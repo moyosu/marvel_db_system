@@ -1,0 +1,23 @@
+{
+  "name": "marvel_system",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moyosu/marvel_db_system.git"
+  },
+  "author": "Yongkang Mo, Zyan Shull-Bain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moyosu/marvel_db_system/issues"
+  },
+  "homepage": "https://github.com/moyosu/marvel_db_system#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "forever": "^4.0.3"
+  }
+}
