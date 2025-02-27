@@ -1,0 +1,153 @@
+html {
+    background-color: rgb(12, 17, 78);
+}
+
+.title-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: aqua;
+}
+
+.logo {
+    height: 1em;
+    height: 100%;
+    max-height: 2.5rem;
+}
+
+.page-title {
+    margin: 10px;              
+    font-size: 40px;
+    line-height: 50px;
+    color: rgb(132, 75, 223);
+    padding-bottom: 5px;
+}
+
+.navbar {
+    margin-left: 10px;
+}
+
+.navlist {
+    margin-top: 0;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.navlist .navitem:not(:last-child)::after {
+    content: " | ";
+    margin-left: 10px;
+}
+
+#searchInput {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.filter-container {
+    margin-bottom: 10px;
+}
+
+#dropdown-filter {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 10px 0; 
+}
+
+.table-name {
+    color: azure;
+    margin-left: 10px;
+}
+
+table {
+    background-color: aliceblue;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header {
+    background-color: #35afc4;
+    font-weight: bold;
+}
+
+.new-button a {
+    background-color: #2553aa;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.new-button a:hover {
+    background-color: #ce4ff5;
+}
+
+.table-button:hover {
+    background-color: #2b8fa1;
+}
+
+table th, table td {
+    color: black;
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.table-link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    background-color: #2b8fa1;
+}
+
+.hidden {
+    display: none;
+}
+
+.form-container {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+button {
+    background-color: #35afc4;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #2b8fa1;
+}
+
+.modal, .modal-label {
+    color: black;
+}
+
+.normal-text {
+    color: aliceblue;
+}
+
+p {
+    margin-left: 10px;
+    margin-right: 10px;
+}

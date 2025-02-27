@@ -1,103 +1,72 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>Players Page</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-</head>
-
-<body onload="showForm('browse')">
-
-    <div class="title-container">
-        <img src="logo.webp" alt="Logo" class="logo">
-        <h1 class="page-title">Players Page</h1>
-    </div>
-
-    <nav class="navbar">
-        <ul class="navlist">
-            <li class="navitem"><a href="home.html">Home</a></li>
-            <li class="navitem"><a href="players.html">Players</a></li>
-            <li class="navitem"><a href="battles.html">Battles</a></li>
-            <li class="navitem"><a href="characters.html">Characters</a></li>
-            <li class="navitem"><a href="abilities.html">Abilities</a></li>
-            <li class="navitem"><a href="alliances.html">Alliances</a></li>
-            <li class="navitem"><a href="playerBattles.html">Player Battles</a></li>
-            <li class="navitem"><a href="battleParticipants.html">Battle Participants</a></li>
-            <li class="navitem"><a href="playerCharacters.html">Player Characters</a></li>
-        </ul>
-    </nav>
-
+{{#> layout title="PlayerS Page"}}
     <div class="filter-container">
         <label for="dropdown-filter">Filter by Rank:</label>
         <select id="dropdown-filter" onchange="filterPlayers()">
             <option value="all">All Ranks</option>
-            <option value="GrandMasters">GrandMasters</option>
+            <option value="Eternal">Eternal</option>
             <option value="Celestial">Celestial</option>
+            <option value="GrandMasters">GrandMasters</option>
+            <option value="Diamond">Diamon</option>
+            <option value="Plat">Plat</option>
             <option value="Gold">Gold</option>
+            <option value="Silver">Silver</option>
+            <option value="Bronze">Bronze</option>
         </select>
     </div>
 
     <div id="browse">
-        <table>
-
-            {{!-- Header section --}}
-            <thead>
-
-                {{!-- For just the first row, we print each key of the row object as a header cell so we
-                know what each column means when the page renders --}}
-                <tr>
+        <h3 class="table-name">Browse Players</h3>
+        
+        <div class="table-container">
+            <table border="1" cellpadding="5">
+                <tr class="table-header">
+                    <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
+                    <th></th>
                     {{#each data.[0]}}
                     <th>
                         {{@key}}
                     </th>
                     {{/each}}
                 </tr>
-            </thead>
-
-            {{!-- Body section --}}
-            <tbody>
-
-                {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+                {{!-- Dynamically populate the table rows --}}
                 {{#each data}}
                 <tr>
-                    <td>{{this.player_id}}</td>
-                    <td>{{this.player_name}}</td>
-                    <td>{{this.rank}}</td>
+                    <td><a href="#" onClick="showForm('update', {{this.player_id}})">Edit</a></td>
+                    <td><a href="#" onclick="showForm('delete', {{this.player_id}})">Delete</a></td>
+                    <td>{{this.[Player ID]}}</td>
+                    <td>{{this.Player}}</td>
+                    <td>{{this.Rank}}</td>
                 </tr>
                 {{/each}}
-            </tbody>
-        </table>
-    </div>
+            </table>
+        </div>
     </div>
 
     <!-- Add Player Form -->
     <div id="insert" class="form-container hidden">
         <h3 class="modal">Add a New Player</h3>
         <label class="modal-label">Player Name</label>
-        <input type="text" id="player-name-input">
-
+        <input type="text" name="player-name-input" id="player-name-input">
+        
         <label class="modal-label">Rank</label>
-        <input type="text" id="player-rank-input">
-
+        <input type="text" name="player-rank-input" id="player-rank-input">
+        
         <button onClick="showForm('browse')">Cancel</button>
         <button onClick="addPlayer()">Add Player</button>
     </div>
 
     <!-- Edit Player Form -->
-    <div id="update" class="form-container hidden">
+    <div id="update" class="form-container hidden" id="add-player-for">
         <h3 class="modal">Edit Player</h3>
         <label class="modal-label">Player ID</label>
         <input type="text" id="edit-player-id-input" value="4">
 
         <label class="modal-label">Player Name</label>
         <input type="text" id="edit-player-name-input" value="Zyverous">
-
+        
         <label class="modal-label">Rank</label>
         <input type="text" id="edit-player-rank-input" value="GrandMaster">
-
+        
         <button onClick="showForm('browse')">Cancel</button>
         <button onClick="saveChanges()">Save Changes</button>
     </div>
@@ -109,6 +78,4 @@
         <button onClick="showForm('browse')">Cancel</button>
         <button onClick="confirmDelete()">Delete</button>
     </div>
-</body>
-
-</html>
+    {{/layout}}

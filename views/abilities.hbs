@@ -1,34 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Abilities Page</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-        <link rel="stylesheet" href="style.css">
-        <script src="script.js" defer></script>
-    </head>
-    <body onload="showForm('browse')">
-
-        <div class="title-container">
-            <img src="logo.webp" alt="Logo" class="logo">
-            <h1 class="page-title">Abilities Page</h1>
-        </div>
-
-        <nav class="navbar">
-            <ul class="navlist">
-                <li class="navitem"><a href="home.html">Home</a></li>
-                <li class="navitem"><a href="players.html">Players</a></li>
-                <li class="navitem"><a href="battles.html">Battles</a></li>
-                <li class="navitem"><a href="characters.html">Characters</a></li>
-                <li class="navitem"><a href="abilities.html">Abilities</a></li>
-                <li class="navitem"><a href="alliances.html">Alliances</a></li>
-                <li class="navitem"><a href="playerBattles.html">Player Battles</a></li>
-                <li class="navitem"><a href="battleParticipants.html">Battle Participants</a></li>
-                <li class="navitem"><a href="playerCharacters.html">Player Characters</a></li>
-            </ul>
-        </nav>
-
-        <div id="browse">
+{{#> layout title="Abilities Page"}}
+    <div id="browse">
             <h3 class="table-name">Browse Abilities</h3>
             
             <div class="table-container">
@@ -163,5 +134,4 @@
             <button onClick="showForm('browse')">Cancel</button>
             <button onClick="confirmDelete()">Delete</button>
         </div>
-    </body>
-</html>
+{{/layout}}
