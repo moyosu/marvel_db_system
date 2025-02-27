@@ -58,6 +58,9 @@ app.get('/playerBattles', function(req, res) {
     res.render('playerBattles', { title: "Player Battles"});
 });
 
+/**************************************************
+ * PLAYER SECTION
+ **************************************************/
 // PlayerCharacters page
 app.get('/playerCharacters', function(req, res){
     res.render('playerCharacters', { title: "Player Characters"});
@@ -78,6 +81,37 @@ app.get('/players', function(req, res) {
         res.render('players', {data: rows}); // Render the players.hbs file and send the data
     });
 });
+
+// Add new player route
+app.post('/add-player', function (req, res) {
+    let data = req.body; // Get the request body data
+    let playerName = data.player_name;
+    let playerRank = data.rank;
+
+    // Insert the new player into the database
+    let query = `INSERT INTO Players (player_name, rank) VALUES ('${playerName}', '${playerRank}');`;
+
+    db.pool.query(query, function (error, results, fields) {
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        } else {
+            // If there was no error, perform a SELECT * on Players
+            let query2 = `SELECT player_id as 'Player ID', player_name as 'Player', rank as 'Rank' FROM Players;`;
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.status(400).json({ error: error.message });
+                } else {
+                    res.status(200).json(rows);
+                }
+            });
+        }
+    });
+});
+
 
 /*
     LISTENER

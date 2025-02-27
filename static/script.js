@@ -1,5 +1,3 @@
-
-
 document.addEventListener("DOMContentLoaded", function () {
     function showForm(formType, id = null) {
         const forms = ["browse", "insert", "update", "delete"];
@@ -12,41 +10,26 @@ document.addEventListener("DOMContentLoaded", function () {
         // Show the selected form
         document.getElementById(formType).classList.remove("hidden");
 
-        // Populate edit form if needed
-        // if (formType === "update" && id) {
-        //     let playerRows = document.querySelectorAll("table tr");
-
-        //     playerRows.forEach(row => {
-        //         let cells = row.children;
-        //         if (cells.length > 2 && cells[2].innerText.trim() == id) { 
-        //             document.getElementById("edit-player-id-input").value = cells[2].innerText.trim();
-        //             document.getElementById("edit-player-name-input").value = cells[3].innerText.trim();
-        //             document.getElementById("edit-player-rank-input").value = cells[4].innerText.trim();
-        //         }
-        //     });
-        // }
-
-        // Show delete message
         if (formType === "delete" && id) {
             document.getElementById("delete-message").innerText = `${id}`;
         }
     }
 
-    // Function to add a player (placeholder)
-    window.addPlayer = function () {
-        alert("Player added! (Functionality not implemented yet)");
+    // Function to add
+    window.addElement = function () {
+        alert("Element added! (Functionality not implemented yet)");
         showForm('browse');
     };
 
-    // Function to save changes to a player (placeholder)
+    // Function to save changes
     window.saveChanges = function () {
         alert("Changes saved! (Functionality not implemented yet)");
         showForm('browse');
     };
 
-    // Function to delete a player (placeholder)
+    // Function to delete
     window.confirmDelete = function () {
-        alert("Player deleted! (Functionality not implemented yet)");
+        alert("Element deleted! (Functionality not implemented yet)");
         showForm('browse');
     };
 
