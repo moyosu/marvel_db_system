@@ -14,58 +14,38 @@
             
             <div class="table-container">
                 <table border="1" cellpadding="5">
-                    <tr class="table-header">
-                        <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
-                        <th></th>
-                        <th>character_id</th>
-                        <th>character_name</th>
-                        <th>role</th>
-                        <th>health</th>
-                        <th>has_secondary_weapon</th>
-                        <th>move_speed</th>
-                        <th>critical_multiplier</th>
-                        <th>ammo_capacity</th>
-                        <th>track_alliance</th>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 4)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 4)">Delete</a></td>
-                        <td>4</td>
-                        <td>Iron Man</td>
-                        <td>Duelist</td>
-                        <td>275</td>
-                        <td>0</td>
-                        <td>10</td>
-                        <td>0</td>
-                        <td>8</td>
-                        <td>6</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 5)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 5)">Delete</a></td>
-                        <td>5</td>
-                        <td>Venom</td>
-                        <td>Vanguard</td>
-                        <td>650</td>
-                        <td>0</td>
-                        <td>15</td>
-                        <td>15</td>
-                        <td>NULL</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 6)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 6)">Delete</a></td>
-                        <td>6</td>
-                        <td>Rocket</td>
-                        <td>Strategist</td>
-                        <td>250</td>
-                        <td>1</td>
-                        <td>15</td>
-                        <td>25</td>
-                        <td>30</td>
-                        <td>7</td>
-                    </tr>
+                    <thead class="table-header">
+                <tr>
+                    <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
+                    <th></th>
+                    {{#each data.[0]}}
+                    <th>
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <td>
+                        <a href="#" onClick="showForm('update', {{this.[Character ID]}})">Edit</a>
+                    </td>
+                    <td>
+                        <a href="#" onClick="showForm('delete', {{this.[Character ID]}})">Delete</a>
+                    </td>
+                    <td>{{this.[Character ID]}}</td>
+                    <td>{{this.Character}}</td>
+                    <td>{{this.Role}}</td>
+                    <td>{{this.Health}}</td>
+                    <td>{{this.[Has Secondary Weapon]}}</td>
+                    <td>{{this.[Move Speed]}}</td>
+                    <td>{{this.[Critical Multiplier]}}</td>
+                    <td>{{this.[Ammo Capacity]}}</td>
+                    <td>{{this.Alliance}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
                 </table>
             </div>
         </div>

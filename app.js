@@ -11,7 +11,7 @@ var app     = express();            // We need to instantiate an express object 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('static'))
-PORT        = 8687;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 8686;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
@@ -28,34 +28,116 @@ app.get('/', function(req, res)
         res.render('home', { title: "Home Page"});                    // an object where 'data' is equal to the 'rows' we
     });                                                         // received back from the query
 
-    // Abilities page
-app.get('/abilities', function(req, res) {
-    res.render('abilities', { title: "Abilities Page"});
+// Abilities page
+app.get('/abilities', function (req, res) {
+    let query1 = "SELECT ability_id AS 'Ability ID', ability_name AS 'Ability', special_effect AS 'Special Effect', ability_range AS 'Range', cooldown AS 'Cooldown', charges AS 'Charges', Characters.character_name AS 'Character' FROM Abilities JOIN Characters ON Abilities.track_character = Characters.character_id;";
+
+    db.pool.query(query1, function (error, rows, fields) { // Execute the query
+        if (error) {
+            console.error("Error executing query: ", error); // Log any errors
+            res.status(500).send("Error executing query"); // Send an error response
+            return;
+        }
+
+        console.log("Rows returned: ", rows); // Log the returned rows
+        res.render('abilities', { data: rows }); // Render the players.hbs file and send the data
+    });
 });
 
 // Alliances page
-app.get('/alliances', function(req, res) {
-    res.render('alliances', { title: "Alliances Page"});
+app.get('/alliances', function (req, res) {
+    let query1 = "SELECT alliance_id AS 'Alliance ID', alliance_name AS 'Alliance', stat_boost AS 'Stat Boost', stat_boost_type AS 'Stat Boost Type' FROM Alliances;";
+
+    db.pool.query(query1, function (error, rows, fields) { // Execute the query
+        if (error) {
+            console.error("Error executing query: ", error); // Log any errors
+            res.status(500).send("Error executing query"); // Send an error response
+            return;
+        }
+
+        console.log("Rows returned: ", rows); // Log the returned rows
+        res.render('alliances', { data: rows }); // Render the players.hbs file and send the data
+    });
 });
 
 // BattleParticipants page
-app.get('/battleParticipants', function(req, res) {
-    res.render('battleParticipants', { title: "Battle Participants"});
+app.get('/battleParticipants', function (req, res) {
+    let query1 = "SELECT track_battle AS 'Battle ID', Characters.character_name AS 'Character' FROM BattleParticipants JOIN Characters ON BattleParticipants.track_character = Characters.character_id ORDER BY track_battle;";
+
+    db.pool.query(query1, function (error, rows, fields) { // Execute the query
+        if (error) {
+            console.error("Error executing query: ", error); // Log any errors
+            res.status(500).send("Error executing query"); // Send an error response
+            return;
+        }
+
+        console.log("Rows returned: ", rows); // Log the returned rows
+        res.render('battleParticipants', { data: rows }); // Render the players.hbs file and send the data
+    });
 });
 
 // Battles page
-app.get('/battles', function(req, res) {
-    res.render('battles', { title: "Battles Page"});
+app.get('/battles', function (req, res) {
+    let query1 = "SELECT battle_id AS 'Battle ID', time_stamp AS 'Time Stamp', IF(is_victory = 1, 'true', 'false') AS 'Victory', kills AS 'Kills', deaths AS 'Deaths', assists AS 'Assists', damage_dealt AS 'Damage Dealt', damage_blocked AS 'Damage Blocked', healing AS 'Healing', accuracy AS 'Accuracy' FROM Battles;";
+
+    db.pool.query(query1, function (error, rows, fields) { // Execute the query
+        if (error) {
+            console.error("Error executing query: ", error); // Log any errors
+            res.status(500).send("Error executing query"); // Send an error response
+            return;
+        }
+
+        console.log("Rows returned: ", rows); // Log the returned rows
+        res.render('battles', { data: rows }); // Render the players.hbs file and send the data
+    });
 });
 
 // Characters page
-app.get('/characters', function(req, res) {
-    res.render('characters', { title: "Characters Page"});
+app.get('/characters', function (req, res) {
+    let query1 = "SELECT character_id AS 'Character ID', character_name AS 'Character', role AS 'Role', health AS 'Health', IF(has_secondary_weapon = 1, 'true', 'false') AS 'Has Secondary Weapon', move_speed AS 'Move Speed', critical_multiplier AS 'Critical Multiplier', ammo_capacity AS 'Ammo Capacity', Alliances.alliance_name AS 'Alliance' FROM Characters JOIN Alliances ON Characters.track_alliance = Alliances.alliance_id;";
+
+    db.pool.query(query1, function (error, rows, fields) { // Execute the query
+        if (error) {
+            console.error("Error executing query: ", error); // Log any errors
+            res.status(500).send("Error executing query"); // Send an error response
+            return;
+        }
+
+        console.log("Rows returned: ", rows); // Log the returned rows
+        res.render('characters', { data: rows });
+    });
 });
 
 // PlayerBattles page
-app.get('/playerBattles', function(req, res) {
-    res.render('playerBattles', { title: "Player Battles"});
+app.get('/playerBattles', function (req, res) {
+    let query1 = "SELECT Players.player_name AS 'Player', track_battle AS 'Battle ID' FROM PlayerBattles JOIN Players ON PlayerBattles.track_player = Players.player_id;";
+
+    db.pool.query(query1, function (error, rows, fields) { // Execute the query
+        if (error) {
+            console.error("Error executing query: ", error); // Log any errors
+            res.status(500).send("Error executing query"); // Send an error response
+            return;
+        }
+
+        console.log("Rows returned: ", rows); // Log the returned rows
+        res.render('playerBattles', { data: rows });
+    });
+});
+
+// PlayerCharacters page
+app.get('/playerCharacters', function (req, res) {
+    let query1 = "SELECT Players.player_name AS 'Player', Characters.character_name AS 'Character' FROM PlayerCharacters JOIN Players ON PlayerCharacters.track_player = Players.player_id JOIN Characters ON PlayerCharacters.track_character = Characters.character_id;";
+
+    db.pool.query(query1, function (error, rows, fields) { // Execute the query
+        if (error) {
+            console.error("Error executing query: ", error); // Log any errors
+            res.status(500).send("Error executing query"); // Send an error response
+            return;
+        }
+
+        console.log("Rows returned: ", rows); // Log the returned rows
+        res.render('playerCharacters', { data: rows });
+    });
 });
 
 /**************************************************

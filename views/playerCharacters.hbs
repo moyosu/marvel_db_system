@@ -6,36 +6,31 @@
             
             <div class="table-container">
                 <table border="1" cellpadding="5" id="IT-table">
-                    <tr class="table-header">
-                        <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
-                        <th></th>
-                        <th>track_player</th>
-                        <th>track_character</th>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 4)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 4)">Delete</a></td>
-                        <td value="4">Zyverous</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 4)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 4)">Delete</a></td>
-                        <td value="4">Zyverous</td>
-                        <td>6</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 5)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 5)">Delete</a></td>
-                        <td value="5">MasterMo</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 6)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 6)">Delete</a></td>
-                        <td value="6">GamerDad</td>
-                        <td>6</td>
-                    </tr>
+                    <thead class="table-header">
+                <tr>
+                    <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
+                    <th></th>
+                    {{#each data.[0]}}
+                    <th>
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <td>
+                        <a href="#" onClick="showForm('update', {{this.[Player ID]}})">Edit</a>
+                    </td>
+                    <td>
+                        <a href="#" onClick="showForm('delete', {{this.[Player ID]}})">Delete</a>
+                    </td>
+                    <td>{{this.Player}}</td>
+                    <td>{{this.Character}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
                 </table>
             </div>
         </div>

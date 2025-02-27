@@ -1,154 +1,128 @@
 {{#> layout title="Battles Page"}}
-        <div class="filter-container">
-            <label for="dropdown-filter">Filter by Win:</label>
-            <select id="dropdown-filter" onchange="filterCharacters()">
-                <option value="all">All Battles</option>
-                <option value="1">Win</option>
-                <option value="0">Loss</option>
-            </select>
-        </div>
+<div class="filter-container">
+    <label for="dropdown-filter">Filter by Win:</label>
+    <select id="dropdown-filter" onchange="filterCharacters()">
+        <option value="all">All Battles</option>
+        <option value="1">Win</option>
+        <option value="0">Loss</option>
+    </select>
+</div>
 
-        <div id="browse">
-            <h3 class="table-name">Browse Battles</h3>
-            
-            <div class="table-container">
-                <table border="1" cellpadding="5">
-                    <tr class="table-header">
-                        <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
-                        <th></th>
-                        <th>battle_id</th>
-                        <th>time_stamp</th>
-                        <th>is_victory</th>
-                        <th>kills</th>
-                        <th>deaths</th>
-                        <th>assists</th>
-                        <th>damage_dealt</th>
-                        <th>damage_blocked</th>
-                        <th>healing</th>
-                        <th>accuracy</th>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 4)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 4)">Delete</a></td>
-                        <td>4</td>
-                        <td>2025-02-05 15:30:00</td>
-                        <td>1</td>
-                        <td>45</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>100000</td>
-                        <td>5000</td>
-                        <td>2000</td>
-                        <td>51</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 5)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 5)">Delete</a></td>
-                        <td>5</td>
-                        <td>2025-02-05 16:00:00</td>
-                        <td>0</td>
-                        <td>3</td>
-                        <td>14</td>
-                        <td>2</td>
-                        <td>800</td>
-                        <td>3000</td>
-                        <td>1000</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 6)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 6)">Delete</a></td>
-                        <td>6</td>
-                        <td>2025-02-05 16:30:00</td>
-                        <td>1</td>
-                        <td>6</td>
-                        <td>1</td>
-                        <td>44</td>
-                        <td>2500</td>
-                        <td>7000</td>
-                        <td>5570</td>
-                        <td>90</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+<div id="browse">
+    <h3 class="table-name">Browse Battles</h3>
 
-        <!-- Add Battle Form -->
-        <div id="insert" class="form-container hidden">
-            <h3 class="modal">Add a New Battle</h3>
-            <label class="modal-label">Time Stamp</label>
-            <input type="text" id="battle-time-stamp-input">
-            
-            <label class="modal-label">Is Victory?</label>
-            <input type="text" id="battle-is-victory-input">
-            
-            <label class="modal-label">Kills</label>
-            <input type="text" id="battle-kills-input">
-            
-            <label class="modal-label">Deaths</label>
-            <input type="text" id="battle-deaths-input">
-            
-            <label class="modal-label">Assists</label>
-            <input type="text" id="battle-assists-input">
-            
-            <label class="modal-label">Damage Dealt</label>
-            <input type="text" id="battle-damage-dealt-input">
-            
-            <label class="modal-label">Damage Blocked</label>
-            <input type="text" id="battle-damage-blocked-input">
-            
-            <label class="modal-label">Healing</label>
-            <input type="text" id="battle-healing-input">
-            
-            <label class="modal-label">Accuracy</label>
-            <input type="text" id="battle-accuracy-input">
-            
-            <button onClick="showForm('browse')">Cancel</button>
-            <button onClick="addBattle()">Add Battle</button>
-        </div>
+    <div class="table-container">
+        <table border="1" cellpadding="5">
+            <thead class="table-header">
+                <tr>
+                    <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
+                    <th></th>
+                    {{#each data.[0]}}
+                    <th>
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+            {{!-- Dynamically populate the table rows --}}
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <td><a href="#" onClick="showForm('update', {{this.[Battle ID]}})">Edit</a></td>
+                    <td><a href="#" onclick="showForm('delete', {{this.[Battle ID]}})">Delete</a></td>
+                    <td>{{this.[Battle ID]}}</td>
+                    <td>{{this.[Time Stamp]}}</td>
+                    <td>{{this.Victory}}</td>
+                    <td>{{this.Kills}}</td>
+                    <td>{{this.Deaths}}</td>
+                    <td>{{this.Assists}}</td>
+                    <td>{{this.[Damage Dealt]}}</td>
+                    <td>{{this.[Damage Blocked]}}</td>
+                    <td>{{this.Healing}}</td>
+                    <td>{{this.Accuracy}}</td>
+                </tr>
+            </tbody>
+            {{/each}}
+        </table>
+    </div>
+</div>
 
-        <!-- Edit Battle Form -->
-        <div id="update" class="form-container hidden">
-            <h3 class="modal">Edit Battle</h3>
-            <label class="modal-label">Battle ID</label>
-            <input type="text" id="edit-battle-id-input" value="4">
+<!-- Add Battle Form -->
+<div id="insert" class="form-container hidden">
+    <h3 class="modal">Add a New Battle</h3>
+    <label class="modal-label">Time Stamp</label>
+    <input type="text" id="battle-time-stamp-input">
 
-            <label class="modal-label">Time Stamp</label>
-            <input type="text" id="edit-time-stamp-input" value="2025-02-05 15:30:00">
-            
-            <label class="modal-label">Is Victory</label>
-            <input type="text" id="edit-is-victory-input" value="1">
-            
-            <label class="modal-label">Kills</label>
-            <input type="text" id="edit-kills-input" value="45">
-            
-            <label class="modal-label">Deaths</label>
-            <input type="text" id="edit-deaths-input" value="2">
-            
-            <label class="modal-label">Assists</label>
-            <input type="text" id="edit-assists-input" value="3">
-            
-            <label class="modal-label">Damage Dealt</label>
-            <input type="text" id="edit-damage-dealt-input" value="100000">
-            
-            <label class="modal-label">Damage Blocked</label>
-            <input type="text" id="edit-damage-blocked-input" value="5000">
-            
-            <label class="modal-label">Healing</label>
-            <input type="text" id="edit-healing-input" value="2000">
-            
-            <label class="modal-label">Accuracy</label>
-            <input type="text" id="edit-accuracy-input" value="51">
-            
-            <button onClick="showForm('browse')">Cancel</button>
-            <button onClick="saveChanges()">Save Changes</button>
-        </div>
+    <label class="modal-label">Is Victory?</label>
+    <input type="text" id="battle-is-victory-input">
 
-        <!-- Delete Confirmation -->
-        <div id="delete" class="form-container hidden">
-            <h3 class="modal">Are you sure you want to delete this battle?</h3>
-            <p class="modal-label">Battle ID: <span id="delete-message"></span></p>
-            <button onClick="showForm('browse')">Cancel</button>
-            <button onClick="confirmDelete()">Delete</button>
-        </div>
+    <label class="modal-label">Kills</label>
+    <input type="text" id="battle-kills-input">
+
+    <label class="modal-label">Deaths</label>
+    <input type="text" id="battle-deaths-input">
+
+    <label class="modal-label">Assists</label>
+    <input type="text" id="battle-assists-input">
+
+    <label class="modal-label">Damage Dealt</label>
+    <input type="text" id="battle-damage-dealt-input">
+
+    <label class="modal-label">Damage Blocked</label>
+    <input type="text" id="battle-damage-blocked-input">
+
+    <label class="modal-label">Healing</label>
+    <input type="text" id="battle-healing-input">
+
+    <label class="modal-label">Accuracy</label>
+    <input type="text" id="battle-accuracy-input">
+
+    <button onClick="showForm('browse')">Cancel</button>
+    <button onClick="addBattle()">Add Battle</button>
+</div>
+
+<!-- Edit Battle Form -->
+<div id="update" class="form-container hidden">
+    <h3 class="modal">Edit Battle</h3>
+    <label class="modal-label">Battle ID</label>
+    <input type="text" id="edit-battle-id-input" value="4">
+
+    <label class="modal-label">Time Stamp</label>
+    <input type="text" id="edit-time-stamp-input" value="2025-02-05 15:30:00">
+
+    <label class="modal-label">Is Victory</label>
+    <input type="text" id="edit-is-victory-input" value="1">
+
+    <label class="modal-label">Kills</label>
+    <input type="text" id="edit-kills-input" value="45">
+
+    <label class="modal-label">Deaths</label>
+    <input type="text" id="edit-deaths-input" value="2">
+
+    <label class="modal-label">Assists</label>
+    <input type="text" id="edit-assists-input" value="3">
+
+    <label class="modal-label">Damage Dealt</label>
+    <input type="text" id="edit-damage-dealt-input" value="100000">
+
+    <label class="modal-label">Damage Blocked</label>
+    <input type="text" id="edit-damage-blocked-input" value="5000">
+
+    <label class="modal-label">Healing</label>
+    <input type="text" id="edit-healing-input" value="2000">
+
+    <label class="modal-label">Accuracy</label>
+    <input type="text" id="edit-accuracy-input" value="51">
+
+    <button onClick="showForm('browse')">Cancel</button>
+    <button onClick="saveChanges()">Save Changes</button>
+</div>
+
+<!-- Delete Confirmation -->
+<div id="delete" class="form-container hidden">
+    <h3 class="modal">Are you sure you want to delete this battle?</h3>
+    <p class="modal-label">Battle ID: <span id="delete-message"></span></p>
+    <button onClick="showForm('browse')">Cancel</button>
+    <button onClick="confirmDelete()">Delete</button>
+</div>
 {{/layout}}

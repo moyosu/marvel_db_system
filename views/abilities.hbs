@@ -1,137 +1,107 @@
 {{#> layout title="Abilities Page"}}
-    <div id="browse">
-            <h3 class="table-name">Browse Abilities</h3>
-            
-            <div class="table-container">
-                <table border="1" cellpadding="5">
-                    <tr class="table-header">
-                        <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
-                        <th></th>
-                        <th>ability_id</th>
-                        <th>ability_name</th>
-                        <th>special_effect</th>
-                        <th>ability_range</th>
-                        <th>cooldown</th>
-                        <th>duration</th>
-                        <th>charges</th>
-                        <th>track_character</th>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 5)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 5)">Delete</a></td>
-                        <td>5</td>
-                        <td>Hyper-Velocity</td>
-                        <td>Activate Hyper-Velocity state for swift forward flight</td>
-                        <td>0</td>
-                        <td>8</td>
-                        <td>5</td>
-                        <td>1</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 6)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 6)">Delete</a></td>
-                        <td>6</td>
-                        <td>Symbiotic Resilience</td>
-                        <td>Launch webbing forward, allowing for a singular swing in desired direction.</td>
-                        <td>100</td>
-                        <td>10</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 7)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 7)">Delete</a></td>
-                        <td>7</td>
-                        <td>Jetpack Dash</td>
-                        <td>Dash forward.</td>
-                        <td>0</td>
-                        <td>7</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>6</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" onClick="showForm('update', 8)">Edit</a></td>
-                        <td><a href="#" onclick="showForm('delete', 8)">Delete</a></td>
-                        <td>8</td>
-                        <td>Battle Rebirth Beacon</td>
-                        <td>Deploy beacon to revive fallen ally and periodically drops armor packs.</td>
-                        <td>50</td>
-                        <td>45</td>
-                        <td>100</td>
-                        <td>1</td>
-                        <td>6</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+<div id="browse">
+    <h3 class="table-name">Browse Abilities</h3>
 
-        <!-- Add Ability Form -->
-        <div id="insert" class="form-container hidden">
-            <h3 class="modal">Add a New Ability</h3>
-            <label class="modal-label">Ability Name</label>
-            <input type="text" id="edit-ability-name-input">
-            
-            <label class="modal-label">Special Effect</label>
-            <input type="text" id="edit-special-effect-input">
-            
-            <label class="modal-label">Ability Range</label>
-            <input type="text" id="edit-ability-range-input">
-            
-            <label class="modal-label">Cooldown</label>
-            <input type="text" id="edit-cooldown-input">
-            
-            <label class="modal-label">Duration</label>
-            <input type="text" id="edit-duration-input">
-            
-            <label class="modal-label">Charges</label>
-            <input type="text" id="edit-charges-input">
-            
-            <label class="modal-label">Track Character</label>
-            <input type="text" id="edit-track-character-input">
-            
-            <button onClick="showForm('browse')">Cancel</button>
-            <button onClick="saveChanges()">Add Ability</button>
-        </div>
+    <div class="table-container">
+        <table border="1" cellpadding="5">
+            <thead class="table-header">
+                <tr>
+                    <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
+                    <th></th>
+                    {{#each data.[0]}}
+                    <th>
+                        {{@key}}
+                    </th>
+                    {{/each}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <td>
+                        <a href="#" onClick="showForm('update', {{this.[Ability ID]}})">Edit</a>
+                    </td>
+                    <td>
+                        <a href="#" onClick="showForm('delete', {{this.[Ability ID]}})">Delete</a>
+                    </td>
+                    <td>{{this.[Ability ID]}}</td>
+                    <td>{{this.Ability}}</td>
+                    <td>{{this.[Special Effect]}}</td>
+                    <td>{{this.Range}}</td>
+                    <td>{{this.Cooldown}}</td>
+                    <td>{{this.Charges}}</td>
+                    <td>{{this.Character}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-        <!-- Edit Ability Form -->
-        <div id="update" class="form-container hidden">
-            <h3 class="modal">Edit Ability</h3>
-            <label class="modal-label">Ability ID</label>
-            <input type="text" id="edit-ability-id-input" value="5">
+<!-- Add Ability Form -->
+<div id="insert" class="form-container hidden">
+    <h3 class="modal">Add a New Ability</h3>
+    <label class="modal-label">Ability Name</label>
+    <input type="text" id="edit-ability-name-input">
 
-            <label class="modal-label">Ability Name</label>
-            <input type="text" id="edit-ability-name-input" value="Hyper-Velocity">
-            
-            <label class="modal-label">Special Effect</label>
-            <input type="text" id="edit-special-effect-input" value="Activate Hyper-Velocity state for swift forward flight.">
-            
-            <label class="modal-label">Ability Range</label>
-            <input type="text" id="edit-ability-range-input" value="0">
-            
-            <label class="modal-label">Cooldown</label>
-            <input type="text" id="edit-cooldown-input" value="8">
-            
-            <label class="modal-label">Duration</label>
-            <input type="text" id="edit-duration-input" value="5">
-            
-            <label class="modal-label">Charges</label>
-            <input type="text" id="edit-charges-input" value="1">
-            
-            <label class="modal-label">Track Character</label>
-            <input type="text" id="edit-track-character-input" value="4">
-            
-            <button onClick="showForm('browse')">Cancel</button>
-            <button onClick="saveChanges()">Save Changes</button>
-        </div>
+    <label class="modal-label">Special Effect</label>
+    <input type="text" id="edit-special-effect-input">
 
-        <!-- Delete Confirmation -->
-        <div id="delete" class="form-container hidden">
-            <h3 class="modal">Are you sure you want to delete this ability?</h3>
-            <p class="modal-label">Ability ID: <span id="delete-message"></span></p>
-            <button onClick="showForm('browse')">Cancel</button>
-            <button onClick="confirmDelete()">Delete</button>
-        </div>
+    <label class="modal-label">Ability Range</label>
+    <input type="text" id="edit-ability-range-input">
+
+    <label class="modal-label">Cooldown</label>
+    <input type="text" id="edit-cooldown-input">
+
+    <label class="modal-label">Duration</label>
+    <input type="text" id="edit-duration-input">
+
+    <label class="modal-label">Charges</label>
+    <input type="text" id="edit-charges-input">
+
+    <label class="modal-label">Track Character</label>
+    <input type="text" id="edit-track-character-input">
+
+    <button onClick="showForm('browse')">Cancel</button>
+    <button onClick="saveChanges()">Add Ability</button>
+</div>
+
+<!-- Edit Ability Form -->
+<div id="update" class="form-container hidden">
+    <h3 class="modal">Edit Ability</h3>
+    <label class="modal-label">Ability ID</label>
+    <input type="text" id="edit-ability-id-input" value="5">
+
+    <label class="modal-label">Ability Name</label>
+    <input type="text" id="edit-ability-name-input" value="Hyper-Velocity">
+
+    <label class="modal-label">Special Effect</label>
+    <input type="text" id="edit-special-effect-input" value="Activate Hyper-Velocity state for swift forward flight.">
+
+    <label class="modal-label">Ability Range</label>
+    <input type="text" id="edit-ability-range-input" value="0">
+
+    <label class="modal-label">Cooldown</label>
+    <input type="text" id="edit-cooldown-input" value="8">
+
+    <label class="modal-label">Duration</label>
+    <input type="text" id="edit-duration-input" value="5">
+
+    <label class="modal-label">Charges</label>
+    <input type="text" id="edit-charges-input" value="1">
+
+    <label class="modal-label">Track Character</label>
+    <input type="text" id="edit-track-character-input" value="4">
+
+    <button onClick="showForm('browse')">Cancel</button>
+    <button onClick="saveChanges()">Save Changes</button>
+</div>
+
+<!-- Delete Confirmation -->
+<div id="delete" class="form-container hidden">
+    <h3 class="modal">Are you sure you want to delete this ability?</h3>
+    <p class="modal-label">Ability ID: <span id="delete-message"></span></p>
+    <button onClick="showForm('browse')">Cancel</button>
+    <button onClick="confirmDelete()">Delete</button>
+</div>
 {{/layout}}
