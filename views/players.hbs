@@ -45,15 +45,20 @@
     <!-- Add Player Form -->
     <div id="insert" class="form-container hidden">
         <h3 class="modal">Add a New Player</h3>
-        <label class="modal-label">Player Name</label>
-        <input type="text" name="player-name-input" id="player-name-input">
-        
-        <label class="modal-label">Rank</label>
-        <input type="text" name="player-rank-input" id="player-rank-input">
-        
-        <button onClick="showForm('browse')">Cancel</button>
-        <button onClick="addPlayer()">Add Player</button>
+        <form id="add-player-form-ajax">
+            <label class="modal-label">Player Name</label>
+            <input type="text" name="player-name-input" id="player-name-input">
+            
+            <label class="modal-label">Rank</label>
+            <input type="text" name="player-rank-input" id="player-rank-input">
+            
+            <button type="button" onClick="showForm('browse')">Cancel</button>
+            <button type="submit">Add Player</button>
+        </form>
     </div>
+
+    <!-- Include add_player.js script -->
+    <script src="/js/add_player.js"></script>
 
     <!-- Edit Player Form -->
     <div id="update" class="form-container hidden" id="add-player-for">
