@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Player Characters</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+    <body onload="showForm('browse')">
+
+        <div class="title-container">
+            <img src="logo.webp" alt="Logo" class="logo">
+            <h1 class="page-title">Player Characters</h1>
+        </div>
+
+        <nav class="navbar">
+            <ul class="navlist">
+                <li class="navitem"><a href="home.html">Home</a></li>
+                <li class="navitem"><a href="players.html">Players</a></li>
+                <li class="navitem"><a href="battles.html">Battles</a></li>
+                <li class="navitem"><a href="characters.html">Characters</a></li>
+                <li class="navitem"><a href="abilities.html">Abilities</a></li>
+                <li class="navitem"><a href="alliances.html">Alliances</a></li>
+                <li class="navitem"><a href="playerBattles.html">Player Battles</a></li>
+                <li class="navitem"><a href="battleParticipants.html">Battle Participants</a></li>
+                <li class="navitem"><a href="playerCharacters.html">Player Characters</a></li>
+            </ul>
+        </nav>
+
+        <div id="browse">
+            <h3 class="table-name">Browse Battle Participants</h3>
+            
+            <input type="text" id="searchInput" placeholder="Search by track_battle... " onkeyup="filterTable()">
+            
+            <div class="table-container">
+                <table border="1" cellpadding="5" id="IT-table">
+                    <tr class="table-header">
+                        <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
+                        <th></th>
+                        <th>track_battle</th>
+                        <th>track_character</th>
+                    </tr>
+                    <tr>
+                        <td><a href="#" onClick="showForm('update', 4)">Edit</a></td>
+                        <td><a href="#" onclick="showForm('delete', 4)">Delete</a></td>
+                        <td>4</td>
+                        <td value="6">Rocket</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" onClick="showForm('update', 4)">Edit</a></td>
+                        <td><a href="#" onclick="showForm('delete', 4)">Delete</a></td>
+                        <td>4</td>
+                        <td value="4">Iron Man</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" onClick="showForm('update', 5)">Edit</a></td>
+                        <td><a href="#" onclick="showForm('delete', 5)">Delete</a></td>
+                        <td>4</td>
+                        <td value="5">Venom</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" onClick="showForm('update', 6)">Edit</a></td>
+                        <td><a href="#" onclick="showForm('delete', 6)">Delete</a></td>
+                        <td>5</td>
+                        <td value="4">Iron Man</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" onClick="showForm('update', 6)">Edit</a></td>
+                        <td><a href="#" onclick="showForm('delete', 6)">Delete</a></td>
+                        <td>6</td>
+                        <td value="5">Venom</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Add Player Character Form -->
+        <div id="insert" class="form-container hidden">
+            <h3 class="modal">Add a New Battle Participant</h3>
+            <label class="modal-label">Track Battle</label>
+            <input type="text" id="player-track-input">
+            
+            <label class="modal-label">Track Character</label>
+            <input type="text" id="character-track-input">
+            
+            <button onClick="showForm('browse')">Cancel</button>
+            <button onClick="addPlayerCharacter()">Add Battle Participant</button>
+        </div>
+
+        <!-- Edit Player Character Form -->
+        <div id="update" class="form-container hidden">
+            <h3 class="modal">Edit Battle Participant</h3>
+            <label class="modal-label">Track Battle</label>
+            <input type="text" id="edit-player-track-input">
+            
+            <label class="modal-label">Track Character</label>
+            <input type="text" id="edit-character-track-input">
+            
+            <button onClick="showForm('browse')">Cancel</button>
+            <button onClick="saveChanges()">Save Changes</button>
+        </div>
+
+        <!-- Delete Confirmation -->
+        <div id="delete" class="form-container hidden">
+            <h3 class="modal">Are you sure you want to delete this battle participant?</h3>
+            <p class="modal-label">Track Battle: <span id="delete-message"></span></p>
+            <button onClick="showForm('browse')">Cancel</button>
+            <button onClick="confirmDelete()">Delete</button>
+        </div>
+    </body>
+</html>

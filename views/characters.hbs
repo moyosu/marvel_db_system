@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Characters Page</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+    <body onload="showForm('browse')">
+
+        <div class="title-container">
+            <img src="logo.webp" alt="Logo" class="logo">
+            <h1 class="page-title">Characters Page</h1>
+        </div>
+
+        <nav class="navbar">
+            <ul class="navlist">
+                <li class="navitem"><a href="home.html">Home</a></li>
+                <li class="navitem"><a href="players.html">Players</a></li>
+                <li class="navitem"><a href="battles.html">Battles</a></li>
+                <li class="navitem"><a href="characters.html">Characters</a></li>
+                <li class="navitem"><a href="abilities.html">Abilities</a></li>
+                <li class="navitem"><a href="alliances.html">Alliances</a></li>
+                <li class="navitem"><a href="playerBattles.html">Player Battles</a></li>
+                <li class="navitem"><a href="battleParticipants.html">Battle Participants</a></li>
+                <li class="navitem"><a href="playerCharacters.html">Player Characters</a></li>
+            </ul>
+        </nav>
+
+        <div class="filter-container">
+            <label for="dropdown-filter">Filter by Role:</label>
+            <select id="dropdown-filter" onchange="filterCharacters()">
+                <option value="all">All Roles</option>
+                <option value="Vanguard">Vanguard</option>
+                <option value="Duelist">Duelist</option>
+                <option value="Strategist">Strategist</option>
+            </select>
+        </div>
+
+        <div id="browse">
+            <h3 class="table-name">Browse Characters</h3>
+            
+            <div class="table-container">
+                <table border="1" cellpadding="5">
+                    <tr class="table-header">
+                        <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
+                        <th></th>
+                        <th>character_id</th>
+                        <th>character_name</th>
+                        <th>role</th>
+                        <th>health</th>
+                        <th>has_secondary_weapon</th>
+                        <th>move_speed</th>
+                        <th>critical_multiplier</th>
+                        <th>ammo_capacity</th>
+                        <th>track_alliance</th>
+                    </tr>
+                    <tr>
+                        <td><a href="#" onClick="showForm('update', 4)">Edit</a></td>
+                        <td><a href="#" onclick="showForm('delete', 4)">Delete</a></td>
+                        <td>4</td>
+                        <td>Iron Man</td>
+                        <td>Duelist</td>
+                        <td>275</td>
+                        <td>0</td>
+                        <td>10</td>
+                        <td>0</td>
+                        <td>8</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" onClick="showForm('update', 5)">Edit</a></td>
+                        <td><a href="#" onclick="showForm('delete', 5)">Delete</a></td>
+                        <td>5</td>
+                        <td>Venom</td>
+                        <td>Vanguard</td>
+                        <td>650</td>
+                        <td>0</td>
+                        <td>15</td>
+                        <td>15</td>
+                        <td>NULL</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#" onClick="showForm('update', 6)">Edit</a></td>
+                        <td><a href="#" onclick="showForm('delete', 6)">Delete</a></td>
+                        <td>6</td>
+                        <td>Rocket</td>
+                        <td>Strategist</td>
+                        <td>250</td>
+                        <td>1</td>
+                        <td>15</td>
+                        <td>25</td>
+                        <td>30</td>
+                        <td>7</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Add Character Form -->
+        <div id="insert" class="form-container hidden">
+            <h3 class="modal">Add a New Character</h3>
+            <label class="modal-label">Character Name</label>
+            <input type="text" id="character-name-input">
+            
+            <label class="modal-label">Role</label>
+            <input type="text" id="character-role-input">
+            
+            <label class="modal-label">Health</label>
+            <input type="text" id="character-health-input">
+
+            <label class="modal-label">Has Secondary Weapon (1 for Yes, 0 for No)</label>
+            <input type="text" id="character-secondary-weapon-input">
+            
+            <label class="modal-label">Move Speed</label>
+            <input type="text" id="character-move-speed-input">
+            
+            <label class="modal-label">Critical Multiplier</label>
+            <input type="text" id="character-critical-multiplier-input">
+            
+            <label class="modal-label">Ammo Capacity</label>
+            <input type="text" id="character-ammo-capacity-input">
+            
+            <label class="modal-label">Track Alliance</label>
+            <input type="text" id="character-track-alliance-input">
+            
+            <button onClick="showForm('browse')">Cancel</button>
+            <button onClick="addCharacter()">Add Character</button>
+        </div>
+
+        <!-- Edit Character Form -->
+        <div id="update" class="form-container hidden">
+            <h3 class="modal">Edit Character</h3>
+            <label class="modal-label">Character ID</label>
+            <input type="text" id="edit-character-id-input" value="4">
+
+            <label class="modal-label">Character Name</label>
+            <input type="text" id="edit-character-name-input" value="Iron Mand">
+            
+            <label class="modal-label">Role</label>
+            <input type="text" id="edit-character-role-input" value="Duelist">
+            
+            <label class="modal-label">Health</label>
+            <input type="text" id="edit-character-health-input" value="275">
+            
+            <label class="modal-label">Has Secondary Weapon</label>
+            <input type="text" id="edit-character-secondary-weapon-input" value="0">
+            
+            <label class="modal-label">Move Speed</label>
+            <input type="text" id="edit-character-move-speed-input" value="10">
+            
+            <label class="modal-label">Critical Multiplier</label>
+            <input type="text" id="edit-character-critical-multiplier-input" value="0">
+            
+            <label class="modal-label">Ammo Capacity</label>
+            <input type="text" id="edit-character-ammo-capacity-input" value="8">
+            
+            <label class="modal-label">Track Alliance</label>
+            <input type="text" id="edit-character-track-alliance-input" value="6">
+            
+            <button onClick="showForm('browse')">Cancel</button>
+            <button onClick="saveChanges()">Save Changes</button>
+        </div>
+
+        <!-- Delete Confirmation -->
+        <div id="delete" class="form-container hidden">
+            <h3 class="modal">Are you sure you want to delete this character?</h3>
+            <p class="modal-label">Character ID: <span id="delete-message"></span></p>
+            <button onClick="showForm('browse')">Cancel</button>
+            <button onClick="confirmDelete()">Delete</button>
+        </div>
+    </body>
+</html>

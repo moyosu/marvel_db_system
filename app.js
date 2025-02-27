@@ -8,6 +8,9 @@ var db = require('./database/db-connector')
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use(express.static('public'))
 PORT        = 8686;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
@@ -17,9 +20,25 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 
 
 app.get('/', function(req, res)
-    {
-        res.render('index');                    // Note the call to render() and not send(). Using render() ensures the templating engine
-    });                                         // will process this file, before sending the finished HTML to the client.
+    {  
+        res.render('index');                    // an object where 'data' is equal to the 'rows' we
+    });                                                         // received back from the query
+
+// New route for the players page
+app.get('/players', function(req, res) {
+    let query1 = "SELECT * FROM Players;";               // Define our query
+
+    db.pool.query(query1, function(error, rows, fields) { // Execute the query
+        if (error) {
+            console.error("Error executing query: ", error); // Log any errors
+            res.status(500).send("Error executing query"); // Send an error response
+            return;
+        }
+
+        console.log("Rows returned: ", rows); // Log the returned rows
+        res.render('players', {data: rows}); // Render the players.hbs file and send the data
+    });
+});
 
 /*
     LISTENER
