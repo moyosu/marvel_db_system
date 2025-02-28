@@ -34,7 +34,7 @@
             <tbody>
                 {{#each data}}
                 <tr>
-                    <td><a href="#" onClick="showForm('update', {{this.[Player ID]}})">Edit</a></td>
+                    <td><a href="#" onClick="updatePlayer({{this.[Player ID]}})">Edit</a></td>
                     <td><a href="#" onclick="confirmDelete({{this.[Player ID]}})">Delete</a></td>
                     <td>{{this.[Player ID]}}</td>
                     <td>{{this.Player}}</td>
@@ -75,30 +75,33 @@
 <script src="/js/add_player.js"></script>
 
 <!-- Edit Player Form -->
-<div id="update" class="form-container hidden" id="add-player-for">
+<div id="update" class="form-container hidden">
     <h3 class="modal">Edit Player</h3>
-    <label class="modal-label">Player ID</label>
-    <input type="text" id="edit-player-id-input" value="4">
+    <form id="update-player-form-ajax">
+        <label class="modal-label" for="upate-player-id">Player ID</label>
+        <input type="text" name="upate-player-id" id="update-player-id-input">
 
-    <label class="modal-label">Player Name</label>
-    <input type="text" id="edit-player-name-input" value="Zyverous">
+        <label class="modal-label" for="update-player-name">Player Name</label>
+        <input type="text" name="update-player-name" id="update-player-name-input">
 
-    <label class="modal-label">Rank</label>
-    <select id="edit-player-rank-input">
-        <!-- Populate with options from the filter -->
-        <option value="Eternal">Eternal</option>
-        <option value="Celestial">Celestial</option>
-        <option value="GrandMasters">GrandMasters</option>
-        <option value="Diamond">Diamond</option>
-        <option value="Plat">Plat</option>
-        <option value="Gold">Gold</option>
-        <option value="Silver">Silver</option>
-        <option value="Bronze">Bronze</option>
-    </select>
+        <label class="modal-label" for="update-player-rank">Rank</label>
+        <select name="update-player-rank" id="update-player-rank-input">
+            <option value="Eternal">Eternal</option>
+            <option value="Celestial">Celestial</option>
+            <option value="GrandMasters">GrandMasters</option>
+            <option value="Diamond">Diamond</option>
+            <option value="Plat">Plat</option>
+            <option value="Gold">Gold</option>
+            <option value="Silver">Silver</option>
+            <option value="Bronze">Bronze</option>
+        </select>
 
-    <button onClick="showForm('browse')">Cancel</button>
-    <button onClick="saveChanges()">Save Changes</button>
+        <button onClick="showForm('browse')">Cancel</button>
+        <button type="submit">Save Changes</button>
+    </form>
 </div>
+
+<script src="/js/update_player.js"></script>
 
 <!-- Delete Confirmation -->
 <div id="delete" class="form-container hidden">

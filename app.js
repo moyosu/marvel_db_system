@@ -11,7 +11,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('static'))
-PORT = 8614;                 // Set a port number at the top so it's easy to change in the future
+PORT = 8686;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
@@ -193,6 +193,26 @@ app.post('/add-player', function (req, res) {
     });
 });
 
+// Update player
+app.put('/put-player-ajax', function (req, res, next) {
+    let data = req.body;
+
+    // Ensure player_id is included in the request
+    let player_id = parseInt(data.player_id); // Get the player ID
+    let new_player_name = data.player_name; // No need to parseInt for name
+    let new_rank = data.rank; // No need to parseInt for rank
+
+    let queryPlayer = `UPDATE Players SET player_name = ?, rank = ? WHERE player_id = ?`;
+
+    db.pool.query(queryPlayer, [new_player_name, new_rank, player_id], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        } else {
+            res.status(200).json(rows);
+        }
+    });
+});
 
 // Delete player
 app.delete('/delete-player-ajax', function (req, res, next) {

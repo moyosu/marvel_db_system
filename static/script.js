@@ -19,7 +19,8 @@ window.showForm = function (formType, id = null) {
 
     // If updating, fill in the existing data
     if (formType === "update" && id) {
-        populateUpdateForm(id);
+        //populateUpdateForm(id);
+        console.log("hello world.")
     }
 
     if (formType === "delete" && id) {
