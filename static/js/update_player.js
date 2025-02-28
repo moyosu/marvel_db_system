@@ -1,6 +1,13 @@
-function updatePlayer(player_id) {
+function updatePlayer(player_id, player_name, player_rank) {
+    // Populate the form fields with the player data
+    document.getElementById('update-player-id-input').value = player_id;
+    document.getElementById('update-player-name-input').value = player_name;
+    document.getElementById('update-player-rank-input').value = player_rank;
+
+    // Show the modal form
     showForm('update', player_id);
 }
+
 
 // Get the objects we need to modify
 let updatePlayerForm = document.getElementById('update-player-form-ajax');

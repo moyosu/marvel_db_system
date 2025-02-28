@@ -34,7 +34,7 @@
             <tbody>
                 {{#each data}}
                 <tr>
-                    <td><a href="#" onClick="updatePlayer({{this.[Player ID]}})">Edit</a></td>
+                    <td><a href="#" onClick="updatePlayer({{this.[Player ID]}}, '{{this.Player}}', '{{this.Rank}}')">Edit</a></td>
                     <td><a href="#" onclick="confirmDelete({{this.[Player ID]}})">Delete</a></td>
                     <td>{{this.[Player ID]}}</td>
                     <td>{{this.Player}}</td>
