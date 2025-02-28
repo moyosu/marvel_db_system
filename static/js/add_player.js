@@ -32,12 +32,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 let response = JSON.parse(xhttp.responseText);
 
                 // Add the new row to the table
-                addRowToTable(response);
+                // addRowToTable(response);
 
                 // Clear the input fields
                 inputPlayerName.value = '';
                 inputPlayerRank.value = '';
-
+                
+                // Refresh the window to reflect the new player addition
+                location.reload(); 
                 // Hide the form
                 showForm('browse');
             } else if (xhttp.readyState == 4 && xhttp.status != 200) {

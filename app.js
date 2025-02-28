@@ -7,11 +7,11 @@ var db = require('./database/db-connector')
     SETUP
 */
 var express = require('express');   // We are using the express library for the web server
-var app     = express();            // We need to instantiate an express object to interact with the server in our code
+var app = express();            // We need to instantiate an express object to interact with the server in our code
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static('static'))
-PORT        = 8686;                 // Set a port number at the top so it's easy to change in the future
+PORT = 8686;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
@@ -23,10 +23,9 @@ app.engine('.hbs', engine({
 app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
 
 
-app.get('/', function(req, res)
-    {  
-        res.render('home', { title: "Home Page"});                    // an object where 'data' is equal to the 'rows' we
-    });                                                         // received back from the query
+app.get('/', function (req, res) {
+    res.render('home', { title: "Home Page" });                    // an object where 'data' is equal to the 'rows' we
+});                                                         // received back from the query
 
 // Abilities page
 app.get('/abilities', function (req, res) {
@@ -56,7 +55,7 @@ app.get('/alliances', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('alliances', { data: rows }); // Render the players.hbs file and send the data
+        res.render('alliances', { data: rows }); // Render the alliances.hbs file and send the data
     });
 });
 
@@ -144,15 +143,15 @@ app.get('/playerCharacters', function (req, res) {
  * PLAYER SECTION
  **************************************************/
 // PlayerCharacters page
-app.get('/playerCharacters', function(req, res){
-    res.render('playerCharacters', { title: "Player Characters"});
+app.get('/playerCharacters', function (req, res) {
+    res.render('playerCharacters', { title: "Player Characters" });
 });
 
 // New route for the players page
-app.get('/players', function(req, res) {
+app.get('/players', function (req, res) {
     let query1 = "SELECT player_id as 'Player ID', player_name as 'Player', rank as 'Rank' FROM Players;";               // Define our query
 
-    db.pool.query(query1, function(error, rows, fields) { // Execute the query
+    db.pool.query(query1, function (error, rows, fields) { // Execute the query
         if (error) {
             console.error("Error executing query: ", error); // Log any errors
             res.status(500).send("Error executing query"); // Send an error response
@@ -160,18 +159,18 @@ app.get('/players', function(req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('players', {data: rows}); // Render the players.hbs file and send the data
+        res.render('players', { data: rows }); // Render the players.hbs file and send the data
     });
 });
 
 // Add new player route
 app.post('/add-player', function (req, res) {
     let data = req.body; // Get the request body data
-    let playerName = data.player_name;
-    let playerRank = data.rank;
+    let player_name_input = data.player_name;
+    let rank_input = data.rank;
 
     // Insert the new player into the database
-    let query = `INSERT INTO Players (player_name, rank) VALUES ('${playerName}', '${playerRank}');`;
+    let query = `INSERT INTO Players (player_name, rank) VALUES ('${player_name_input}', '${rank_input}');`;
 
     db.pool.query(query, function (error, results, fields) {
         // Check to see if there was an error
@@ -195,9 +194,28 @@ app.post('/add-player', function (req, res) {
 });
 
 
+// Delete player
+app.delete('/delete-player-ajax', function (req, res, next) {
+    console.log("starting delete request");
+    let data = req.body;
+    let player_id_input = parseInt(data.player_id);
+    let delete_player = `DELETE FROM Players WHERE player_id = ?`;
+
+    // Run the query
+    db.pool.query(delete_player, [player_id_input], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400); // Bad request
+        } else {
+            console.log("Delete successful");
+            res.sendStatus(204); // No content, indicating successful deletion
+        }
+    });
+});
+
 /*
     LISTENER
 */
-app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
+app.listen(PORT, function () {            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
 });
