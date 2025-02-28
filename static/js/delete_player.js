@@ -1,3 +1,17 @@
+function confirmDelete(player_id) {
+
+    // Show the modal
+    showForm('delete', player_id);
+
+    // Display the player ID in the modal
+    document.getElementById('delete-message').textContent = player_id;
+
+    // Update the delete button to call deletePlayer with the correct ID
+    document.getElementById('confirm-delete-button').onclick = function () {
+        deletePlayer(player_id);
+    };
+}
+
 function deletePlayer(player_id) {
     // Put our data we want to send in a javascript object
     let data = {
@@ -25,4 +39,10 @@ function deletePlayer(player_id) {
     console.log("Player ID to delete: ", player_id);
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
+
+    hideDeleteModal();
+}
+
+function hideDeleteModal() {
+    showForm('browse');
 }

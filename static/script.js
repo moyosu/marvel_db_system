@@ -1,41 +1,31 @@
-document.addEventListener("DOMContentLoaded", function () {
-    function showForm(formType, id = null) {
-        const forms = ["browse", "insert", "update", "delete"];
-        
-        // Hide all forms
-        forms.forEach(form => {
-            document.getElementById(form).classList.add("hidden");
-        });
-
-        // Show the selected form
-        document.getElementById(formType).classList.remove("hidden");
-
-        if (formType === "delete" && id) {
-            document.getElementById("delete-message").innerText = `${id}`;
+window.showForm = function (formType, id = null) {
+    const forms = ["browse", "insert", "update", "delete"];
+    
+    // Hide all forms
+    forms.forEach(form => {
+        let element = document.getElementById(form);
+        if (element) {
+            element.classList.add("hidden");
         }
+    });
+
+    // Show the selected form
+    let selectedForm = document.getElementById(formType);
+    if (selectedForm) {
+        selectedForm.classList.remove("hidden");
+    } else {
+        console.error("Form not found:", formType);
     }
 
-    // Function to add
-    window.addElement = function () {
-        alert("Element added! (Functionality not implemented yet)");
-        showForm('browse');
-    };
+    // If updating, fill in the existing data
+    if (formType === "update" && id) {
+        populateUpdateForm(id);
+    }
 
-    // Function to save changes
-    window.saveChanges = function () {
-        alert("Changes saved! (Functionality not implemented yet)");
-        showForm('browse');
-    };
-
-    // Function to delete
-    window.confirmDelete = function () {
-        alert("Element deleted! (Functionality not implemented yet)");
-        showForm('browse');
-    };
-
-    // Make function globally available
-    window.showForm = showForm;
-});
+    if (formType === "delete" && id) {
+        document.getElementById("delete-message").innerText = `${id}`;
+    }
+}
 
 function filterPlayers() {
     const selectedRank = document.getElementById("dropdown-filter").value;
