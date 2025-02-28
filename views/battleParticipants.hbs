@@ -42,7 +42,12 @@
     <input type="text" id="player-track-input">
 
     <label class="modal-label">Track Character</label>
-    <input type="text" id="character-track-input">
+    <select id="character-track-input">
+        <option value="Select">Select</option>
+        <option value="Rocket">Rocket</option>
+        <option value="Iron Man">Iron Man</option>
+        <option value="Venom">Venom</option>
+    </select>
 
     <button onClick="showForm('browse')">Cancel</button>
     <button onClick="addPlayerCharacter()">Add Battle Participant</button>
@@ -55,7 +60,11 @@
     <input type="text" id="edit-player-track-input">
 
     <label class="modal-label">Track Character</label>
-    <input type="text" id="edit-character-track-input">
+    <select id="edit-character-track-input">
+        <option value="Rocket">Rocket</option>
+        <option value="Iron Man">Iron Man</option>
+        <option value="Venom">Venom</option>
+    </select>
 
     <button onClick="showForm('browse')">Cancel</button>
     <button onClick="saveChanges()">Save Changes</button>
