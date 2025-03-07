@@ -11,7 +11,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('static'))
-PORT = 8614;                 // Set a port number at the top so it's easy to change in the future
+PORT = 8615;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
@@ -27,6 +27,9 @@ app.get('/', function (req, res) {
     res.render('home', { title: "Home Page" });                    // an object where 'data' is equal to the 'rows' we
 });                                                         // received back from the query
 
+/**************************************************
+ * ABILITIES SECTION
+ **************************************************/
 // Abilities page
 app.get('/abilities', function (req, res) {
     let query1 = "SELECT ability_id AS 'Ability ID', ability_name AS 'Ability', special_effect AS 'Special Effect', ability_range AS 'Range', cooldown AS 'Cooldown', charges AS 'Charges', Characters.character_name AS 'Character' FROM Abilities JOIN Characters ON Abilities.track_character = Characters.character_id;";
@@ -42,6 +45,10 @@ app.get('/abilities', function (req, res) {
         res.render('abilities', { data: rows }); // Render the players.hbs file and send the data
     });
 });
+
+/**************************************************
+ * ALLIANCES SECTION
+ **************************************************/
 
 // Alliances page
 app.get('/alliances', function (req, res) {
@@ -59,6 +66,10 @@ app.get('/alliances', function (req, res) {
     });
 });
 
+/**************************************************
+ * BATTLEPARTICIPANTS SECTION
+ **************************************************/
+
 // BattleParticipants page
 app.get('/battleParticipants', function (req, res) {
     let query1 = "SELECT track_battle AS 'Battle ID', Characters.character_name AS 'Character' FROM BattleParticipants JOIN Characters ON BattleParticipants.track_character = Characters.character_id ORDER BY track_battle;";
@@ -74,7 +85,9 @@ app.get('/battleParticipants', function (req, res) {
         res.render('battleParticipants', { data: rows }); // Render the players.hbs file and send the data
     });
 });
-
+/**************************************************
+ * BATTLES SECTION
+ **************************************************/
 // Battles page
 app.get('/battles', function (req, res) {
     let query1 = "SELECT battle_id AS 'Battle ID', time_stamp AS 'Time Stamp', IF(is_victory = 1, 'true', 'false') AS 'Victory', kills AS 'Kills', deaths AS 'Deaths', assists AS 'Assists', damage_dealt AS 'Damage Dealt', damage_blocked AS 'Damage Blocked', healing AS 'Healing', accuracy AS 'Accuracy' FROM Battles;";
@@ -91,7 +104,10 @@ app.get('/battles', function (req, res) {
     });
 });
 
-// Characters page
+/**************************************************
+ * CHARACTERS SECTION
+ **************************************************/
+// Get data for Characters page
 app.get('/characters', function (req, res) {
     let query1 = "SELECT character_id AS 'Character ID', character_name AS 'Character', role AS 'Role', health AS 'Health', IF(has_secondary_weapon = 1, 'true', 'false') AS 'Has Secondary Weapon', move_speed AS 'Move Speed', critical_multiplier AS 'Critical Multiplier', ammo_capacity AS 'Ammo Capacity', Alliances.alliance_name AS 'Alliance' FROM Characters JOIN Alliances ON Characters.track_alliance = Alliances.alliance_id;";
 
@@ -106,6 +122,47 @@ app.get('/characters', function (req, res) {
         res.render('characters', { data: rows });
     });
 });
+
+// Add Character route
+app.post('/add-character', function (req, res) {
+    let data = req.body; // Get the request body data
+    let character_name_input = data.character_name;
+    let role_input = data.role;
+    let health_input = data.health;
+    let has_secondary_weapon_input = data.has_secondary_weapon;
+    let move_speed_input = data.move_speed;
+    let critical_multiplier_input = data.critical_multiplier;
+    let ammo_capacity_input = data.ammo_capacity;
+    let track_alliance_input = data.track_alliance;
+
+    // Insert the new character into the database
+    let query = `INSERT INTO Characters (character_name, role, health, has_secondary_weapon, move_speed, critical_multiplier, ammo_capacity, track_alliance) VALUES ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}', '${ammo_capacity_input}', '${track_alliance_input}');`;
+
+    db.pool.query(query, function (error, results, fields) {
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        } else {
+            // If there was no error, perform a SELECT * on Characters
+            let query2 = `SELECT character_id AS 'Character ID', character_name AS 'Character', role AS 'Role', health AS 'Health', IF(has_secondary_weapon = 1, 'true', 'false') AS 'Has Secondary Weapon', move_speed AS 'Move Speed', critical_multiplier AS 'Critical Multiplier', ammo_capacity AS 'Ammo Capacity', Alliances.alliance_name AS 'Alliance' FROM Characters JOIN Alliances ON Characters.track_alliance = Alliances.alliance_id;`;
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.status(400).json({ error: error.message });
+                } else {
+                    res.status(200).json(rows);
+                }
+            });
+        }
+    });
+}
+);
+
+/**************************************************
+ * PLAYERBATTLES SECTION
+ **************************************************/
 
 // PlayerBattles page
 app.get('/playerBattles', function (req, res) {
@@ -122,6 +179,10 @@ app.get('/playerBattles', function (req, res) {
         res.render('playerBattles', { data: rows });
     });
 });
+
+/**************************************************
+ * PLAYERCHARACTERS SECTION
+ **************************************************/
 
 // PlayerCharacters page
 app.get('/playerCharacters', function (req, res) {
@@ -142,10 +203,6 @@ app.get('/playerCharacters', function (req, res) {
 /**************************************************
  * PLAYER SECTION
  **************************************************/
-// PlayerCharacters page
-app.get('/playerCharacters', function (req, res) {
-    res.render('playerCharacters', { title: "Player Characters" });
-});
 
 // New route for the players page
 app.get('/players', function (req, res) {

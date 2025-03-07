@@ -1,20 +1,20 @@
 {{#> layout title="Characters Page"}}
-        <div class="filter-container">
-            <label for="dropdown-filter">Filter by Role:</label>
-            <select id="dropdown-filter" onchange="filterCharacters()">
-                <option value="all">All Roles</option>
-                <option value="Vanguard">Vanguard</option>
-                <option value="Duelist">Duelist</option>
-                <option value="Strategist">Strategist</option>
-            </select>
-        </div>
+<div class="filter-container">
+    <label for="dropdown-filter">Filter by Role:</label>
+    <select id="dropdown-filter" onchange="filterCharacters()">
+        <option value="all">All Roles</option>
+        <option value="Vanguard">Vanguard</option>
+        <option value="Duelist">Duelist</option>
+        <option value="Strategist">Strategist</option>
+    </select>
+</div>
 
-        <div id="browse">
-            <h3 class="table-name">Browse Characters</h3>
-            
-            <div class="table-container">
-                <table border="1" cellpadding="5">
-                    <thead class="table-header">
+<div id="browse">
+    <h3 class="table-name">Browse Characters</h3>
+
+    <div class="table-container">
+        <table border="1" cellpadding="5">
+            <thead class="table-header">
                 <tr>
                     <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
                     <th></th>
@@ -46,80 +46,85 @@
                 </tr>
                 {{/each}}
             </tbody>
-                </table>
-            </div>
-        </div>
+        </table>
+    </div>
+</div>
 
-        <!-- Add Character Form -->
-        <div id="insert" class="form-container hidden">
-            <h3 class="modal">Add a New Character</h3>
-            <label class="modal-label">Character Name</label>
-            <input type="text" id="character-name-input">
-            
-            <label class="modal-label">Role</label>
-            <input type="text" id="character-role-input">
-            
-            <label class="modal-label">Health</label>
-            <input type="text" id="character-health-input">
+<!-- Add Character Form -->
+<div id="insert" class="form-container hidden">
+    <h3 class="modal">Add a New Character</h3>
+    <form id="add-character-form-ajax">
+        <label class="modal-label" for="character-name-input">Character Name</label>
+        <input type="text" name="character-name" id="character-name-input">
 
-            <label class="modal-label">Has Secondary Weapon (1 for Yes, 0 for No)</label>
-            <input type="text" id="character-secondary-weapon-input">
-            
-            <label class="modal-label">Move Speed</label>
-            <input type="text" id="character-move-speed-input">
-            
-            <label class="modal-label">Critical Multiplier</label>
-            <input type="text" id="character-critical-multiplier-input">
-            
-            <label class="modal-label">Ammo Capacity</label>
-            <input type="text" id="character-ammo-capacity-input">
-            
-            <label class="modal-label">Track Alliance</label>
-            <input type="text" id="character-track-alliance-input">
-            
-            <button onClick="showForm('browse')">Cancel</button>
-            <button onClick="addCharacter()">Add Character</button>
-        </div>
+        <label class="modal-label" for="character-role-input">Role</label>
+        <input type="text" name="character-role" id="character-role-input">
 
-        <!-- Edit Character Form -->
-        <div id="update" class="form-container hidden">
-            <h3 class="modal">Edit Character</h3>
-            <label class="modal-label">Character ID</label>
-            <input type="text" id="edit-character-id-input" value="4" readonly>
+        <label class="modal-label" for="character-health-input">Health</label>
+        <input type="text" name="character-health" id="character-health-input">
 
-            <label class="modal-label">Character Name</label>
-            <input type="text" id="edit-character-name-input" value="Iron Mand">
-            
-            <label class="modal-label">Role</label>
-            <input type="text" id="edit-character-role-input" value="Duelist">
-            
-            <label class="modal-label">Health</label>
-            <input type="text" id="edit-character-health-input" value="275">
-            
-            <label class="modal-label">Has Secondary Weapon</label>
-            <input type="text" id="edit-character-secondary-weapon-input" value="0">
-            
-            <label class="modal-label">Move Speed</label>
-            <input type="text" id="edit-character-move-speed-input" value="10">
-            
-            <label class="modal-label">Critical Multiplier</label>
-            <input type="text" id="edit-character-critical-multiplier-input" value="0">
-            
-            <label class="modal-label">Ammo Capacity</label>
-            <input type="text" id="edit-character-ammo-capacity-input" value="8">
-            
-            <label class="modal-label">Track Alliance</label>
-            <input type="text" id="edit-character-track-alliance-input" value="6">
-            
-            <button onClick="showForm('browse')">Cancel</button>
-            <button onClick="saveChanges()">Save Changes</button>
-        </div>
+        <label class="modal-label" for="character-secondary-weapon-input">Has Secondary Weapon (1 for Yes, 0 for No)</label>
+        <input type="text" name="character-secondary-weapon" id="character-secondary-weapon-input">
 
-        <!-- Delete Confirmation -->
-        <div id="delete" class="form-container hidden">
-            <h3 class="modal">Are you sure you want to delete this character?</h3>
-            <p class="modal-label">Character ID: <span id="delete-message"></span></p>
-            <button onClick="showForm('browse')">Cancel</button>
-            <button onClick="confirmDelete()">Delete</button>
-        </div>
+        <label class="modal-label" for="character-move-speed-input">Move Speed</label>
+        <input type="text" name="character-move-speed" id="character-move-speed-input">
+
+        <label class="modal-label" for="character-critical-multiplier-input">Critical Multiplier</label>
+        <input type="text" name="character-critical-multiplier" id="character-critical-multiplier-input">
+
+        <label class="modal-label" for="character-ammo-capacity-input">Ammo Capacity</label>
+        <input type="text" name="character-ammo-capacity" id="character-ammo-capacity-input">
+
+        <label class="modal-label" for="character-track-alliance-input">Track Alliance</label>
+        <input type="text" name="character-track-alliance" id="character-track-alliance-input">
+
+        <button onClick="showForm('browse')">Cancel</button>
+        <button type="submit" >Add Character</button>
+    </form>
+</div>
+<script src="/js/add_character.js"></script>
+
+<!-- Edit Character Form -->
+<div id="update" class="form-container hidden">
+    <h3 class="modal">Edit Character</h3>
+    <form id="update-character-form-ajax">
+        <label class="modal-label" for="edit-character-id">Character ID</label>
+        <input type="text" id="edit-character-id-input" name="character-id" value="4" readonly>
+
+        <label class="modal-label" for="edit-character-name-input">Character Name</label>
+        <input type="text" id="edit-character-name-input" name="character-name" value="Iron Mand">
+
+        <label class="modal-label" for="edit-character-role-input">Role</label>
+        <input type="text" id="edit-character-role-input" name="character-role" value="Duelist">
+
+        <label class="modal-label" for="edit-character-health-input">Health</label>
+        <input type="text" id="edit-character-health-input" name="character-health" value="275">
+
+        <label class="modal-label" for="edit-character-secondary-weapon-input">Has Secondary Weapon</label>
+        <input type="text" id="edit-character-secondary-weapon-input" name="character-secondary-weapon" value="0">
+
+        <label class="modal-label" for="edit-character-move-speed-input">Move Speed</label>
+        <input type="text" id="edit-character-move-speed-input" name="character-move-speed" value="10">
+
+        <label class="modal-label" for="edit-character-critical-multiplier-input">Critical Multiplier</label>
+        <input type="text" id="edit-character-critical-multiplier-input" name="character-critical-multiplier" value="0">
+
+        <label class="modal-label" for="edit-character-ammo-capacity-input">Ammo Capacity</label>
+        <input type="text" id="edit-character-ammo-capacity-input" name="character-ammo-capacity" value="8">
+
+        <label class="modal-label" for="edit-character-track-alliance-input">Track Alliance</label>
+        <input type="text" id="edit-character-track-alliance-input" name="character-track-alliance" value="6">
+
+        <button onClick="showForm('browse')">Cancel</button>
+        <button onClick="saveChanges()">Save Changes</button>
+    </form>
+</div>
+
+<!-- Delete Confirmation -->
+<div id="delete" class="form-container hidden">
+    <h3 class="modal">Are you sure you want to delete this character?</h3>
+    <p class="modal-label">Character ID: <span id="delete-message"></span></p>
+    <button onClick="showForm('browse')">Cancel</button>
+    <button onClick="confirmDelete()">Delete</button>
+</div>
 {{/layout}}
