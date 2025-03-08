@@ -32,7 +32,22 @@ app.get('/', function (req, res) {
  **************************************************/
 // Abilities page
 app.get('/abilities', function (req, res) {
-    let query1 = "SELECT ability_id AS 'Ability ID', ability_name AS 'Ability', special_effect AS 'Special Effect', ability_range AS 'Range', cooldown AS 'Cooldown', charges AS 'Charges', Characters.character_name AS 'Character' FROM Abilities JOIN Characters ON Abilities.track_character = Characters.character_id;";
+    let query1 = `
+        SELECT 
+            ability_id AS 'Ability ID', 
+            ability_name AS 'Ability', 
+            special_effect AS 'Special Effect', 
+            ability_range AS 'Range', 
+            cooldown AS 'Cooldown', 
+            charges AS 'Charges', 
+            Characters.character_name AS 'Character' 
+        FROM 
+            Abilities 
+        JOIN 
+            Characters 
+        ON 
+            Abilities.track_character = Characters.character_id;
+    `;
 
     db.pool.query(query1, function (error, rows, fields) { // Execute the query
         if (error) {
@@ -52,7 +67,15 @@ app.get('/abilities', function (req, res) {
 
 // Alliances page
 app.get('/alliances', function (req, res) {
-    let query1 = "SELECT alliance_id AS 'Alliance ID', alliance_name AS 'Alliance', stat_boost AS 'Stat Boost', stat_boost_type AS 'Stat Boost Type' FROM Alliances;";
+    let query1 = `
+        SELECT 
+            alliance_id AS 'Alliance ID', 
+            alliance_name AS 'Alliance', 
+            stat_boost AS 'Stat Boost', 
+            stat_boost_type AS 'Stat Boost Type' 
+        FROM 
+            Alliances;
+    `;
 
     db.pool.query(query1, function (error, rows, fields) { // Execute the query
         if (error) {
@@ -72,7 +95,19 @@ app.get('/alliances', function (req, res) {
 
 // BattleParticipants page
 app.get('/battleParticipants', function (req, res) {
-    let query1 = "SELECT track_battle AS 'Battle ID', Characters.character_name AS 'Character' FROM BattleParticipants JOIN Characters ON BattleParticipants.track_character = Characters.character_id ORDER BY track_battle;";
+    let query1 = `
+        SELECT 
+            track_battle AS 'Battle ID', 
+            Characters.character_name AS 'Character' 
+        FROM 
+            BattleParticipants 
+        JOIN 
+            Characters 
+        ON 
+            BattleParticipants.track_character = Characters.character_id 
+        ORDER BY 
+            track_battle;
+    `;
 
     db.pool.query(query1, function (error, rows, fields) { // Execute the query
         if (error) {
@@ -85,12 +120,27 @@ app.get('/battleParticipants', function (req, res) {
         res.render('battleParticipants', { data: rows }); // Render the players.hbs file and send the data
     });
 });
+
 /**************************************************
  * BATTLES SECTION
  **************************************************/
 // Battles page
 app.get('/battles', function (req, res) {
-    let query1 = "SELECT battle_id AS 'Battle ID', time_stamp AS 'Time Stamp', IF(is_victory = 1, 'true', 'false') AS 'Victory', kills AS 'Kills', deaths AS 'Deaths', assists AS 'Assists', damage_dealt AS 'Damage Dealt', damage_blocked AS 'Damage Blocked', healing AS 'Healing', accuracy AS 'Accuracy' FROM Battles;";
+    let query1 = `
+        SELECT 
+            battle_id AS 'Battle ID', 
+            time_stamp AS 'Time Stamp', 
+            IF(is_victory = 1, 'true', 'false') AS 'Victory', 
+            kills AS 'Kills', 
+            deaths AS 'Deaths', 
+            assists AS 'Assists', 
+            damage_dealt AS 'Damage Dealt', 
+            damage_blocked AS 'Damage Blocked', 
+            healing AS 'Healing', 
+            accuracy AS 'Accuracy' 
+        FROM 
+            Battles;
+    `;
 
     db.pool.query(query1, function (error, rows, fields) { // Execute the query
         if (error) {
@@ -109,17 +159,58 @@ app.get('/battles', function (req, res) {
  **************************************************/
 // Get data for Characters page
 app.get('/characters', function (req, res) {
-    let query1 = "SELECT character_id AS 'Character ID', character_name AS 'Character', role AS 'Role', health AS 'Health', IF(has_secondary_weapon = 1, 'true', 'false') AS 'Has Secondary Weapon', move_speed AS 'Move Speed', critical_multiplier AS 'Critical Multiplier', ammo_capacity AS 'Ammo Capacity', Alliances.alliance_name AS 'Alliance' FROM Characters JOIN Alliances ON Characters.track_alliance = Alliances.alliance_id;";
+    let query1 = `
+        SELECT 
+            character_id AS 'Character ID', 
+            character_name AS 'Character', 
+            role AS 'Role', 
+            health AS 'Health', 
+            IF(has_secondary_weapon = 1, 'true', 'false') AS 'Has Secondary Weapon', 
+            move_speed AS 'Move Speed', 
+            critical_multiplier AS 'Critical Multiplier', 
+            ammo_capacity AS 'Ammo Capacity', 
+            Alliances.alliance_name AS 'Alliance'
+        FROM 
+            Characters 
+        LEFT JOIN 
+            Alliances 
+        ON 
+            Characters.track_alliance = Alliances.alliance_id;
+    `;
 
-    db.pool.query(query1, function (error, rows, fields) { // Execute the query
-        if (error) {
-            console.error("Error executing query: ", error); // Log any errors
+    let query2 = `
+        SELECT 
+            alliance_id AS 'Alliance ID', 
+            alliance_name AS 'Alliance' 
+        FROM 
+            Alliances;
+    `;
+
+    // Execute the first query
+    db.pool.query(query1, function (error1, characterRows, fields1) {
+        if (error1) {
+            console.error("Error executing query: ", error1); // Log any errors
             res.status(500).send("Error executing query"); // Send an error response
             return;
         }
 
-        console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('characters', { data: rows });
+        // Execute the second query
+        db.pool.query(query2, function (error2, allianceRows, fields2) {
+            if (error2) {
+                console.error("Error executing query: ", error2); // Log any errors
+                res.status(500).send("Error executing query"); // Send an error response
+                return;
+            }
+
+            // Combine the results into a single object
+            let data = {
+                characters: characterRows,
+                alliances: allianceRows
+            };
+
+            console.log("Rows returned: ", data); // Log the returned rows
+            res.render('characters', { data: data }); // Render the characters.hbs file and send the data
+        });
     });
 });
 
@@ -136,7 +227,12 @@ app.post('/add-character', function (req, res) {
     let track_alliance_input = data.track_alliance;
 
     // Insert the new character into the database
-    let query = `INSERT INTO Characters (character_name, role, health, has_secondary_weapon, move_speed, critical_multiplier, ammo_capacity, track_alliance) VALUES ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}', '${ammo_capacity_input}', '${track_alliance_input}');`;
+    let query = `
+        INSERT INTO Characters 
+            (character_name, role, health, has_secondary_weapon, move_speed, critical_multiplier, ammo_capacity, track_alliance) 
+        VALUES 
+            ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}', '${ammo_capacity_input}', '${track_alliance_input}');
+    `;
 
     db.pool.query(query, function (error, results, fields) {
         // Check to see if there was an error
@@ -146,7 +242,24 @@ app.post('/add-character', function (req, res) {
             res.status(400).json({ error: error.message });
         } else {
             // If there was no error, perform a SELECT * on Characters
-            let query2 = `SELECT character_id AS 'Character ID', character_name AS 'Character', role AS 'Role', health AS 'Health', IF(has_secondary_weapon = 1, 'true', 'false') AS 'Has Secondary Weapon', move_speed AS 'Move Speed', critical_multiplier AS 'Critical Multiplier', ammo_capacity AS 'Ammo Capacity', Alliances.alliance_name AS 'Alliance' FROM Characters JOIN Alliances ON Characters.track_alliance = Alliances.alliance_id;`;
+            let query2 = `
+                SELECT 
+                    character_id AS 'Character ID', 
+                    character_name AS 'Character', 
+                    role AS 'Role', 
+                    health AS 'Health', 
+                    IF(has_secondary_weapon = 1, 'true', 'false') AS 'Has Secondary Weapon', 
+                    move_speed AS 'Move Speed', 
+                    critical_multiplier AS 'Critical Multiplier', 
+                    ammo_capacity AS 'Ammo Capacity', 
+                    Alliances.alliance_name AS 'Alliance' 
+                FROM 
+                    Characters 
+                JOIN 
+                    Alliances 
+                ON 
+                    Characters.track_alliance = Alliances.alliance_id;
+            `;
             db.pool.query(query2, function (error, rows, fields) {
                 if (error) {
                     console.log(error);
@@ -157,8 +270,7 @@ app.post('/add-character', function (req, res) {
             });
         }
     });
-}
-);
+});
 
 /**************************************************
  * PLAYERBATTLES SECTION
@@ -166,7 +278,17 @@ app.post('/add-character', function (req, res) {
 
 // PlayerBattles page
 app.get('/playerBattles', function (req, res) {
-    let query1 = "SELECT Players.player_name AS 'Player', track_battle AS 'Battle ID' FROM PlayerBattles JOIN Players ON PlayerBattles.track_player = Players.player_id;";
+    let query1 = `
+        SELECT 
+            Players.player_name AS 'Player', 
+            track_battle AS 'Battle ID' 
+        FROM 
+            PlayerBattles 
+        JOIN 
+            Players 
+        ON 
+            PlayerBattles.track_player = Players.player_id;
+    `;
 
     db.pool.query(query1, function (error, rows, fields) { // Execute the query
         if (error) {
@@ -186,7 +308,21 @@ app.get('/playerBattles', function (req, res) {
 
 // PlayerCharacters page
 app.get('/playerCharacters', function (req, res) {
-    let query1 = "SELECT Players.player_name AS 'Player', Characters.character_name AS 'Character' FROM PlayerCharacters JOIN Players ON PlayerCharacters.track_player = Players.player_id JOIN Characters ON PlayerCharacters.track_character = Characters.character_id;";
+    let query1 = `
+        SELECT 
+            Players.player_name AS 'Player', 
+            Characters.character_name AS 'Character' 
+        FROM 
+            PlayerCharacters 
+        JOIN 
+            Players 
+        ON 
+            PlayerCharacters.track_player = Players.player_id 
+        JOIN 
+            Characters 
+        ON 
+            PlayerCharacters.track_character = Characters.character_id;
+    `;
 
     db.pool.query(query1, function (error, rows, fields) { // Execute the query
         if (error) {
@@ -206,7 +342,14 @@ app.get('/playerCharacters', function (req, res) {
 
 // New route for the players page
 app.get('/players', function (req, res) {
-    let query1 = "SELECT player_id as 'Player ID', player_name as 'Player', rank as 'Rank' FROM Players;";               // Define our query
+    let query1 = `
+        SELECT 
+            player_id as 'Player ID', 
+            player_name as 'Player', 
+            rank as 'Rank' 
+        FROM 
+            Players;
+    `;               // Define our query
 
     db.pool.query(query1, function (error, rows, fields) { // Execute the query
         if (error) {
@@ -227,7 +370,12 @@ app.post('/add-player', function (req, res) {
     let rank_input = data.rank;
 
     // Insert the new player into the database
-    let query = `INSERT INTO Players (player_name, rank) VALUES ('${player_name_input}', '${rank_input}');`;
+    let query = `
+        INSERT INTO Players 
+            (player_name, rank) 
+        VALUES 
+            ('${player_name_input}', '${rank_input}');
+    `;
 
     db.pool.query(query, function (error, results, fields) {
         // Check to see if there was an error
@@ -237,7 +385,14 @@ app.post('/add-player', function (req, res) {
             res.status(400).json({ error: error.message });
         } else {
             // If there was no error, perform a SELECT * on Players
-            let query2 = `SELECT player_id as 'Player ID', player_name as 'Player', rank as 'Rank' FROM Players;`;
+            let query2 = `
+                SELECT 
+                    player_id as 'Player ID', 
+                    player_name as 'Player', 
+                    rank as 'Rank' 
+                FROM 
+                    Players;
+            `;
             db.pool.query(query2, function (error, rows, fields) {
                 if (error) {
                     console.log(error);
@@ -259,7 +414,15 @@ app.put('/put-player-ajax', function (req, res, next) {
     let new_player_name = data.player_name; // No need to parseInt for name
     let new_rank = data.rank; // No need to parseInt for rank
 
-    let queryPlayer = `UPDATE Players SET player_name = ?, rank = ? WHERE player_id = ?`;
+    let queryPlayer = `
+        UPDATE 
+            Players 
+        SET 
+            player_name = ?, 
+            rank = ? 
+        WHERE 
+            player_id = ?;
+    `;
 
     db.pool.query(queryPlayer, [new_player_name, new_rank, player_id], function (error, rows, fields) {
         if (error) {
@@ -276,7 +439,12 @@ app.delete('/delete-player-ajax', function (req, res, next) {
     console.log("starting delete request");
     let data = req.body;
     let player_id_input = parseInt(data.player_id);
-    let delete_player = `DELETE FROM Players WHERE player_id = ?`;
+    let delete_player = `
+        DELETE FROM 
+            Players 
+        WHERE 
+            player_id = ?;
+    `;
 
     // Run the query
     db.pool.query(delete_player, [player_id_input], function (error, rows, fields) {

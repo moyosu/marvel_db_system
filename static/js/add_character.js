@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Hide the form
                 showForm('browse');
             } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+                alert("There was an error with the input.");
                 console.log("There was an error with the input.");
             }
         };

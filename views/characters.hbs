@@ -18,7 +18,7 @@
                 <tr>
                     <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
                     <th></th>
-                    {{#each data.[0]}}
+                    {{#each data.characters.[0]}}
                     <th>
                         {{@key}}
                     </th>
@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each data}}
+                {{#each data.characters}}
                 <tr>
                     <td>
                         <a href="#" onClick="showForm('update', {{this.[Character ID]}})">Edit</a>
@@ -55,31 +55,38 @@
     <h3 class="modal">Add a New Character</h3>
     <form id="add-character-form-ajax">
         <label class="modal-label" for="character-name-input">Character Name</label>
-        <input type="text" name="character-name" id="character-name-input">
+        <input type="text" name="character-name" id="character-name-input" required>
 
         <label class="modal-label" for="character-role-input">Role</label>
-        <input type="text" name="character-role" id="character-role-input">
+        <input type="text" name="character-role" id="character-role-input" required>
 
         <label class="modal-label" for="character-health-input">Health</label>
-        <input type="text" name="character-health" id="character-health-input">
+        <input type="text" name="character-health" id="character-health-input" required>
 
-        <label class="modal-label" for="character-secondary-weapon-input">Has Secondary Weapon (1 for Yes, 0 for No)</label>
-        <input type="text" name="character-secondary-weapon" id="character-secondary-weapon-input">
+        <label class="modal-label" for="character-secondary-weapon-input">Has Secondary Weapon</label>
+        <select name="character-secondary-weapon" id="character-secondary-weapon-input" value="0" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
 
         <label class="modal-label" for="character-move-speed-input">Move Speed</label>
-        <input type="text" name="character-move-speed" id="character-move-speed-input">
+        <input type="text" name="character-move-speed" id="character-move-speed-input" required>
 
         <label class="modal-label" for="character-critical-multiplier-input">Critical Multiplier</label>
-        <input type="text" name="character-critical-multiplier" id="character-critical-multiplier-input">
+        <input type="text" name="character-critical-multiplier" id="character-critical-multiplier-input" required>
 
         <label class="modal-label" for="character-ammo-capacity-input">Ammo Capacity</label>
         <input type="text" name="character-ammo-capacity" id="character-ammo-capacity-input">
 
         <label class="modal-label" for="character-track-alliance-input">Track Alliance</label>
-        <input type="text" name="character-track-alliance" id="character-track-alliance-input">
+        <select name="character-track-alliance" id="character-track-alliance-input">
+            {{#each data.alliances}}
+            <option value="{{this.[Alliance ID]}}">{{this.Alliance}}</option>
+            {{/each}}
+        </select>
 
         <button onClick="showForm('browse')">Cancel</button>
-        <button type="submit" >Add Character</button>
+        <button type="submit">Add Character</button>
     </form>
 </div>
 <script src="/js/add_character.js"></script>
