@@ -272,6 +272,31 @@ app.post('/add-character', function (req, res) {
     });
 });
 
+// delete character
+app.delete('/delete-character-ajax', function (req, res, next) {
+    console.log("starting delete request");
+    let data = req.body;
+    let character_id_input = parseInt(data.character_id);
+    let delete_character = `
+        DELETE FROM 
+            Characters 
+        WHERE 
+            character_id = ?;
+    `;
+
+    // Run the query
+    db.pool.query(delete_character, [character_id_input], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400); // Bad request
+        } else {
+            console.log("Delete successful");
+            res.sendStatus(204); // No content, indicating successful deletion
+        }
+    });
+});
+
+
 /**************************************************
  * PLAYERBATTLES SECTION
  **************************************************/
