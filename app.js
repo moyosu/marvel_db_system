@@ -12,7 +12,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('static'))
-PORT = 8614;                 // Set a port number at the top so it's easy to change in the future
+PORT = 8615;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
@@ -530,15 +530,101 @@ app.get('/playerCharacters', function (req, res) {
             PlayerCharacters.track_character = Characters.character_id;
     `;
 
+    let query2 = `
+        SELECT
+            player_id AS 'Player ID',
+            player_name AS 'Player'
+        FROM
+            Players;
+    `;
+    let query3 = `
+        SELECT
+            character_id AS 'Character ID',
+            character_name AS 'Character'
+        FROM
+            Characters;
+    `;
+
     db.pool.query(query1, function (error, rows, fields) { // Execute the query
         if (error) {
             console.error("Error executing query: ", error); // Log any errors
             res.status(500).send("Error executing query"); // Send an error response
             return;
         }
+        db.pool.query(query2, function (error, playerRows, fields) {
+            if (error) {
+                console.error("Error executing query: ", error); // Log any errors
+                res.status(500).send("Error executing query"); // Send an error response
+                return;
+            }
+            db.pool.query(query3, function (error, characterRows, fields) {
+                if (error) {
+                    console.error("Error executing query: ", error); // Log any errors
+                    res.status(500).send("Error executing query"); // Send an error response
+                    return;
+                }
 
-        console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('playerCharacters', { data: rows });
+                let data = {
+                    playerCharacters: rows,
+                    players: playerRows,
+                    characters: characterRows
+                };
+
+                console.log("Rows returned: ", data); // Log the returned rows
+                res.render('playerCharacters', { data: data });
+            });
+        });
+    });
+});
+
+// Add PlayerCharacter route
+app.post('/add-player-character', function (req, res) {
+    let data = req.body; // Get the request body data
+    let track_player_input = data.track_player;
+    let track_character_input = data.track_character;
+
+    // Insert the new player into the database
+    let query = `
+        INSERT INTO PlayerCharacters 
+            (track_player, track_character) 
+        VALUES 
+            ('${track_player_input}', '${track_character_input}');
+    `;
+
+
+
+    db.pool.query(query, function (error, results, fields) {
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        } else {
+            // If there was no error, perform a SELECT * on PlayerCharacters
+            let query2 = `
+                SELECT 
+                    Players.player_name AS 'Player', 
+                    Characters.character_name AS 'Character' 
+                FROM 
+                    PlayerCharacters 
+                JOIN 
+                    Players 
+                ON 
+                    PlayerCharacters.track_player = Players.player_id 
+                JOIN 
+                    Characters 
+                ON 
+                    PlayerCharacters.track_character = Characters.character_id;
+            `;
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.status(400).json({ error: error.message });
+                } else {
+                    res.status(200).json(rows);
+                }
+            });
+        }
     });
 });
 
