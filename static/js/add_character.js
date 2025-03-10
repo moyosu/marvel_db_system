@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 inputCharacterAlliance.value = '';
                 
                 // Refresh the window to reflect the new character addition
-                // location.reload(); 
+                location.reload(); 
                 // Hide the form
                 showForm('browse');
             } else if (xhttp.readyState == 4 && xhttp.status != 200) {

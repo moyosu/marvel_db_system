@@ -29,7 +29,8 @@
                 {{#each data.characters}}
                 <tr>
                     <td>
-                        <a href="#" onClick="showForm('update', {{this.[Character ID]}})">Edit</a>
+                        <a href="#"
+                            onClick="updateCharacter({{this.[Character ID]}}, '{{this.Character}}', '{{this.Role}}', '{{this.Health}}', '{{this.[Has Secondary Weapon]}}', '{{this.[Move Speed]}}', '{{this.[Critical Multiplier]}}', '{{this.[Ammo Capacity]}}', '{{this.Alliance}}')">Edit</a>
                     </td>
                     <td>
                         <a href="#" onclick="confirmDelete({{this.[Character ID]}})">Delete</a>
@@ -49,6 +50,7 @@
         </table>
     </div>
 </div>
+<script src="/js/update_character.js"></script>
 
 <!-- Add Character Form -->
 <div id="insert" class="form-container hidden">
@@ -83,6 +85,7 @@
             {{#each data.alliances}}
             <option value="{{this.[Alliance ID]}}">{{this.Alliance}}</option>
             {{/each}}
+            <option value="-1">None</option>
         </select>
 
         <button onClick="showForm('browse')">Cancel</button>
@@ -96,19 +99,27 @@
     <h3 class="modal">Edit Character</h3>
     <form id="update-character-form-ajax">
         <label class="modal-label" for="edit-character-id">Character ID</label>
-        <input type="text" id="edit-character-id-input" name="character-id" value="4" readonly>
+        <input type="text" id="edit-character-id-input" name="character-id" value="" readonly>
 
         <label class="modal-label" for="edit-character-name-input">Character Name</label>
-        <input type="text" id="edit-character-name-input" name="character-name" value="Iron Mand">
+        <input type="text" id="edit-character-name-input" name="character-name" value="">
 
         <label class="modal-label" for="edit-character-role-input">Role</label>
-        <input type="text" id="edit-character-role-input" name="character-role" value="Duelist">
+        <select id="edit-character-role-input" name="character-role" required>
+            <option value="" selected>Choose a role</option>
+            <option value="Vanguard">Vanguard</option>
+            <option value="Duelist">Duelist</option>
+            <option value="Strategist">Strategist</option>
+        </select>
 
         <label class="modal-label" for="edit-character-health-input">Health</label>
-        <input type="text" id="edit-character-health-input" name="character-health" value="275">
+        <input type="text" id="edit-character-health-input" name="character-health" value="">
 
         <label class="modal-label" for="edit-character-secondary-weapon-input">Has Secondary Weapon</label>
-        <input type="text" id="edit-character-secondary-weapon-input" name="character-secondary-weapon" value="0">
+        <select name="character-secondary-weapon" id="character-secondary-weapon-input" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
 
         <label class="modal-label" for="edit-character-move-speed-input">Move Speed</label>
         <input type="text" id="edit-character-move-speed-input" name="character-move-speed" value="10">
@@ -120,11 +131,16 @@
         <input type="text" id="edit-character-ammo-capacity-input" name="character-ammo-capacity" value="8">
 
         <label class="modal-label" for="edit-character-track-alliance-input">Track Alliance</label>
-        <input type="text" id="edit-character-track-alliance-input" name="character-track-alliance" value="6">
-
-        <button onClick="showForm('browse')">Cancel</button>
-        <button onClick="saveChanges()">Save Changes</button>
+        <select name="character-track-alliance" id="character-track-alliance-input" onchange="updateSelectedAlliance(this.selectedIndex)">
+            {{#each data.alliances}}
+            <option value="{{this.[Alliance ID]}}">
+                {{this.Alliance}}</option>
+            {{/each}}
+            <option value="-1">None</option>
+        </select>
+        <button type="submit">Save Changes</button>
     </form>
+        <button onClick="showForm('browse')">Cancel</button>
 </div>
 
 <!-- Delete Confirmation -->

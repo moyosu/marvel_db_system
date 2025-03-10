@@ -1,6 +1,7 @@
 // App.js
 
 // Database
+const e = require('express');
 var db = require('./database/db-connector')
 
 /*
@@ -11,10 +12,19 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('static'))
-PORT = 8615;                 // Set a port number at the top so it's easy to change in the future
+PORT = 8614;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
+
+const Handlebars = require('handlebars');
+
+Handlebars.registerHelper('eq', function (a, b) {
+    console.log("a: ", a);
+    console.log("b: ", b);
+    return a === b;
+});
+
 app.engine('.hbs', engine({
     extname: ".hbs",
     defaultLayout: "main", // Set "main.hbs" as the default layout
@@ -268,6 +278,61 @@ app.post('/add-character', function (req, res) {
                     res.status(200).json(rows);
                 }
             });
+        }
+    });
+});
+
+// Update character
+app.put('/put-character-ajax', function (req, res, next) {
+    let data = req.body;
+    console.log("Data: ", data);
+    // Ensure character_id is included in the request
+    let character_id = parseInt(data.character_id); // Get the character ID
+    let new_character_name = data.character_name; // No need to parseInt for name
+    let new_role = data.role; // No need to parseInt for role
+    let new_health = parseInt(data.health);
+    let new_has_secondary_weapon = parseInt(data.has_secondary_weapon);
+    let new_move_speed = parseInt(data.move_speed);
+    let new_critical_multiplier = parseInt(data.critical_multiplier);
+    // If the ammo_capacity is an empty string, null, or undefined, set it to null
+    let new_ammo_capacity = data.ammo_capacity === '' || data.ammo_capacity === null || data.ammo_capacity === undefined 
+        ? null 
+        : parseInt(data.ammo_capacity);
+    // If the track_alliance is an empty string, null, or undefined, set it to null
+    let new_track_alliance = data.track_alliance === '' || data.track_alliance === null || data.track_alliance === undefined 
+        ? null 
+        : parseInt(data.track_alliance);
+    let queryCharacter = `
+        UPDATE 
+            Characters 
+        SET 
+            character_name = ?, 
+            role = ?, 
+            health = ?, 
+            has_secondary_weapon = ?, 
+            move_speed = ?, 
+            critical_multiplier = ?, 
+            ammo_capacity = ?, 
+            track_alliance = ? 
+        WHERE 
+            character_id = ?;
+    `;
+
+    db.pool.query(queryCharacter, [
+        new_character_name, new_role,
+        new_health,
+        new_has_secondary_weapon,
+        new_move_speed,
+        new_critical_multiplier,
+        new_ammo_capacity,
+        new_track_alliance,
+        character_id
+    ], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        } else {
+            res.status(200).json(rows);
         }
     });
 });
