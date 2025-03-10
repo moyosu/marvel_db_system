@@ -6,7 +6,9 @@ html {
     display: flex;
     align-items: center;
     gap: 10px;
-    background-color: aqua;
+    background-color: rgb(25, 37, 171);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .logo {
@@ -150,4 +152,23 @@ button:hover {
 p {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+#confirm-delete-button {
+    background-color: red; /* red */
+}
+
+#dropdown-filter {
+    padding: 5px;
+    font-size: 14px;
+    background-color: lightblue;
+    color: black;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+.page-title, .table-name {
+    color: white;
 }

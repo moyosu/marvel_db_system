@@ -49,8 +49,8 @@
     <label class="modal-label">Track Battle</label>
     <input type="text" id="battle-track-input">
 
-    <button onClick="showForm('browse')">Cancel</button>
     <button onClick="addPlayerBattle()">Add Player Battle</button>
+    <button onClick="showForm('browse')">Cancel</button>
 </div>
 
 <!-- Edit Player Battle Form -->
@@ -66,15 +66,15 @@
     <label class="modal-label">Track Battle</label>
     <input type="text" id="edit-battle-track-input" value="4">
 
-    <button onClick="showForm('browse')">Cancel</button>
     <button onClick="saveChanges()">Save Changes</button>
+    <button onClick="showForm('browse')">Cancel</button>
 </div>
 
 <!-- Delete Confirmation -->
 <div id="delete" class="form-container hidden">
     <h3 class="modal">Are you sure you want to delete this player battle?</h3>
     <p class="modal-label">Track Player: <span id="delete-message"></span></p>
+    <button id="confirm-delete-button">Delete</button>
     <button onClick="showForm('browse')">Cancel</button>
-    <button onClick="confirmDelete()">Delete</button>
 </div>
 {{/layout}}
