@@ -59,15 +59,176 @@ app.get('/abilities', function (req, res) {
             Abilities.track_character = Characters.character_id;
     `;
 
-    db.pool.query(query1, function (error, rows, fields) { // Execute the query
+    let query2 = `
+        SELECT 
+            character_id AS 'Character ID', 
+            character_name AS 'Character' 
+        FROM Characters;
+    `;
+
+    db.pool.query(query1, function (error, abilityRows, fields) {
         if (error) {
-            console.error("Error executing query: ", error); // Log any errors
-            res.status(500).send("Error executing query"); // Send an error response
+            console.error("Error executing query1: ", error);
+            res.status(500).send("Error executing query");
             return;
         }
 
-        console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('abilities', { data: rows }); // Render the players.hbs file and send the data
+        db.pool.query(query2, function (error, characterRows, fields) {
+            if (error) {
+                console.error("Error executing query2: ", error);
+                res.status(500).send("Error executing query");
+                return;
+            }
+
+            let data = {
+                abilities: abilityRows,
+                characters: characterRows
+            };
+
+            console.log("Data: ", data);
+            res.render('abilities', { data: data });
+        });
+    });
+});
+
+// Add Ability route
+app.post('/add-ability', function (req, res) {
+    let data = req.body; // Get the request body data
+    let ability_name_input = data.ability_name;
+    let special_effect_input = data.special_effect;
+    let ability_range_input = data.ability_range;
+    let cooldown_input = data.cooldown;
+    let charges_input = data.charges;
+    let track_character_input = data.track_character;
+
+    // Insert the new ability into the database
+    let query = `
+        INSERT INTO Abilities 
+            (ability_name, special_effect, ability_range, cooldown, charges, track_character) 
+        VALUES 
+            ('${ability_name_input}', '${special_effect_input}', '${ability_range_input}', '${cooldown_input}', '${charges_input}', '${track_character_input}');
+    `;
+
+    db.pool.query(query, function (error, results, fields) {
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        } else {
+            // If there was no error, perform a SELECT * on Abilities
+            let query2 = `
+                SELECT 
+                    ability_id AS 'Ability ID', 
+                    ability_name AS 'Ability', 
+                    special_effect AS 'Special Effect', 
+                    ability_range AS 'Range', 
+                    cooldown AS 'Cooldown', 
+                    charges AS 'Charges', 
+                    Characters.character_name AS 'Character' 
+                FROM 
+                    Abilities 
+                JOIN 
+                    Characters 
+                ON 
+                    Abilities.track_character = Characters.character_id;
+            `;
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.status(400).json({ error: error.message });
+                } else {
+                    res.status(200).json(rows);
+                }
+            });
+        }
+    });
+});
+
+// Update Ability route
+app.put('/put-ability-ajax', function (req, res) {
+    let data = req.body;
+
+    // Extract data from the request body
+    let ability_id = parseInt(data.ability_id);
+    let ability_name = data.ability_name;
+    let special_effect = data.special_effect;
+    let ability_range = data.ability_range;
+    let cooldown = data.cooldown;
+    let charges = data.charges;
+    let track_character = parseInt(data.track_character);
+
+    // Query to update the ability
+    let query = `
+        UPDATE Abilities 
+        SET 
+            ability_name = ?, 
+            special_effect = ?, 
+            ability_range = ?, 
+            cooldown = ?, 
+            charges = ?, 
+            track_character = ? 
+        WHERE 
+            ability_id = ?;
+    `;
+
+    // Execute the query
+    db.pool.query(query, [ability_name, special_effect, ability_range, cooldown, charges, track_character, ability_id], function (error, results, fields) {
+        if (error) {
+            console.error("Error updating ability: ", error);
+            res.status(400).json({ error: error.message });
+        } else {
+            res.status(200).json(results);
+        }
+    });
+});
+
+// Delete Ability route
+app.delete('/delete-ability-ajax', function (req, res) {
+    let data = req.body; // Get the request body data
+    let ability_id_input = parseInt(data.ability_id); // Get the ability ID
+
+    // Delete the ability from the database
+    let query = `
+        DELETE FROM 
+            Abilities 
+        WHERE 
+            ability_id = ?;
+    `;
+
+    db.pool.query(query, [ability_id_input], function (error, results, fields) {
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        } else {
+            // If there was no error, perform a SELECT * on Abilities
+            let query2 = `
+                SELECT 
+                    ability_id AS 'Ability ID', 
+                    ability_name AS 'Ability', 
+                    special_effect AS 'Special Effect', 
+                    ability_range AS 'Range', 
+                    cooldown AS 'Cooldown', 
+                    charges AS 'Charges', 
+                    Characters.character_name AS 'Character' 
+                FROM 
+                    Abilities 
+                JOIN 
+                    Characters 
+                ON 
+                    Abilities.track_character = Characters.character_id;
+            `;
+            db.pool.query(query2, function (error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.status(400).json({ error: error.message });
+                } else {
+                    res.status(200).json(rows);
+                }
+            });
+        }
     });
 });
 
@@ -277,6 +438,105 @@ app.get('/battles', function (req, res) {
 
         console.log("Rows returned: ", rows); // Log the returned rows
         res.render('battles', { data: rows }); // Render the players.hbs file and send the data
+    });
+});
+
+// Add Battle route
+app.post('/add-battle-ajax', function (req, res) {
+    let data = req.body; // Get the request body data
+
+    // Extract data from the request body
+    let time_stamp = data.time_stamp;
+    let is_victory = data.is_victory === 'true' ? 1 : 0; // Convert to boolean
+    let kills = parseInt(data.kills);
+    let deaths = parseInt(data.deaths);
+    let assists = parseInt(data.assists);
+    let damage_dealt = parseInt(data.damage_dealt);
+    let damage_blocked = parseInt(data.damage_blocked);
+    let healing = parseInt(data.healing);
+    let accuracy = parseInt(data.accuracy);
+
+    // Insert the new battle into the database
+    let query = `
+        INSERT INTO Battles 
+            (time_stamp, is_victory, kills, deaths, assists, damage_dealt, damage_blocked, healing, accuracy) 
+        VALUES 
+            (?, ?, ?, ?, ?, ?, ?, ?, ?);
+    `;
+
+    db.pool.query(query, [time_stamp, is_victory, kills, deaths, assists, damage_dealt, damage_blocked, healing, accuracy], function (error, results, fields) {
+        if (error) {
+            console.error("Error adding battle: ", error);
+            res.status(400).json({ error: error.message });
+        } else {
+            res.status(200).json(results);
+        }
+    });
+});
+
+// Update Battle route
+app.put('/put-battle-ajax', function (req, res) {
+    let data = req.body; // Get the request body data
+
+    // Extract data from the request body
+    let battle_id = parseInt(data.battle_id);
+    let time_stamp = data.time_stamp;
+    let is_victory = data.is_victory === 'true' ? 1 : 0; // Convert to boolean
+    let kills = parseInt(data.kills);
+    let deaths = parseInt(data.deaths);
+    let assists = parseInt(data.assists);
+    let damage_dealt = parseInt(data.damage_dealt);
+    let damage_blocked = parseInt(data.damage_blocked);
+    let healing = parseInt(data.healing);
+    let accuracy = parseInt(data.accuracy);
+
+    // Query to update the battle
+    let query = `
+        UPDATE Battles 
+        SET 
+            time_stamp = ?, 
+            is_victory = ?, 
+            kills = ?, 
+            deaths = ?, 
+            assists = ?, 
+            damage_dealt = ?, 
+            damage_blocked = ?, 
+            healing = ?, 
+            accuracy = ? 
+        WHERE 
+            battle_id = ?;
+    `;
+
+    db.pool.query(query, [time_stamp, is_victory, kills, deaths, assists, damage_dealt, damage_blocked, healing, accuracy, battle_id], function (error, results, fields) {
+        if (error) {
+            console.error("Error updating battle: ", error);
+            res.status(400).json({ error: error.message });
+        } else {
+            res.status(200).json(results);
+        }
+    });
+});
+
+// Delete Battle route
+app.delete('/delete-battle-ajax', function (req, res) {
+    let data = req.body; // Get the request body data
+    let battle_id = parseInt(data.battle_id); // Get the battle ID
+
+    // Query to delete the battle
+    let query = `
+        DELETE FROM 
+            Battles 
+        WHERE 
+            battle_id = ?;
+    `;
+
+    db.pool.query(query, [battle_id], function (error, results, fields) {
+        if (error) {
+            console.error("Error deleting battle: ", error);
+            res.status(400).json({ error: error.message });
+        } else {
+            res.status(200).json(results);
+        }
     });
 });
 
