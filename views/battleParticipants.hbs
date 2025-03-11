@@ -49,8 +49,8 @@
         <option value="Venom">Venom</option>
     </select>
 
-    <button onClick="showForm('browse')">Cancel</button>
     <button onClick="addPlayerCharacter()">Add Battle Participant</button>
+    <button onClick="showForm('browse')">Cancel</button>
 </div>
 
 <!-- Edit Player Character Form -->
@@ -66,15 +66,15 @@
         <option value="Venom">Venom</option>
     </select>
 
-    <button onClick="showForm('browse')">Cancel</button>
     <button onClick="saveChanges()">Save Changes</button>
+    <button onClick="showForm('browse')">Cancel</button>
 </div>
 
 <!-- Delete Confirmation -->
 <div id="delete" class="form-container hidden">
     <h3 class="modal">Are you sure you want to delete this battle participant?</h3>
     <p class="modal-label">Track Battle: <span id="delete-message"></span></p>
+    <button id="confirm-delete-button">Delete</button>
     <button onClick="showForm('browse')">Cancel</button>
-    <button onClick="confirmDelete()">Delete</button>
 </div>
 {{/layout}}

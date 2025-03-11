@@ -34,7 +34,7 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 
 
 app.get('/', function (req, res) {
-    res.render('home', { title: "Home Page" });                    // an object where 'data' is equal to the 'rows' we
+    res.render('home', { title: "Marvel Game Statistics Management System" });                    // an object where 'data' is equal to the 'rows' we
 });                                                         // received back from the query
 
 /**************************************************
@@ -72,7 +72,6 @@ app.get('/abilities', function (req, res) {
             res.status(500).send("Error executing query");
             return;
         }
-
         db.pool.query(query2, function (error, characterRows, fields) {
             if (error) {
                 console.error("Error executing query2: ", error);
@@ -256,7 +255,7 @@ app.get('/alliances', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('alliances', { data: rows }); // Render the alliances.hbs file and send the data
+        res.render('alliances', { data: rows, title: "Alliances Page" }); // Render the alliances.hbs file and send the data
     });
 });
 
@@ -404,7 +403,7 @@ app.get('/battleParticipants', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('battleParticipants', { data: rows }); // Render the players.hbs file and send the data
+        res.render('battleParticipants', { data: rows, title: "BattleParticipants Page"  }); // Render the players.hbs file and send the data
     });
 });
 
@@ -437,7 +436,7 @@ app.get('/battles', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('battles', { data: rows }); // Render the players.hbs file and send the data
+        res.render('battles', { data: rows, title: "Battles Page"  }); // Render the players.hbs file and send the data
     });
 });
 
@@ -595,7 +594,7 @@ app.get('/characters', function (req, res) {
             };
 
             console.log("Rows returned: ", data); // Log the returned rows
-            res.render('characters', { data: data }); // Render the characters.hbs file and send the data
+            res.render('characters', { data: data, title: "Characters Page"  }); // Render the characters.hbs file and send the data
         });
     });
 });
@@ -764,7 +763,7 @@ app.get('/playerBattles', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('playerBattles', { data: rows });
+        res.render('playerBattles', { data: rows, title: "PlayerBattles Page"  });
     });
 });
 
@@ -831,7 +830,7 @@ app.get('/playerCharacters', function (req, res) {
                 };
 
                 console.log("Rows returned: ", data); // Log the returned rows
-                res.render('playerCharacters', { data: data });
+                res.render('playerCharacters', { data: data, title: "PlayerCharacters Page"  });
             });
         });
     });
@@ -911,7 +910,7 @@ app.get('/players', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('players', { data: rows }); // Render the players.hbs file and send the data
+        res.render('players', { data: rows, title: "Players Page"  }); // Render the players.hbs file and send the data
     });
 });
 
