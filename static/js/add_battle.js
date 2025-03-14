@@ -17,6 +17,30 @@ document.addEventListener("DOMContentLoaded", function () {
             let healing = document.getElementById('battle-healing-input').value;
             let accuracy = document.getElementById('battle-accuracy-input').value;
 
+            // Convert numeric fields to numbers
+            kills = parseInt(kills);
+            deaths = parseInt(deaths);
+            assists = parseInt(assists);
+            damageDealt = parseInt(damageDealt);
+            damageBlocked = parseInt(damageBlocked);
+            healing = parseInt(healing);
+            accuracy = parseInt(accuracy);
+
+            // Validate numeric fields to ensure they are not less than 0
+            if (
+                kills < 0 ||
+                deaths < 0 ||
+                assists < 0 ||
+                damageDealt < 0 ||
+                damageBlocked < 0 ||
+                healing < 0 ||
+                accuracy < 0 ||
+                accuracy > 100
+            ) {
+                alert("Numeric fields (Kills, Deaths, Assists, Damage Dealt, Damage Blocked, Healing, Accuracy) cannot be less than 0. Accuracy must be from 0 - 100.");
+                return; // Stop the form submission if validation fails
+            }
+
             // Create a data object to send
             let data = {
                 time_stamp: timeStamp,

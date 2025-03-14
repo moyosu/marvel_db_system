@@ -22,6 +22,15 @@ document.addEventListener("DOMContentLoaded", function () {
         let chargesValue = chargesInput.value;
         let trackCharacterValue = trackCharacterInput.value;
 
+        if (
+            abilityRangeValue < 0 ||
+            cooldownValue < 0 ||
+            chargesValue < 0 
+        ) {
+            alert("Numeric fields (Ability Range, Cooldown, and Charges) cannot be less than 0.");
+            return; // Stop the form submission if validation fails
+        }
+
         // Create a data object to send
         let data = {
             ability_name: abilityNameValue,

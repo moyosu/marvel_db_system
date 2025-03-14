@@ -55,31 +55,34 @@
     <h3 class="modal">Add a New Battle</h3>
     <form id="add-battle-form-ajax">
         <label class="modal-label">Time Stamp</label>
-        <input type="text" id="battle-time-stamp-input" name="time-stamp" required>
+        <input type="datetime-local" id="battle-time-stamp-input" name="time-stamp" required>
 
         <label class="modal-label">Is Victory?</label>
-        <input type="text" id="battle-is-victory-input" name="is-victory" required>
+        <select id="battle-is-victory-input" name="is-victory" required>
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
 
         <label class="modal-label">Kills</label>
-        <input type="text" id="battle-kills-input" name="kills" required>
+        <input type="number" id="battle-kills-input" name="kills" required>
 
         <label class="modal-label">Deaths</label>
-        <input type="text" id="battle-deaths-input" name="deaths" required>
+        <input type="number" id="battle-deaths-input" name="deaths" required>
 
         <label class="modal-label">Assists</label>
-        <input type="text" id="battle-assists-input" name="assists" required>
+        <input type="number" id="battle-assists-input" name="assists" required>
 
         <label class="modal-label">Damage Dealt</label>
-        <input type="text" id="battle-damage-dealt-input" name="damage-dealt" required>
+        <input type="number" id="battle-damage-dealt-input" name="damage-dealt" required>
 
         <label class="modal-label">Damage Blocked</label>
-        <input type="text" id="battle-damage-blocked-input" name="damage-blocked" required>
+        <input type="number" id="battle-damage-blocked-input" name="damage-blocked" required>
 
         <label class="modal-label">Healing</label>
-        <input type="text" id="battle-healing-input" name="healing" required>
+        <input type="number" id="battle-healing-input" name="healing" required>
 
         <label class="modal-label">Accuracy</label>
-        <input type="text" id="battle-accuracy-input" name="accuracy" required>
+        <input type="number" id="battle-accuracy-input" name="accuracy" required>
 
         <button type="submit">Add Battle</button>
         <button type="button" onClick="showForm('browse')">Cancel</button>
@@ -93,34 +96,37 @@
     <h3 class="modal">Edit Battle</h3>
     <form id="update-battle-form-ajax">
         <label class="modal-label">Battle ID</label>
-        <input type="text" id="edit-battle-id-input" readonly>
+        <input type="text" class="edit-id" id="edit-battle-id-input" readonly>
 
         <label class="modal-label">Time Stamp</label>
-        <input type="text" id="edit-time-stamp-input" required>
+        <input type="datetime-local" id="edit-time-stamp-input" required>
 
         <label class="modal-label">Is Victory</label>
-        <input type="text" id="edit-is-victory-input" required>
+        <select id="edit-is-victory-input" required>
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
 
         <label class="modal-label">Kills</label>
-        <input type="text" id="edit-kills-input" required>
+        <input type="number" id="edit-kills-input" required>
 
         <label class="modal-label">Deaths</label>
-        <input type="text" id="edit-deaths-input" required>
+        <input type="number" id="edit-deaths-input" required>
 
         <label class="modal-label">Assists</label>
-        <input type="text" id="edit-assists-input" required>
+        <input type="number" id="edit-assists-input" required>
 
         <label class="modal-label">Damage Dealt</label>
-        <input type="text" id="edit-damage-dealt-input" required>
+        <input type="number" id="edit-damage-dealt-input" required>
 
         <label class="modal-label">Damage Blocked</label>
-        <input type="text" id="edit-damage-blocked-input" required>
+        <input type="number" id="edit-damage-blocked-input" required>
 
         <label class="modal-label">Healing</label>
-        <input type="text" id="edit-healing-input" required>
+        <input type="number" id="edit-healing-input" required>
 
         <label class="modal-label">Accuracy</label>
-        <input type="text" id="edit-accuracy-input" required>
+        <input type="number" id="edit-accuracy-input" required>
 
         <button type="submit">Save Changes</button>
         <button type="button" onClick="showForm('browse')">Cancel</button>
