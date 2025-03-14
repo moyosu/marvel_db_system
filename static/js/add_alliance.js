@@ -16,6 +16,13 @@ document.addEventListener("DOMContentLoaded", function () {
         let statBoostValue = inputStatBoost.value;
         let statBoostTypeValue = inputStatBoostType.value;
 
+        if (
+            statBoostValue < 0
+        ) {
+            alert("Numeric field (Stat Boost) cannot be less than 0.");
+            return; // Stop the form submission if validation fails
+        }
+
         // Create a data object to send
         let data = {
             alliance_name: allianceNameValue,

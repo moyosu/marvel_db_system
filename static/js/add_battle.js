@@ -34,9 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 damageDealt < 0 ||
                 damageBlocked < 0 ||
                 healing < 0 ||
-                accuracy < 0
+                accuracy < 0 ||
+                accuracy > 100
             ) {
-                alert("Numeric fields (Kills, Deaths, Assists, Damage Dealt, Damage Blocked, Healing, Accuracy) cannot be less than 0.");
+                alert("Numeric fields (Kills, Deaths, Assists, Damage Dealt, Damage Blocked, Healing, Accuracy) cannot be less than 0. Accuracy must be from 0 - 100.");
                 return; // Stop the form submission if validation fails
             }
 
