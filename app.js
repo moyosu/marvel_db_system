@@ -85,7 +85,7 @@ app.get('/abilities', function (req, res) {
             };
 
             console.log("Data: ", data);
-            res.render('abilities', { data: data, title: "Abilities Page" });
+            res.render('abilities', { data: data, title: "Abilities Page"});
         });
     });
 });
