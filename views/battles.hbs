@@ -55,10 +55,13 @@
     <h3 class="modal">Add a New Battle</h3>
     <form id="add-battle-form-ajax">
         <label class="modal-label">Time Stamp</label>
-        <input type="text" id="battle-time-stamp-input" name="time-stamp" required>
+        <input type="datetime-local" id="battle-time-stamp-input" name="time-stamp" required>
 
         <label class="modal-label">Is Victory?</label>
-        <input type="text" id="battle-is-victory-input" name="is-victory" required>
+        <select id="battle-is-victory-input" name="is-victory" required>
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
 
         <label class="modal-label">Kills</label>
         <input type="text" id="battle-kills-input" name="kills" required>
@@ -93,13 +96,16 @@
     <h3 class="modal">Edit Battle</h3>
     <form id="update-battle-form-ajax">
         <label class="modal-label">Battle ID</label>
-        <input type="text" id="edit-battle-id-input" readonly>
+        <input type="text" class="edit-id" id="edit-battle-id-input" readonly>
 
         <label class="modal-label">Time Stamp</label>
-        <input type="text" id="edit-time-stamp-input" required>
+        <input type="datetime-local" id="edit-time-stamp-input" required>
 
         <label class="modal-label">Is Victory</label>
-        <input type="text" id="edit-is-victory-input" required>
+        <select id="edit-is-victory-input" required>
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
 
         <label class="modal-label">Kills</label>
         <input type="text" id="edit-kills-input" required>

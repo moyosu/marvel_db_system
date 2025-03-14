@@ -1,8 +1,15 @@
 // Function to populate the update form with the selected battle's data
 function updateBattle(battle_id, time_stamp, is_victory, kills, deaths, assists, damage_dealt, damage_blocked, healing, accuracy) {
+    
+    let date = new Date(time_stamp); // Parse the timestamp into a Date object
+    let formattedTimestamp = date.toISOString().slice(0, 16); // Convert to YYYY-MM-DDTHH:MM format
+
     // Populate the form fields
     document.getElementById('edit-battle-id-input').value = battle_id;
-    document.getElementById('edit-time-stamp-input').value = time_stamp;
+    document.getElementById('edit-time-stamp-input').value = formattedTimestamp;
+
+    document.getElementById('edit-battle-id-input').value = battle_id;
+    document.getElementById('edit-time-stamp-input').value = formattedTimestamp;
     document.getElementById('edit-is-victory-input').value = is_victory;
     document.getElementById('edit-kills-input').value = kills;
     document.getElementById('edit-deaths-input').value = deaths;
@@ -36,6 +43,20 @@ document.addEventListener("DOMContentLoaded", function () {
             let healing = document.getElementById('edit-healing-input').value;
             let accuracy = document.getElementById('edit-accuracy-input').value;
 
+            // Validate numeric fields to ensure they are not less than 0
+            if (
+                kills < 0 ||
+                deaths < 0 ||
+                assists < 0 ||
+                damageDealt < 0 ||
+                damageBlocked < 0 ||
+                healing < 0 ||
+                accuracy < 0
+            ) {
+                alert("Numeric fields (Kills, Deaths, Assists, Damage Dealt, Damage Blocked, Healing, Accuracy) cannot be less than 0.");
+                return; // Stop the form submission if validation fails
+            }
+            
             // Create a data object to send
             let data = {
                 battle_id: battleID,

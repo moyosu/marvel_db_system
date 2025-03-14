@@ -60,7 +60,12 @@
         <input type="text" name="character-name" id="character-name-input" required>
 
         <label class="modal-label" for="character-role-input">Role</label>
-        <input type="text" name="character-role" id="character-role-input" required>
+        <select name="character-role" id="character-role-input" required>
+            <option value="" selected>Choose a role</option>
+            <option value="Vanguard">Vanguard</option>
+            <option value="Duelist">Duelist</option>
+            <option value="Strategist">Strategist</option>
+        </select>
 
         <label class="modal-label" for="character-health-input">Health</label>
         <input type="text" name="character-health" id="character-health-input" required>
@@ -99,14 +104,13 @@
     <h3 class="modal">Edit Character</h3>
     <form id="update-character-form-ajax">
         <label class="modal-label" for="edit-character-id">Character ID</label>
-        <input type="text" id="edit-character-id-input" name="character-id" value="" readonly>
+        <input type="text" class="edit-id" id="edit-character-id-input" name="character-id" value="" readonly>
 
         <label class="modal-label" for="edit-character-name-input">Character Name</label>
         <input type="text" id="edit-character-name-input" name="character-name" value="">
 
         <label class="modal-label" for="edit-character-role-input">Role</label>
         <select id="edit-character-role-input" name="character-role" required>
-            <option value="" selected>Choose a role</option>
             <option value="Vanguard">Vanguard</option>
             <option value="Duelist">Duelist</option>
             <option value="Strategist">Strategist</option>
