@@ -17,9 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
         let playerValue = inputPlayer.value;
         let characterValue = inputCharacter.value;
 
-        console.log(playerValue);
-        console.log(characterValue);
-
         // Create a data object to send
         let data = {
             player: playerValue,
@@ -28,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Setup our AJAX request
         var xhttp = new XMLHttpRequest();
-        xhttp.open('POST', '/add-playerCharacter', true);
+        xhttp.open('POST', '/add-player-character', true);
         xhttp.setRequestHeader('Content-type', 'application/json');
 
         // Tell our AJAX request how to resolve
@@ -37,15 +34,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Parse the response
                 let response = JSON.parse(xhttp.responseText);
 
-                // Add the new row to the table
-                // addRowToTable(response);
-
                 // Clear the input fields
                 inputPlayer.value = '';
                 inputCharacter.value = '';
 
                 // refresh the page
-                location.reload();
+                // location.reload();
+                showForm('browse');
             }
         };
 

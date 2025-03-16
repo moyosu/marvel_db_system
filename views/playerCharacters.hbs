@@ -65,16 +65,16 @@
     <form id="edit-player-character-form-ajax">
         <label class="modal-label" for="edit-player-track-input">Track Player</label>
         <select id="edit-player-track-input" name="edit-player-track">
-            <option value="MasterMo">MasterMo</option>
-            <option value="Zyverous">Zyverous</option>
-            <option value="GamerDad">GamerDad</option>
+            {{#each data.players}}
+            <option value="{{this.[Player ID]}}">{{this.Player}}</option>
+            {{/each}}
         </select>
         
         <label class="modal-label" for="edit-character-track-input">Track Character</label>
         <select id="edit-character-track-input" name="edit-character-track">
-            <option value="Rocket">Rocket</option>
-            <option value="Iron Man">Iron Man</option>
-            <option value="Venom">Venom</option>
+            {{#each data.characters}}
+            <option value="{{this.[Character ID]}}">{{this.Character}}</option>
+            {{/each}}
         </select>
         
         <button type="submit">Save Changes</button>

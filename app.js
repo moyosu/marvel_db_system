@@ -907,18 +907,17 @@ app.get('/playerCharacters', function (req, res) {
 // Add PlayerCharacter route
 app.post('/add-player-character', function (req, res) {
     let data = req.body; // Get the request body data
-    let track_player_input = data.track_player;
-    let track_character_input = data.track_character;
+    console.log("Data: ", data);
+    let player_input = data.player;
+    let character_input = data.character;
 
     // Insert the new player into the database
     let query = `
         INSERT INTO PlayerCharacters 
             (track_player, track_character) 
         VALUES 
-            ('${track_player_input}', '${track_character_input}');
+            ('${player_input}', '${character_input}');
     `;
-
-
 
     db.pool.query(query, function (error, results, fields) {
         // Check to see if there was an error
@@ -930,18 +929,10 @@ app.post('/add-player-character', function (req, res) {
             // If there was no error, perform a SELECT * on PlayerCharacters
             let query2 = `
                 SELECT 
-                    Players.player_name AS 'Player', 
-                    Characters.character_name AS 'Character' 
+                    track_player AS 'Player', 
+                    track_character AS 'Character' 
                 FROM 
-                    PlayerCharacters 
-                JOIN 
-                    Players 
-                ON 
-                    PlayerCharacters.track_player = Players.player_id 
-                JOIN 
-                    Characters 
-                ON 
-                    PlayerCharacters.track_character = Characters.character_id;
+                    PlayerCharacters;
             `;
             db.pool.query(query2, function (error, rows, fields) {
                 if (error) {

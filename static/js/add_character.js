@@ -67,14 +67,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 // addRowToTable(response);
 
                 // Clear the input fields
-                inputCharacterName.value = '';
-                inputCharacterRole.value = '';
-                inputCharacterHealth.value = '';
-                inputCharacterHasSecondaryWeapon.value = '';
-                inputCharacterMoveSpeed.value = '';
-                inputCharacterCriticalMultiplier.value = '';
-                inputCharacterAmmoCapacity.value = '';
-                inputCharacterAlliance.value = '';
+                characterNameValue = '';
+                characterRoleValue = '';
+                characterHealthValue = '';
+                characterHasSecondaryWeaponValue = '';
+                characterMoveSpeedValue = '';
+                characterCriticalMultiplierValue = '';
+                characterAmmoCapacityValue = '';
+                characterAllianceValue = '';
                 
                 // Refresh the window to reflect the new character addition
                 // location.reload(); 
