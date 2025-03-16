@@ -10,9 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
         let inputPlayer = document.getElementById('player-track-input');
         let inputCharacter = document.getElementById('character-track-input');
 
-        console.log(inputPlayer);
-        console.log(inputCharacter);
-
         // Get the values from the form fields
         let playerValue = inputPlayer.value;
         let characterValue = inputCharacter.value;
