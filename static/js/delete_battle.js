@@ -21,7 +21,7 @@ function deleteBattle(battle_id) {
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "/delete-battle-ajax", true);
+    xhttp.open("DELETE", "/battles/delete-battle-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve

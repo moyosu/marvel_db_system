@@ -20,7 +20,7 @@ function deleteCharacter(character_id) {
 
     // Setup our AJAX request
     let xhttp = new XMLHttpRequest();
-    xhttp.open('DELETE', 'delete-character-ajax', true);
+    xhttp.open('DELETE', '/characters/delete-character-ajax', true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
 
     // Tell our AJAX request how to resolve

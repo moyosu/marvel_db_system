@@ -10,11 +10,15 @@
                 <tr>
                     <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
                     <th></th>
-                    {{#each data.[0]}}
                     <th>
-                        {{@key}}
+                        Battle
                     </th>
-                    {{/each}}
+                    <th>
+                        Time Stamp
+                    </th>
+                    <th>
+                        Character
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +31,7 @@
                         <a href="#" onClick="showForm('delete', {{this.[Battle ID]}})">Delete</a>
                     </td>
                     <td>{{this.[Battle ID]}}</td>
+                    <td>{{this.[Time Stamp]}}</td>
                     <td>{{this.Character}}</td>
                 </tr>
                 {{/each}}
@@ -38,18 +43,20 @@
 <!-- Add Player Character Form -->
 <div id="insert" class="form-container hidden">
     <h3 class="modal">Add a New Battle Participant</h3>
-    <label class="modal-label">Track Battle</label>
-    <input type="text" id="player-track-input">
+    <form id="add-battle-participant-form-ajax">
+        <label class="modal-label">Track Battle</label>
+        <input type="text" id="player-track-input">
 
-    <label class="modal-label">Track Character</label>
-    <select id="character-track-input">
-        <option value="Select">Select</option>
-        <option value="Rocket">Rocket</option>
-        <option value="Iron Man">Iron Man</option>
-        <option value="Venom">Venom</option>
-    </select>
+        <label class="modal-label">Track Character</label>
+        <select id="character-track-input">
+            <option value="Select">Select</option>
+            <option value="Rocket">Rocket</option>
+            <option value="Iron Man">Iron Man</option>
+            <option value="Venom">Venom</option>
+        </select>
 
-    <button onClick="addPlayerCharacter()">Add Battle Participant</button>
+        <button type="submit">Add Battle Participant</button>
+    </form>
     <button onClick="showForm('browse')">Cancel</button>
 </div>
 

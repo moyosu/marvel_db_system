@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Send the AJAX request
             let xhttp = new XMLHttpRequest();
-            xhttp.open("PUT", "/put-ability-ajax", true);
+            xhttp.open("PUT", "/abilities/put-ability-ajax", true);
             xhttp.setRequestHeader("Content-type", "application/json");
 
             xhttp.onreadystatechange = function () {

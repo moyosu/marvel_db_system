@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Setup our AJAX request
         var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/add-alliance", true);
+        xhttp.open("POST", "/alliances/add-alliance", true);
         xhttp.setRequestHeader("Content-type", "application/json");
 
         // Tell our AJAX request how to resolve

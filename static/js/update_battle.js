@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Send the AJAX request
             let xhttp = new XMLHttpRequest();
-            xhttp.open("PUT", "/put-battle-ajax", true);
+            xhttp.open("PUT", "/battles/put-battle-ajax", true);
             xhttp.setRequestHeader("Content-type", "application/json");
 
             xhttp.onreadystatechange = function () {

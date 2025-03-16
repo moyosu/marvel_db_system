@@ -16,7 +16,7 @@ function deletePlayerCharacter(player_id, character_id) {
     };
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open('DELETE', 'delete-player-character-ajax', true);
+    xhttp.open('DELETE', '/playerCharacters/delete-player-character-ajax', true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
 
     xhttp.onreadystatechange = function() {

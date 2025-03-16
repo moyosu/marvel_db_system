@@ -21,7 +21,7 @@ function deleteAbility(ability_id) {
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "/delete-ability-ajax", true);
+    xhttp.open("DELETE", "/abilities/delete-ability-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
