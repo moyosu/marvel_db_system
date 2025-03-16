@@ -26,6 +26,30 @@ document.addEventListener("DOMContentLoaded", function () {
         let characterAmmoCapacityValue = inputCharacterAmmoCapacity.value;
         let characterAllianceValue = inputCharacterAlliance.value;
 
+        if (characterHealthValue < 1 || characterHealthValue > 9999) {
+            inputCharacterHealth.value = '';
+            alert("Please enter a valid number between 1 and 100 for the character's health.");
+            return;
+        }
+
+        if (characterMoveSpeedValue < 1 || characterMoveSpeedValue > 10) {
+            characterMoveSpeedValue.value = '';
+            alert("Please enter a valid number between 1 and 10 for the character's move speed.");
+            return;
+        }
+
+        if (characterCriticalMultiplierValue < 0 || characterCriticalMultiplierValue > 100) {
+            characterCriticalMultiplierValue.value = '';
+            alert("Please enter a valid number between 0 and 100 for the character's critical multiplier.");
+            return;
+        }
+
+        if (characterAmmoCapacityValue < 0 || characterAmmoCapacityValue > 9999) {
+            characterAmmoCapacityValue.value = '';
+            alert("Please enter a valid number between 0 and 9999 for the character's health.");
+            return;
+        }
+
         // Create a data object to send
         let data = {
             character_name: characterNameValue,
@@ -71,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("There was an error with the input.");
             }
         };
-
+        console.log(JSON.stringify(data));
         // Send the request and wait for the response
         xhttp.send(JSON.stringify(data));
     });

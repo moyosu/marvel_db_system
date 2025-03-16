@@ -550,7 +550,7 @@ app.get('/characters', function (req, res) {
             character_name AS 'Character', 
             role AS 'Role', 
             health AS 'Health', 
-            IF(has_secondary_weapon = 1, 'true', 'false') AS 'Has Secondary Weapon', 
+            has_secondary_weapon AS 'Has Secondary Weapon', 
             move_speed AS 'Move Speed', 
             critical_multiplier AS 'Critical Multiplier', 
             ammo_capacity AS 'Ammo Capacity', 
@@ -608,16 +608,84 @@ app.post('/add-character', function (req, res) {
     let has_secondary_weapon_input = data.has_secondary_weapon;
     let move_speed_input = data.move_speed;
     let critical_multiplier_input = data.critical_multiplier;
-    let ammo_capacity_input = data.ammo_capacity;
-    let track_alliance_input = data.track_alliance;
+    // If the ammo_capacity is an empty string, null, or undefined, set it to null
+    let ammo_capacity_input = data.ammo_capacity === '' || data.ammo_capacity === null || data.ammo_capacity === undefined 
+        ? null 
+        : parseInt(data.ammo_capacity);
+    // If the track_alliance is an empty string, null, or undefined, set it to null
+    let track_alliance_input = data.track_alliance === '' || data.track_alliance === null || data.track_alliance === undefined 
+        ? null 
+        : parseInt(data.track_alliance);
 
-    // Insert the new character into the database
+    // Insert the new character without ammo capacity into the database
+    let queryWithoutAmmoCapacity = `
+        INSERT INTO 
+            Characters 
+                (
+                character_name, 
+                role, health, 
+                has_secondary_weapon, 
+                move_speed, 
+                critical_multiplier,
+                track_alliance
+                ) 
+        VALUES 
+            ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}', '${track_alliance_input}');
+    `;
+    // Insert the new character wihtout alliance into the database
+    let queryWithoutAlliance = `
+        INSERT INTO 
+            Characters 
+                (
+                character_name, 
+                role, health, 
+                has_secondary_weapon, 
+                move_speed, 
+                critical_multiplier, 
+                ammo_capacity
+                ) 
+        VALUES 
+            ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}', '${ammo_capacity_input}');
+    `;
+    // Insert the new character wihtout ammo capacity and alliance into the database
+    let queryWithoutAllianceAndAmmoCapacity = `
+        INSERT INTO 
+            Characters 
+                (
+                character_name, 
+                role, health, 
+                has_secondary_weapon, 
+                move_speed, 
+                critical_multiplier
+                ) 
+        VALUES 
+            ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}');
+    `;
+    // Insert the new character with ammo and alliance into the database
     let query = `
-        INSERT INTO Characters 
-            (character_name, role, health, has_secondary_weapon, move_speed, critical_multiplier, ammo_capacity, track_alliance) 
+        INSERT INTO 
+            Characters 
+                (
+                character_name, 
+                role, health, 
+                has_secondary_weapon, 
+                move_speed, 
+                critical_multiplier, 
+                ammo_capacity, 
+                track_alliance
+                ) 
         VALUES 
             ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}', '${ammo_capacity_input}', '${track_alliance_input}');
     `;
+
+    // Select the query to run based on the input
+    if (ammo_capacity_input === null && track_alliance_input === null) {
+        query = queryWithoutAllianceAndAmmoCapacity;
+    } else if (ammo_capacity_input === null) {
+        query = queryWithoutAmmoCapacity;
+    } else if (track_alliance_input === null) {
+        query = queryWithoutAlliance;
+    };
 
     db.pool.query(query, function (error, results, fields) {
         // Check to see if there was an error

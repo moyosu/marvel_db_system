@@ -1,14 +1,15 @@
-function confirmDelete(character_id) {
-    // show the modal
-    showForm('delete', character_id);
+function confirmDelete(character_id, character_name) {
     console.log("Character ID: ", character_id); // Log the character ID
+    console.log("Character Name: ", document.getElementById('delete-character-name').value);
     // Display the Character ID in the modal
-    document.getElementById('delete-message').value = character_id;
+    document.getElementById('delete-character-id').value = character_id;
+    document.getElementById('delete-character-name').value = character_name;
     
     // Update the delete button to include the character ID
     document.getElementById('confirm-delete-button').onclick = function() {
         deleteCharacter(character_id);
     };
+    showForm('delete', character_id, character_name);
 }
 
 function deleteCharacter(character_id) {

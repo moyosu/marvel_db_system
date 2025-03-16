@@ -1,4 +1,4 @@
-window.showForm = function (formType, id = null) {
+window.showForm = function (formType, id = null, name = null) {
     const forms = ["browse", "insert", "update", "delete"];
     
     // Hide all forms
@@ -16,15 +16,10 @@ window.showForm = function (formType, id = null) {
     } else {
         console.error("Form not found:", formType);
     }
-
-    // If updating, fill in the existing data
-    if (formType === "update" && id) {
-        //populateUpdateForm(id);
-        console.log("hello world.")
-    }
-
-    if (formType === "delete" && id) {
-        document.getElementById("delete-message").innerText = `${id}`;
+    
+    if (formType === "delete" && id && name) {
+        document.getElementById("delete-character-id").innerText = `${id}`;
+        document.getElementById("delete-character-name").innerText = `${name}`;
     }
 }
 
