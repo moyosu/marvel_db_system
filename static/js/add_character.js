@@ -6,25 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
     addCharacterForm.addEventListener("submit", function (e) {
         e.preventDefault(); // Prevent the form from submitting the traditional way
 
-        // Get form fields we need to get data from
-        let inputCharacterName = document.getElementById("character-name-input");
-        let inputCharacterRole = document.getElementById("character-role-input");
-        let inputCharacterHealth = document.getElementById("character-health-input");
-        let inputCharacterHasSecondaryWeapon = document.getElementById("character-secondary-weapon-input");
-        let inputCharacterMoveSpeed = document.getElementById("character-move-speed-input");
-        let inputCharacterCriticalMultiplier = document.getElementById("character-critical-multiplier-input");
-        let inputCharacterAmmoCapacity = document.getElementById("character-ammo-capacity-input");
-        let inputCharacterAlliance = document.getElementById("character-track-alliance-input");
-
         // Get the values from the form fields
-        let characterNameValue = inputCharacterName.value;
-        let characterRoleValue = inputCharacterRole.value;
-        let characterHealthValue = inputCharacterHealth.value;
-        let characterHasSecondaryWeaponValue = inputCharacterHasSecondaryWeapon.value;
-        let characterMoveSpeedValue = inputCharacterMoveSpeed.value;
-        let characterCriticalMultiplierValue = inputCharacterCriticalMultiplier.value;
-        let characterAmmoCapacityValue = inputCharacterAmmoCapacity.value;
-        let characterAllianceValue = inputCharacterAlliance.value;
+        let characterNameValue = document.getElementById("character-name-input").value;
+        let characterRoleValue = document.getElementById("character-role-input").value;
+        let characterHealthValue = document.getElementById("character-health-input").value;
+        let characterHasSecondaryWeaponValue = document.getElementById("character-secondary-weapon-input").value;
+        let characterMoveSpeedValue = document.getElementById("character-move-speed-input").value;
+        let characterCriticalMultiplierValue = document.getElementById("character-critical-multiplier-input").value;
+        let characterAmmoCapacityValue = document.getElementById("character-ammo-capacity-input").value;
+        let characterAllianceValue = document.getElementById("character-track-alliance-input").value;
 
         if (characterHealthValue < 1 || characterHealthValue > 9999) {
             inputCharacterHealth.value = '';

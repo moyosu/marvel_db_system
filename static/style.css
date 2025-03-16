@@ -176,7 +176,7 @@ table, th, td {
 }
 
 .edit-id {
-    color: black;
-    background-color: rgb(255, 255, 255);
+    color: rgb(62, 62, 62);
+    background-color: gray;
     border-color: rgb(255, 255, 255);
 }

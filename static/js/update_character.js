@@ -41,6 +41,29 @@ document.addEventListener("DOMContentLoaded", function () {
         let inputCharacterAmmoCapacityValue = document.getElementById("edit-character-ammo-capacity-input").value;
         let inputCharacterAllianceValue = document.getElementById("edit-character-track-alliance-input").value;
 
+        if (inputCharacterHealthValue < 1 || inputCharacterHealthValue > 9999) {
+            document.getElementById("edit-character-health-input").value = '';
+            alert("Please enter a valid number between 1 and 9999 for the character's health.");
+            return;
+        }
+
+        if (inputCharacterMoveSpeedValue < 1 || inputCharacterMoveSpeedValue > 10) {
+            document.getElementById("edit-character-move-speed-input").value = '';
+            alert("Please enter a valid number between 1 and 10 for the character's move speed.");
+            return;
+        }
+
+        if (inputCharacterCriticalMultiplierValue < 0 || inputCharacterCriticalMultiplierValue > 100) {
+            document.getElementById("edit-character-critical-multiplier-input").value = '';
+            alert("Please enter a valid number between 0 and 100 for the character's critical multiplier.");
+            return;
+        }
+
+        if (inputCharacterAmmoCapacityValue < 0 || inputCharacterAmmoCapacityValue > 9999) {
+            document.getElementById("edit-character-ammo-capacity-input").value = '';
+            alert("Please enter a valid number between 0 and 9999 for the character's ammo capacity.");
+            return;
+        }
         // Create a data object to send
         let data = {
             character_id: inputCharacterIDValue, // Include character ID
@@ -65,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
                 // Add the new data to the table
-                // location.reload();
+                location.reload();
                 showForm('browse');
             } else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")

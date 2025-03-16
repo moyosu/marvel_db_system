@@ -107,32 +107,33 @@
         <input type="text" class="edit-id" id="edit-character-id-input" name="character-id" value="" readonly>
 
         <label class="modal-label" for="edit-character-name-input">Character Name</label>
-        <input type="text" id="edit-character-name-input" name="character-name" value="">
+        <input type="text" id="edit-character-name-input" name="character-name" placeholder="Enter character's name" required>
 
         <label class="modal-label" for="edit-character-role-input">Role</label>
         <select id="edit-character-role-input" name="character-role" required>
+            <option value="" disabled>Choose a role</option>
             <option value="Vanguard">Vanguard</option>
             <option value="Duelist">Duelist</option>
             <option value="Strategist">Strategist</option>
         </select>
 
         <label class="modal-label" for="edit-character-health-input">Health</label>
-        <input type="text" id="edit-character-health-input" name="character-health" value="">
+        <input type="number" id="edit-character-health-input" name="character-health" value="100" required>
 
         <label class="modal-label" for="edit-character-secondary-weapon-input">Has Secondary Weapon</label>
-        <select name="character-secondary-weapon" id="edit-character-secondary-weapon-input" required>
+        <select name="character-secondary-weapon" id="edit-character-secondary-weapon-input" onchange="updateSelectedHasSecondaryWeapon(this.selectedIndex)" required>
             <option value="1">Yes</option>
             <option value="0">No</option>
         </select>
 
         <label class="modal-label" for="edit-character-move-speed-input">Move Speed</label>
-        <input type="text" id="edit-character-move-speed-input" name="character-move-speed" value="10">
+        <input type="number" id="edit-character-move-speed-input" name="character-move-speed" value="1" required>
 
         <label class="modal-label" for="edit-character-critical-multiplier-input">Critical Multiplier</label>
-        <input type="text" id="edit-character-critical-multiplier-input" name="character-critical-multiplier" value="0">
+        <input type="number" id="edit-character-critical-multiplier-input" name="character-critical-multiplier" value="0" required>
 
         <label class="modal-label" for="edit-character-ammo-capacity-input">Ammo Capacity</label>
-        <input type="text" id="edit-character-ammo-capacity-input" name="character-ammo-capacity" value="8">
+        <input type="number" id="edit-character-ammo-capacity-input" name="character-ammo-capacity" value="0">
 
         <label class="modal-label" for="edit-character-track-alliance-input">Alliance</label>
         <select name="character-track-alliance" id="edit-character-track-alliance-input">
