@@ -1,6 +1,4 @@
 function confirmDelete(character_id, character_name) {
-    console.log("Character ID: ", character_id); // Log the character ID
-    console.log("Character Name: ", document.getElementById('delete-character-name').value);
     // Display the Character ID in the modal
     document.getElementById('delete-character-id').value = character_id;
     document.getElementById('delete-character-name').value = character_name;
@@ -9,7 +7,9 @@ function confirmDelete(character_id, character_name) {
     document.getElementById('confirm-delete-button').onclick = function() {
         deleteCharacter(character_id);
     };
-    showForm('delete', character_id, character_name);
+    document.getElementById('delete-character-id').innerText = character_id;
+    document.getElementById('delete-character-name').innerText = character_name;
+    showForm('delete');
 }
 
 function deleteCharacter(character_id) {
@@ -39,9 +39,5 @@ function deleteCharacter(character_id) {
     console.log("Character ID: ", character_id); // Log the character ID
     xhttp.send(JSON.stringify(data)); // Send the data
     
-    hideDeleteModal(); // Hide the modal
-}
-
-function hideDeleteModal() {
     showForm('browse');
 }

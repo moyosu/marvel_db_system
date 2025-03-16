@@ -10,21 +10,18 @@
                 <tr>
                     <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
                     <th></th>
-                    {{#each data.playerCharacters.[0]}}
-                    <th>
-                        {{@key}}
-                    </th>
-                    {{/each}}
+                    <th>Player</th>
+                    <th>Character</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each data.playerCharacters}}
                 <tr>
                     <td>
-                        <a href="#" onClick="showForm('update', {{this.[Player ID]}})">Edit</a>
+                        <a href="#" onClick="updatePlayerCharacter('{{this.[Player ID]}}', '{{this.[Character ID]}}')">Edit</a>
                     </td>
                     <td>
-                        <a href="#" onClick="showForm('delete', {{this.[Player ID]}})">Delete</a>
+                        <a href="#" onclick="confirmDelete('{{this.[Player ID]}}', '{{this.[Character ID]}}', '{{this.Player}}', '{{this.Character}}')">Delete</a>
                     </td>
                     <td>{{this.Player}}</td>
                     <td>{{this.Character}}</td>
@@ -63,6 +60,9 @@
 <div id="update" class="form-container hidden">
     <h3 class="modal">Edit Player Character</h3>
     <form id="edit-player-character-form-ajax">
+        <input type="hidden" id="prev-player-id" name="prev-player-id">
+        <input type="hidden" id="prev-character-id" name="prev-character-id">
+        
         <label class="modal-label" for="edit-player-track-input">Track Player</label>
         <select id="edit-player-track-input" name="edit-player-track">
             {{#each data.players}}
@@ -81,12 +81,15 @@
     </form>
         <button type="button" onClick="showForm('browse')">Cancel</button>
 </div>
+<script src="js/update_playerCharacter.js"></script>
 
 <!-- Delete Confirmation -->
 <div id="delete" class="form-container hidden">
     <h3 class="modal">Are you sure you want to delete this player character?</h3>
-    <p class="modal-label">Track Player: <span id="delete-message"></span></p>
-    <button id="confirm-delete-button">Delete</button>
+    <p class="modal-label">Player: <span id="delete-player-id"></span></p>
+    <p class="modal-label">Character: <span id="delete-character-id"></span></p>
     <button type="button" onClick="showForm('browse')">Cancel</button>
+    <button id="confirm-delete-button">Delete</button>
 </div>
+<script src="js/delete_playerCharacter.js"></script>
 {{/layout}}

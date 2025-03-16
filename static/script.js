@@ -16,11 +16,6 @@ window.showForm = function (formType, id = null, name = null) {
     } else {
         console.error("Form not found:", formType);
     }
-    
-    if (formType === "delete" && id && name) {
-        document.getElementById("delete-character-id").innerText = `${id}`;
-        document.getElementById("delete-character-name").innerText = `${name}`;
-    }
 }
 
 function filterPlayers() {

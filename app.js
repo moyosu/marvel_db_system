@@ -85,7 +85,7 @@ app.get('/abilities', function (req, res) {
             };
 
             console.log("Data: ", data);
-            res.render('abilities', { data: data, title: "Abilities Page"});
+            res.render('abilities', { data: data, title: "Abilities Page" });
         });
     });
 });
@@ -403,7 +403,7 @@ app.get('/battleParticipants', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('battleParticipants', { data: rows, title: "BattleParticipants Page"  }); // Render the players.hbs file and send the data
+        res.render('battleParticipants', { data: rows, title: "BattleParticipants Page" }); // Render the players.hbs file and send the data
     });
 });
 
@@ -436,7 +436,7 @@ app.get('/battles', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('battles', { data: rows, title: "Battles Page"  }); // Render the players.hbs file and send the data
+        res.render('battles', { data: rows, title: "Battles Page" }); // Render the players.hbs file and send the data
     });
 });
 
@@ -594,7 +594,7 @@ app.get('/characters', function (req, res) {
             };
 
             console.log("Rows returned: ", data); // Log the returned rows
-            res.render('characters', { data: data, title: "Characters Page"  }); // Render the characters.hbs file and send the data
+            res.render('characters', { data: data, title: "Characters Page" }); // Render the characters.hbs file and send the data
         });
     });
 });
@@ -609,12 +609,12 @@ app.post('/add-character', function (req, res) {
     let move_speed_input = data.move_speed;
     let critical_multiplier_input = data.critical_multiplier;
     // If the ammo_capacity is an empty string, null, or undefined, set it to null
-    let ammo_capacity_input = data.ammo_capacity === '' || data.ammo_capacity === null || data.ammo_capacity === undefined 
-        ? null 
+    let ammo_capacity_input = data.ammo_capacity === '' || data.ammo_capacity === null || data.ammo_capacity === undefined
+        ? null
         : parseInt(data.ammo_capacity);
     // If the track_alliance is an empty string, null, or undefined, set it to null
-    let track_alliance_input = data.track_alliance === '' || data.track_alliance === null || data.track_alliance === undefined 
-        ? null 
+    let track_alliance_input = data.track_alliance === '' || data.track_alliance === null || data.track_alliance === undefined
+        ? null
         : parseInt(data.track_alliance);
 
     // Insert the new character without ammo capacity into the database
@@ -738,12 +738,12 @@ app.put('/put-character-ajax', function (req, res, next) {
     let new_move_speed = parseInt(data.move_speed);
     let new_critical_multiplier = parseInt(data.critical_multiplier);
     // If the ammo_capacity is an empty string, null, or undefined, set it to null
-    let new_ammo_capacity = data.ammo_capacity === '' || data.ammo_capacity === null || data.ammo_capacity === undefined 
-        ? null 
+    let new_ammo_capacity = data.ammo_capacity === '' || data.ammo_capacity === null || data.ammo_capacity === undefined
+        ? null
         : parseInt(data.ammo_capacity);
     // If the track_alliance is an empty string, null, or undefined, set it to null
-    let new_track_alliance = data.track_alliance === '' || data.track_alliance === null || data.track_alliance === undefined 
-        ? null 
+    let new_track_alliance = data.track_alliance === '' || data.track_alliance === null || data.track_alliance === undefined
+        ? null
         : parseInt(data.track_alliance);
     let queryCharacter = `
         UPDATE 
@@ -831,7 +831,7 @@ app.get('/playerBattles', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('playerBattles', { data: rows, title: "PlayerBattles Page"  });
+        res.render('playerBattles', { data: rows, title: "PlayerBattles Page" });
     });
 });
 
@@ -843,7 +843,9 @@ app.get('/playerBattles', function (req, res) {
 app.get('/playerCharacters', function (req, res) {
     let query1 = `
         SELECT 
+            Players.player_id AS 'Player ID',
             Players.player_name AS 'Player', 
+            Characters.character_id AS 'Character ID',
             Characters.character_name AS 'Character' 
         FROM 
             PlayerCharacters 
@@ -898,7 +900,7 @@ app.get('/playerCharacters', function (req, res) {
                 };
 
                 console.log("Rows returned: ", data); // Log the returned rows
-                res.render('playerCharacters', { data: data, title: "PlayerCharacters Page"  });
+                res.render('playerCharacters', { data: data, title: "PlayerCharacters Page" });
             });
         });
     });
@@ -907,7 +909,6 @@ app.get('/playerCharacters', function (req, res) {
 // Add PlayerCharacter route
 app.post('/add-player-character', function (req, res) {
     let data = req.body; // Get the request body data
-    console.log("Data: ", data);
     let player_input = data.player;
     let character_input = data.character;
 
@@ -926,7 +927,7 @@ app.post('/add-player-character', function (req, res) {
             console.log(error);
             res.status(400).json({ error: error.message });
         } else {
-            // If there was no error, perform a SELECT * on PlayerCharacters
+            // If there was no error, perform a SELECT * on PlayerCharacters     
             let query2 = `
                 SELECT 
                     track_player AS 'Player', 
@@ -942,6 +943,66 @@ app.post('/add-player-character', function (req, res) {
                     res.status(200).json(rows);
                 }
             });
+        }
+    });
+});
+
+// Update PlayerCharacter route
+app.put('/put-player-character-ajax', function (req, res, next) {
+    let data = req.body;
+    console.log("Data: ", data);
+    // Get the new and previous IDs
+    let player_id = parseInt(data.player_id); // New player ID
+    let character_id = parseInt(data.character_id); // New character ID
+    let prev_player_id = parseInt(data.prev_player_id); // Previous player ID
+    let prev_character_id = parseInt(data.prev_character_id); // Previous character ID
+    
+    let queryPlayerCharacter = `
+        UPDATE 
+            PlayerCharacters 
+        SET 
+            track_player = ?, 
+            track_character = ? 
+        WHERE 
+            track_player = ? 
+        AND 
+            track_character = ?;
+    `;
+    console.log("Query: ", queryPlayerCharacter);
+    db.pool.query(queryPlayerCharacter, [player_id, character_id, prev_player_id, prev_character_id], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.status(400).json({ error: error.message });
+        }
+        else {
+            res.status(200).json(rows);
+        }
+    });
+});
+
+// Delete PlayerCharacter route
+app.delete('/delete-player-character-ajax', function (req, res, next) {
+    let data = req.body;
+    let player_id = parseInt(data.player_id);
+    let character_id = parseInt(data.character_id);
+
+    let delete_player_character = `
+        DELETE FROM 
+            PlayerCharacters 
+        WHERE 
+            track_player = ? 
+        AND 
+            track_character = ?;
+    `;
+
+    db.pool.query(delete_player_character, [player_id, character_id], function (error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            console.log("Delete successful");
+            res.sendStatus(204);
         }
     });
 });
@@ -969,7 +1030,7 @@ app.get('/players', function (req, res) {
         }
 
         console.log("Rows returned: ", rows); // Log the returned rows
-        res.render('players', { data: rows, title: "Players Page"  }); // Render the players.hbs file and send the data
+        res.render('players', { data: rows, title: "Players Page" }); // Render the players.hbs file and send the data
     });
 });
 
