@@ -1,4 +1,14 @@
 {{#> layout title="Abilities Page"}}
+<div class="filter-container">
+    <label for="dropdown-filter">Filter by Character:</label>
+    <select id="dropdown-filter" onchange="filterAbilities()">
+        <option value="all">All Characters</option>
+        {{#each data.characters}}
+            <option value="{{this.Character}}">{{this.Character}}</option>
+        {{/each}}
+    </select>
+</div>
+
 <div id="browse">
     <h3 class="table-name">Browse Abilities</h3>
 

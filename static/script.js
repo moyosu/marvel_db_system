@@ -92,3 +92,17 @@ function filterTable() {
     }
 }
 
+function filterAbilities() {
+    let selectedCharacter = document.getElementById("dropdown-filter").value.toLowerCase();
+    let rows = document.querySelectorAll("#browse tbody tr");
+
+    rows.forEach(row => {
+        let characterCell = row.cells[row.cells.length - 1].textContent.toLowerCase(); // Last column contains character name
+
+        if (selectedCharacter === "all" || characterCell === selectedCharacter) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
