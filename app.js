@@ -7,7 +7,7 @@ var express = require('express');   // We are using the express library for the 
 var app = express();            // We need to instantiate an express object to interact with the server in our code
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('static'))
+app.use(express.static('static')) // Serve static files from the 'static' directory
 PORT = 8686;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
