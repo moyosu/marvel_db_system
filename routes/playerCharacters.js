@@ -113,7 +113,7 @@ router.post('/add-player-character', function (req, res) {
 });
 
 // Update PlayerCharacter route
-router.put('/put-player-character-ajax', function (req, res, next) {
+router.put('/put-player-character-ajax', function (req, res) {
     let data = req.body;
     console.log("Data: ", data);
     // Get the new and previous IDs
@@ -122,19 +122,19 @@ router.put('/put-player-character-ajax', function (req, res, next) {
     let prev_player_id = parseInt(data.prev_player_id); // Previous player ID
     let prev_character_id = parseInt(data.prev_character_id); // Previous character ID
     
-    let queryPlayerCharacter = `
+    let query = `
         UPDATE 
             PlayerCharacters 
         SET 
-            track_player = ?, 
-            track_character = ? 
+            track_player = '${player_id}', 
+            track_character = '${character_id}' 
         WHERE 
-            track_player = ? 
+            track_player = '${prev_player_id}' 
         AND 
-            track_character = ?;
+            track_character = '${prev_character_id}';
     `;
-    console.log("Query: ", queryPlayerCharacter);
-    db.pool.query(queryPlayerCharacter, [player_id, character_id, prev_player_id, prev_character_id], function (error, rows, fields) {
+    console.log("Query: ", query);
+    db.pool.query(query, function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.status(400).json({ error: error.message });
@@ -146,21 +146,21 @@ router.put('/put-player-character-ajax', function (req, res, next) {
 });
 
 // Delete PlayerCharacter route
-router.delete('/delete-player-character-ajax', function (req, res, next) {
+router.delete('/delete-player-character-ajax', function (req, res) {
     let data = req.body;
     let player_id = parseInt(data.player_id);
     let character_id = parseInt(data.character_id);
 
-    let delete_player_character = `
+    let query = `
         DELETE FROM 
             PlayerCharacters 
         WHERE 
-            track_player = ? 
+            track_player = '${player_id}' 
         AND 
-            track_character = ?;
+            track_character = '${character_id}';
     `;
 
-    db.pool.query(delete_player_character, [player_id, character_id], function (error, rows, fields) {
+    db.pool.query(query, function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);
