@@ -12,3 +12,6 @@
     - *Referenced for implementing modular routing structure in our application, as seen in the routes directory organization.*
 - *Figured out the duplicate intersection table entries entirely on our own by examining the error logs. First by checking for errors in error logs due to duplicate entry and send a specific status code to the HTTP response.*
 - *Update form fields pre-populate associated values are entirely our own work, exception where citations are present inline with the codes.*
+- **Website: Stack Overflow, contributors: [Stack Overflow]** (March 2025)
+Javascript Alert Statements with input values [Web page]. Available at: https://stackoverflow.com/questions/15072302/javascript-alert-statement-with-string-int
+    - *Referenced for implementing the alert system when a user inputs an invalid response into one of the input fields for the add and update modals for numeric values.
