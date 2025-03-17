@@ -108,7 +108,7 @@ router.post('/add-battle-participant', function (req, res) {
                 JOIN 
                     Characters 
                 ON 
-                    BattleParticipants.track_character = Characters.character_id 
+                    BattleParticipants.track_character = Characters.character_id;
             `;
 
             console.log("Rows returned: ", rows); // Log the returned rows

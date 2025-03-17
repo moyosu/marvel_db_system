@@ -125,18 +125,18 @@ router.put('/put-ability-ajax', function (req, res) {
     let query = `
         UPDATE Abilities 
         SET 
-            ability_name = ?, 
-            special_effect = ?, 
-            ability_range = ?, 
-            cooldown = ?, 
-            charges = ?, 
-            track_character = ? 
+            ability_name = '${ability_name}', 
+            special_effect = '${special_effect}', 
+            ability_range = '${ability_range}', 
+            cooldown = '${cooldown}', 
+            charges = '${charges}', 
+            track_character = '${track_character}' 
         WHERE 
-            ability_id = ?;
+            ability_id = '${ability_id}';
     `;
 
     // Execute the query
-    db.pool.query(query, [ability_name, special_effect, ability_range, cooldown, charges, track_character, ability_id], function (error, results, fields) {
+    db.pool.query(query, function (error, results, fields) {
         if (error) {
             console.error("Error updating ability: ", error);
             res.status(400).json({ error: error.message });
@@ -156,10 +156,10 @@ router.delete('/delete-ability-ajax', function (req, res) {
         DELETE FROM 
             Abilities 
         WHERE 
-            ability_id = ?;
+            ability_id = '${ability_id_input}';
     `;
 
-    db.pool.query(query, [ability_id_input], function (error, results, fields) {
+    db.pool.query(query, function (error, results, fields) {
         // Check to see if there was an error
         if (error) {
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.

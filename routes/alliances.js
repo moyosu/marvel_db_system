@@ -85,14 +85,14 @@ router.put('/put-alliance-ajax', function (req, res, next) {
         UPDATE 
             Alliances 
         SET 
-            alliance_name = ?, 
-            stat_boost = ?, 
-            stat_boost_type = ? 
+            alliance_name = '${new_alliance_name}', 
+            stat_boost = '${new_stat_boost}', 
+            stat_boost_type = '${new_stat_boost_type}' 
         WHERE 
-            alliance_id = ?;
+            alliance_id = '${alliance_id}';
     `;
 
-    db.pool.query(queryAlliance, [new_alliance_name, new_stat_boost, new_stat_boost_type, alliance_id], function (error, rows, fields) {
+    db.pool.query(queryAlliance, function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.status(400).json({ error: error.message });
@@ -112,10 +112,10 @@ router.delete('/delete-alliance-ajax', function (req, res) {
         DELETE FROM 
             Alliances 
         WHERE 
-            alliance_id = ?;
+            alliance_id = '${alliance_id_input}';
     `;
 
-    db.pool.query(query, [alliance_id_input], function (error, results, fields) {
+    db.pool.query(query, function (error, results, fields) {
         // Check to see if there was an error
         if (error) {
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.

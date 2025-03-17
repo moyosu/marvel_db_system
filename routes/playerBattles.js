@@ -134,15 +134,15 @@ router.put('/put-player-battle-ajax', function (req, res, next) {
         UPDATE 
             PlayerBattles 
         SET 
-            track_player = ?, 
-            track_battle = ? 
+            track_player = '${player_id}', 
+            track_battle = '${battle_id}' 
         WHERE 
-            track_player = ? 
+            track_player = '${prev_player_id}' 
         AND 
-            track_battle = ?;
+            track_battle = '${prev_battle_id}';
     `;
 
-    db.pool.query(queryPlayerBattle, [player_id, battle_id, prev_player_id, prev_battle_id], function (error, rows, fields) {
+    db.pool.query(queryPlayerBattle, function (error, rows, fields) {
         if (error) {
             if (error.code === 'ER_DUP_ENTRY') {
                 res.status(409).send("Duplicate entry"); // Send a conflict response
@@ -168,12 +168,12 @@ router.delete('/delete-player-battle-ajax', function (req, res, next) {
         DELETE FROM 
             PlayerBattles 
         WHERE 
-            track_player = ? 
+            track_player = '${player_id}' 
         AND 
-            track_battle = ?;
+            track_battle = '${battle_id}';
     `;
 
-    db.pool.query(delete_player_battle, [player_id, battle_id], function (error, rows, fields) {
+    db.pool.query(delete_player_battle, function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400);

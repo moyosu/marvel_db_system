@@ -92,7 +92,13 @@ router.post('/add-character', function (req, res) {
                 track_alliance
                 ) 
         VALUES 
-            ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}', '${track_alliance_input}');
+            ('${character_name_input}', 
+            '${role_input}', 
+            '${health_input}', 
+            '${has_secondary_weapon_input}', 
+            '${move_speed_input}', 
+            '${critical_multiplier_input}', 
+            '${track_alliance_input}');
     `;
     // Insert the new character wihtout alliance into the database
     let queryWithoutAlliance = `
@@ -107,7 +113,13 @@ router.post('/add-character', function (req, res) {
                 ammo_capacity
                 ) 
         VALUES 
-            ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}', '${ammo_capacity_input}');
+            ('${character_name_input}', 
+            '${role_input}', 
+            '${health_input}', 
+            '${has_secondary_weapon_input}', 
+            '${move_speed_input}', 
+            '${critical_multiplier_input}', 
+            '${ammo_capacity_input}');
     `;
     // Insert the new character wihtout ammo capacity and alliance into the database
     let queryWithoutAllianceAndAmmoCapacity = `
@@ -121,7 +133,12 @@ router.post('/add-character', function (req, res) {
                 critical_multiplier
                 ) 
         VALUES 
-            ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}');
+            ('${character_name_input}', 
+            '${role_input}', 
+            '${health_input}', 
+            '${has_secondary_weapon_input}', 
+            '${move_speed_input}', 
+            '${critical_multiplier_input}');
     `;
     // Insert the new character with ammo and alliance into the database
     let query = `
@@ -137,7 +154,14 @@ router.post('/add-character', function (req, res) {
                 track_alliance
                 ) 
         VALUES 
-            ('${character_name_input}', '${role_input}', '${health_input}', '${has_secondary_weapon_input}', '${move_speed_input}', '${critical_multiplier_input}', '${ammo_capacity_input}', '${track_alliance_input}');
+            ('${character_name_input}', 
+            '${role_input}', 
+            '${health_input}', 
+            '${has_secondary_weapon_input}', 
+            '${move_speed_input}', 
+            '${critical_multiplier_input}', 
+            '${ammo_capacity_input}', 
+            '${track_alliance_input}');
     `;
 
     // Select the query to run based on the input
@@ -211,28 +235,19 @@ router.put('/put-character-ajax', function (req, res, next) {
         UPDATE 
             Characters 
         SET 
-            character_name = ?, 
-            role = ?, 
-            health = ?, 
-            has_secondary_weapon = ?, 
-            move_speed = ?, 
-            critical_multiplier = ?, 
-            ammo_capacity = ?, 
-            track_alliance = ? 
+            character_name = '${new_character_name}', 
+            role = '${new_role}', 
+            health = '${new_health}', 
+            has_secondary_weapon = '${new_has_secondary_weapon}', 
+            move_speed = '${new_move_speed}', 
+            critical_multiplier = '${new_critical_multiplier}', 
+            ammo_capacity = '${new_ammo_capacity}', 
+            track_alliance = '${new_track_alliance}' 
         WHERE 
-            character_id = ?;
+            character_id = '${character_id}';
     `;
 
-    db.pool.query(queryCharacter, [
-        new_character_name, new_role,
-        new_health,
-        new_has_secondary_weapon,
-        new_move_speed,
-        new_critical_multiplier,
-        new_ammo_capacity,
-        new_track_alliance,
-        character_id
-    ], function (error, rows, fields) {
+    db.pool.query(queryCharacter, function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.status(400).json({ error: error.message });
@@ -251,11 +266,11 @@ router.delete('/delete-character-ajax', function (req, res, next) {
         DELETE FROM 
             Characters 
         WHERE 
-            character_id = ?;
+            character_id = '${character_id_input}';
     `;
 
     // Run the query
-    db.pool.query(delete_character, [character_id_input], function (error, rows, fields) {
+    db.pool.query(delete_character, function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.sendStatus(400); // Bad request

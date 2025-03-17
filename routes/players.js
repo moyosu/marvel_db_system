@@ -82,13 +82,13 @@ router.put('/put-player-ajax', function (req, res, next) {
         UPDATE 
             Players 
         SET 
-            player_name = ?, 
-            rank = ? 
+            player_name = '${new_player_name}', 
+            rank = '${new_rank}' 
         WHERE 
-            player_id = ?;
+            player_id = '${player_id}';
     `;
 
-    db.pool.query(queryPlayer, [new_player_name, new_rank, player_id], function (error, rows, fields) {
+    db.pool.query(queryPlayer, function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.status(400).json({ error: error.message });
@@ -107,7 +107,7 @@ router.delete('/delete-player-ajax', function (req, res, next) {
         DELETE FROM 
             Players 
         WHERE 
-            player_id = ?;
+            player_id = '${player_id_input}';
     `;
 
     // Run the query

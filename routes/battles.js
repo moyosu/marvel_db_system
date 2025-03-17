@@ -54,10 +54,18 @@ router.post('/add-battle-ajax', function (req, res) {
         INSERT INTO Battles 
             (time_stamp, is_victory, kills, deaths, assists, damage_dealt, damage_blocked, healing, accuracy) 
         VALUES 
-            (?, ?, ?, ?, ?, ?, ?, ?, ?);
+            ('${time_stamp}', 
+            '${is_victory}', 
+            '${kills}', 
+            '${deaths}', 
+            '${assists}', 
+            '${damage_dealt}', 
+            '${damage_blocked}', 
+            '${healing}', 
+            '${accuracy}');
     `;
 
-    db.pool.query(query, [time_stamp, is_victory, kills, deaths, assists, damage_dealt, damage_blocked, healing, accuracy], function (error, results, fields) {
+    db.pool.query(query, function (error, results, fields) {
         if (error) {
             console.error("Error adding battle: ", error);
             res.status(400).json({ error: error.message });
@@ -87,20 +95,20 @@ router.put('/put-battle-ajax', function (req, res) {
     let query = `
         UPDATE Battles 
         SET 
-            time_stamp = ?, 
-            is_victory = ?, 
-            kills = ?, 
-            deaths = ?, 
-            assists = ?, 
-            damage_dealt = ?, 
-            damage_blocked = ?, 
-            healing = ?, 
-            accuracy = ? 
+            time_stamp = '${time_stamp}', 
+            is_victory = '${is_victory}', 
+            kills = '${kills}', 
+            deaths = '${deaths}', 
+            assists = '${assists}', 
+            damage_dealt = '${damage_dealt}', 
+            damage_blocked = '${damage_blocked}', 
+            healing = '${healing}', 
+            accuracy = '${accuracy}' 
         WHERE 
-            battle_id = ?;
+            battle_id = '${battle_id}';
     `;
 
-    db.pool.query(query, [time_stamp, is_victory, kills, deaths, assists, damage_dealt, damage_blocked, healing, accuracy, battle_id], function (error, results, fields) {
+    db.pool.query(query, function (error, results, fields) {
         if (error) {
             console.error("Error updating battle: ", error);
             res.status(400).json({ error: error.message });
@@ -120,10 +128,10 @@ router.delete('/delete-battle-ajax', function (req, res) {
         DELETE FROM 
             Battles 
         WHERE 
-            battle_id = ?;
+            battle_id = '${battle_id}';
     `;
 
-    db.pool.query(query, [battle_id], function (error, results, fields) {
+    db.pool.query(query, function (error, results, fields) {
         if (error) {
             console.error("Error deleting battle: ", error);
             res.status(400).json({ error: error.message });
