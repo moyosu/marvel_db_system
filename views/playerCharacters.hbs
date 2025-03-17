@@ -28,6 +28,16 @@
                 </tr>
                 {{/each}}
             </tbody>
+            <!-- table footer -->
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    This intersection table is used to represent the <strong>M:N relationship</strong> between <strong>Players</strong> and <strong>Characters</strong>.
+                    <br>
+                    Deleting a PlayerCharacter will not delete the player or character associated with it, but it will remove the relationship between the player and the character.
+                </td>
+            </tr>
+        </tfoot>
         </table>
     </div>
 </div>

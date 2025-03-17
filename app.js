@@ -21,8 +21,10 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
 
 // Citation for the following code below:
 // Date: 03/16/2025
-// Adapted from:
+// Adapted from: StackOverflow
 // Source URL: https://stackoverflow.com/questions/44544990/how-to-set-routes-in-express-app-use-vs-app-get
+// Purpose: This code was used to set up the routes for the web server. The purpose of the routes is to 
+// modularize the code and make it more well structured and easier to manage. 
 
 // Import routes
 const routes = require('./routes');

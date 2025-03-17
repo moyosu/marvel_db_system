@@ -39,10 +39,12 @@
                     <td>{{this.Character}}</td>
                     <td>{{this.Role}}</td>
                     <td>{{this.Health}}</td>
-                    <!--# Citation for the following function:
-                        # Date: 03/15/2025
-                        # Adapted from:
-                        # Source URL: https://handlebarsjs.com/guide/builtin-helpers.html#if -->
+                    <!-- Citation for the following function:
+                        Date: 03/15/2025
+                        Adapted from: HandlebarsJS Documentation
+                        Source URL: https://handlebarsjs.com/guide/builtin-helpers.html#if
+                        Purpose: Converts the boolean database value into a "Yes" or "No" format.
+                    -->
                     <td>{{#if this.[Has Secondary Weapon]}}Yes{{else}}No{{/if}}</td>
                     <td>{{this.[Move Speed]}}</td>
                     <td>{{this.[Critical Multiplier]}}</td>
@@ -51,7 +53,19 @@
                 </tr>
                 {{/each}}
             </tbody>
+            <!-- table footer -->
+            <tfoot>
+                <tr>
+                    <td colspan="11">
+                        <strong>Alliance is an optional field representing a nullable relationship.</strong> If a character is not part of an alliance, it will be displayed as empty.
+                        <br>
+                        Deleting/updating a Character will not delete the alliance associated with it, but it will delete/update any
+                        associated relationships in PlayerCharacters and BattleParticipants.
+                    </td>
+                </tr>
+            </tfoot>
         </table>
+
     </div>
 </div>
 <script src="/js/update_character.js"></script>

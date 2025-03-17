@@ -37,6 +37,16 @@
                 </tr>
                 {{/each}}
             </tbody>
+            <!-- table footer -->
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    This intersection table is used to represent the <strong>M:N relationship</strong> between <strong>Battles</strong> and <strong>Characters</strong>.
+                    <br>
+                    Deleting a BattleParticipant will not delete the battle or character associated with it, but it will remove the relationship between the battle and the character.
+                </td>
+            </tr>
+        </tfoot>
         </table>
     </div>
 </div>

@@ -31,7 +31,16 @@
                 </tr>
                 {{/each}}
             </tbody>
-        </table>
+            <!-- table footer -->
+            <tfoot>
+            <tr>
+                <td colspan="6">
+                    Deleting an Alliance will not delete the characters associated with it, but it will remove the relationship between the character and the alliance.
+                    <br>
+                    Character's alliance attribute will be set to NULL and the its Alliance field will be empty.
+                </td>
+            </tr>
+        </tfoot>
     </div>
 </div>
 

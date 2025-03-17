@@ -45,8 +45,16 @@
                     <td>{{this.Healing}}</td>
                     <td>{{this.Accuracy}}</td>
                 </tr>
+                {{/each}}
             </tbody>
-            {{/each}}
+            <!-- table footer -->
+            <tfoot>
+            <tr>
+                <td colspan="12">
+                    Deleting a Battle will delete any associated relationships in BattleParticipants.
+                </td>
+            </tr>
+            </tfoot>
         </table>
     </div>
 </div>

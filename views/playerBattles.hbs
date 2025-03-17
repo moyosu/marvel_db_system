@@ -11,7 +11,8 @@
                     <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
                     <th></th>
                     <th>Player</th>
-                    <th>Battle</th>
+                    <th>Battle ID</th>
+                    <th>Time Stamp</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,10 +25,21 @@
                         <a id="delete-option" href="#" onclick="confirmDelete('{{this.[Player ID]}}', '{{this.[Battle ID]}}', '{{this.Player}}', '{{this.[Battle ID]}}', '{{this.[Time Stamp]}}')">Delete</a>
                     </td>
                     <td>{{this.[Player]}}</td>
+                    <td>{{this.[Battle ID]}}</td>
                     <td>{{this.[Time Stamp]}}</td>
                 </tr>
                 {{/each}}
             </tbody>
+            <!-- table footer -->
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    This intersection table is used to represent the <strong>M:N relationship</strong> between <strong>Players</strong> and <strong>Battles</strong>.
+                    <br>
+                    Deleting a PlayerBattle will not delete the player or battle associated with it, but it will remove the relationship between the player and the battle.
+                </td>
+            </tr>
+        </tfoot>
         </table>
     </div>
 </div>
