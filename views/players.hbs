@@ -53,10 +53,10 @@
     <h3 class="modal">Add a New Player</h3>
     <form id="add-player-form-ajax">
         <label class="modal-label" for="player-name-input">Player Name</label>
-        <input type="text" name="player-name" id="player-name-input">
+        <input type="text" name="player-name" id="player-name-input" readonly>
 
         <label class="modal-label">Rank</label>
-        <select name="player-rank" id="player-rank-input">
+        <select name="player-rank" id="player-rank-input" required>
             <!-- Populate with options from the filter -->
             <option value="Eternal">Eternal</option>
             <option value="Celestial">Celestial</option>
@@ -84,10 +84,10 @@
         <input type="text" class="edit-id" name="upate-player-id" id="update-player-id-input" readonly>
 
         <label class="modal-label" for="update-player-name-input">Player Name</label>
-        <input type="text" name="update-player-name" id="update-player-name-input">
+        <input type="text" name="update-player-name" id="update-player-name-input" required>
 
         <label class="modal-label" for="update-player-rank-input">Rank</label>
-        <select name="update-player-rank" id="update-player-rank-input">
+        <select name="update-player-rank" id="update-player-rank-input" required>
             <option value="Eternal">Eternal</option>
             <option value="Celestial">Celestial</option>
             <option value="GrandMasters">GrandMasters</option>
