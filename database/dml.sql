@@ -327,7 +327,8 @@ VALUES
     '${track_alliance_input}'
     );
 
--- Update an existing character's information by character_id
+-- Update an existing character's information by character_id.
+-- The ammo_capacity and track_alliance are optional and can be null.
 UPDATE Characters 
 SET 
     character_name = '${new_character_name}', 
@@ -336,8 +337,8 @@ SET
     has_secondary_weapon = '${new_has_secondary_weapon}', 
     move_speed = '${new_move_speed}', 
     critical_multiplier = '${new_critical_multiplier}', 
-    ammo_capacity = '${new_ammo_capacity}', 
-    track_alliance = '${new_track_alliance}' 
+    ammo_capacity = ?, 
+    track_alliance = ?
 WHERE 
     character_id = '${character_id}';
 
@@ -380,20 +381,20 @@ SELECT
 FROM
     Battles;
 
--- Insert a new player-battle relationship
+-- Insert a new player battle relationship
 INSERT INTO PlayerBattles 
     (track_player, track_battle) 
 VALUES 
     ('${player_input}', '${battle_input}');
 
--- Get all player-battle relationships
+-- Get all player battle relationships
 SELECT 
     track_player AS 'Player', 
     track_battle AS 'Battle' 
 FROM 
     PlayerBattles;
 
--- Update an existing player-battle relationship
+-- Update an existing player battle relationship
 UPDATE 
     PlayerBattles 
 SET 
@@ -404,7 +405,7 @@ WHERE
 AND 
     track_battle = '${prev_battle_id}';
 
--- Delete a player-battle relationship
+-- Delete a player battle relationship
 DELETE FROM 
     PlayerBattles 
 WHERE 
@@ -415,7 +416,7 @@ AND
 /***************************** PlayerCharacters queries *********************************
 */
 
--- Get all player-character relationships with detailed information
+-- Get all player character relationships with detailed information
 SELECT 
     Players.player_id AS 'Player ID',
     Players.player_name AS 'Player', 
@@ -446,20 +447,20 @@ SELECT
 FROM
     Characters;
 
--- Insert a new player-character relationship
+-- Insert a new player character relationship
 INSERT INTO PlayerCharacters 
     (track_player, track_character) 
 VALUES 
     ('${player_input}', '${character_input}');
 
--- Get all player-character relationships
+-- Get all player character relationships
 SELECT 
     track_player AS 'Player', 
     track_character AS 'Character' 
 FROM 
     PlayerCharacters;
 
--- Update an existing player-character relationship
+-- Update an existing player character relationship
 UPDATE 
     PlayerCharacters 
 SET 
@@ -470,7 +471,7 @@ WHERE
 AND 
     track_character = '${prev_character_id}';
 
--- Delete a player-character relationship
+-- Delete a player character relationship
 DELETE FROM 
     PlayerCharacters 
 WHERE 

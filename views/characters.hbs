@@ -32,12 +32,17 @@
                             onClick="updateCharacter({{this.[Character ID]}}, '{{this.Character}}', '{{this.Role}}', '{{this.Health}}', '{{this.[Has Secondary Weapon]}}', '{{this.[Move Speed]}}', '{{this.[Critical Multiplier]}}', '{{this.[Ammo Capacity]}}', '{{this.Alliance}}')">Edit</a>
                     </td>
                     <td>
-                        <a id="delete-option" href="#" onclick="confirmDelete({{this.[Character ID]}}, '{{this.Character}}')">Delete</a>
+                        <a id="delete-option" href="#"
+                            onclick="confirmDelete({{this.[Character ID]}}, '{{this.Character}}')">Delete</a>
                     </td>
                     <td>{{this.[Character ID]}}</td>
                     <td>{{this.Character}}</td>
                     <td>{{this.Role}}</td>
                     <td>{{this.Health}}</td>
+                    <!--# Citation for the following function:
+                        # Date: 03/15/2025
+                        # Adapted from:
+                        # Source URL: https://handlebarsjs.com/guide/builtin-helpers.html#if -->
                     <td>{{#if this.[Has Secondary Weapon]}}Yes{{else}}No{{/if}}</td>
                     <td>{{this.[Move Speed]}}</td>
                     <td>{{this.[Critical Multiplier]}}</td>
@@ -124,8 +129,7 @@
         <input type="number" id="edit-character-health-input" name="character-health" value="100" required>
 
         <label class="modal-label" for="edit-character-secondary-weapon-input">Has Secondary Weapon</label>
-        <select name="character-secondary-weapon" id="edit-character-secondary-weapon-input"
-            onchange="updateSelectedHasSecondaryWeapon(this.selectedIndex)" required>
+        <select name="character-secondary-weapon" id="edit-character-secondary-weapon-input" required>
             <option value="1">Yes</option>
             <option value="0">No</option>
         </select>
@@ -146,7 +150,7 @@
             <option value="{{this.[Alliance ID]}}">
                 {{this.Alliance}}</option>
             {{/each}}
-            <option value="-1" selected>None</option>
+            <option value="" selected>None</option>
         </select>
         <button type="submit">Save Changes</button>
     </form>

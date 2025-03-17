@@ -163,17 +163,19 @@ router.post('/add-character', function (req, res) {
             '${ammo_capacity_input}', 
             '${track_alliance_input}');
     `;
-
+    var queryToRun = undefined;
     // Select the query to run based on the input
-    if (ammo_capacity_input === null && track_alliance_input === null) {
-        query = queryWithoutAllianceAndAmmoCapacity;
-    } else if (ammo_capacity_input === null) {
-        query = queryWithoutAmmoCapacity;
-    } else if (track_alliance_input === null) {
-        query = queryWithoutAlliance;
-    };
+    if (ammo_capacity_input && track_alliance_input) {
+        queryToRun = query;
+    } else if (ammo_capacity_input) {
+        queryToRun = queryWithoutAlliance;
+    } else if (track_alliance_input) {
+        queryToRun = queryWithoutAmmoCapacity;
+    } else {
+        queryToRun = queryWithoutAllianceAndAmmoCapacity;
+    }
 
-    db.pool.query(query, function (error, results, fields) {
+    db.pool.query(queryToRun, function (error, results, fields) {
         // Check to see if there was an error
         if (error) {
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
@@ -241,13 +243,13 @@ router.put('/put-character-ajax', function (req, res, next) {
             has_secondary_weapon = '${new_has_secondary_weapon}', 
             move_speed = '${new_move_speed}', 
             critical_multiplier = '${new_critical_multiplier}', 
-            ammo_capacity = '${new_ammo_capacity}', 
-            track_alliance = '${new_track_alliance}' 
+            ammo_capacity = ?, 
+            track_alliance = ? 
         WHERE 
             character_id = '${character_id}';
     `;
 
-    db.pool.query(queryCharacter, function (error, rows, fields) {
+    db.pool.query(queryCharacter, [new_ammo_capacity, new_track_alliance], function (error, rows, fields) {
         if (error) {
             console.log(error);
             res.status(400).json({ error: error.message });

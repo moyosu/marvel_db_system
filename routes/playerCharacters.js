@@ -39,7 +39,7 @@ router.get('/', function (req, res) {
             Characters;
     `;
 
-    db.pool.query(query1, function (error, rows, fields) { // Execute the query
+    db.pool.query(query1, function (error, playerCharactersRows, fields) { // Execute the query
         if (error) {
             console.error("Error executing query: ", error); // Log any errors
             res.status(500).send("Error executing query"); // Send an error response
@@ -59,7 +59,7 @@ router.get('/', function (req, res) {
                 }
 
                 let data = {
-                    playerCharacters: rows,
+                    playerCharacters: playerCharactersRows,
                     players: playerRows,
                     characters: characterRows
                 };

@@ -8,7 +8,7 @@ var app = express();            // We need to instantiate an express object to i
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('static'))
-PORT = 8619;                 // Set a port number at the top so it's easy to change in the future
+PORT = 8686;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
 
@@ -18,6 +18,11 @@ app.engine('.hbs', engine({
     layoutsDir: __dirname + "/views/layouts" // Specify layouts directory
 }));
 app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
+
+// Citation for the following code below:
+// Date: 03/16/2025
+// Adapted from:
+// Source URL: https://stackoverflow.com/questions/44544990/how-to-set-routes-in-express-app-use-vs-app-get
 
 // Import routes
 const routes = require('./routes');
@@ -42,4 +47,4 @@ app.use('/players', routes.players);
 */
 app.listen(PORT, function () {            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.')
-});
+}); 
