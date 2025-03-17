@@ -1,10 +1,11 @@
 // Function to show the delete confirmation modal and set the ability ID
-function confirmDelete(ability_id) {
+function confirmDelete(ability_id, name) {
     // Show the modal
     showForm('delete');
 
     // Display the ability ID in the modal
     document.getElementById('delete-message').textContent = ability_id;
+    document.getElementById('delete-message-name').textContent = name;
 
     // Update the delete button to call deleteAbility with the correct ID
     document.getElementById('confirm-delete-button').onclick = function () {

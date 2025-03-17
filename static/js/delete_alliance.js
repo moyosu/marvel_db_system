@@ -1,10 +1,11 @@
-function confirmDelete(alliance_id) {
+function confirmDelete(alliance_id, name) {
 
     // Show the modal
     showForm('delete', alliance_id);
 
     // Display the alliance ID in the modal
     document.getElementById('delete-message').textContent = alliance_id;
+    document.getElementById('delete-message-name').textContent = name;
 
     // Update the delete button to call deleteAlliance with the correct ID
     document.getElementById('confirm-delete-button').onclick = function () {

@@ -1,10 +1,11 @@
 // Function to show the delete confirmation modal and set the battle ID
-function confirmDelete(battle_id) {
+function confirmDelete(battle_id, time_stamp) {
     // Show the modal
     showForm('delete');
 
     // Display the battle ID in the modal
     document.getElementById('delete-message').textContent = battle_id;
+    document.getElementById('delete-message-time').textContent = time_stamp;
 
     // Update the delete button to call deleteBattle with the correct ID
     document.getElementById('confirm-delete-button').onclick = function () {

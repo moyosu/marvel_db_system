@@ -1,10 +1,11 @@
-function confirmDelete(player_id) {
+function confirmDelete(player_id, player_name) {
 
     // Show the modal
     showForm('delete', player_id);
 
     // Display the player ID in the modal
     document.getElementById('delete-message').textContent = player_id;
+    document.getElementById('delete-message-name').textContent = player_name;
 
     // Update the delete button to call deletePlayer with the correct ID
     document.getElementById('confirm-delete-button').onclick = function () {
