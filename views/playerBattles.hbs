@@ -10,21 +10,18 @@
                 <tr>
                     <th class="new-button"><a href="#" onClick="showForm('insert')">New</a></th>
                     <th></th>
-                    {{#each data.[0]}}
-                    <th>
-                        {{@key}}
-                    </th>
-                    {{/each}}
+                    <th>Player</th>
+                    <th>Battle</th>
                 </tr>
             </thead>
             <tbody>
-                {{#each data}}
+                {{#each data.playerBattles}}
                 <tr>
                     <td>
-                        <a href="#" onClick="showForm('update', {{this.[Player ID]}})">Edit</a>
+                        <a href="#" onClick="updatePlayerBattle('{{this.[Player ID]}}', '{{this.[Battle ID]}}')">Edit</a>
                     </td>
                     <td>
-                        <a href="#" onClick="showForm('delete', {{this.[Player ID]}})">Delete</a>
+                        <a href="#" onclick="confirmDelete('{{this.[Player ID]}}', '{{this.[Battle ID]}}', '{{this.Player}}', '{{this.[Battle ID]}}')">Delete</a>
                     </td>
                     <td>{{this.[Player]}}</td>
                     <td>{{this.[Battle ID]}}</td>
@@ -38,43 +35,63 @@
 <!-- Add Player Battle Form -->
 <div id="insert" class="form-container hidden">
     <h3 class="modal">Add a New Player Battle</h3>
-    <label class="modal-label">Track Player</label>
-    <select id="player-track-input">
-        <option value="Select">Select</option>
-        <option value="MasterMo">MasterMo</option>
-        <option value="Zyverous">Zyverous</option>
-        <option value="GamerDad">GamerDad</option>
-    </select>
-
-    <label class="modal-label">Track Battle</label>
-    <input type="text" id="battle-track-input">
-
-    <button onClick="addPlayerBattle()">Add Player Battle</button>
-    <button onClick="showForm('browse')">Cancel</button>
+    <form id="add-player-battle-form-ajax">
+        <label class="modal-label" for="player-track-input">Track Player</label>
+        <select id="player-track-input" name="player-track">
+            {{#each data.players}}
+            <option value="{{this.[Player ID]}}">{{this.Player}}</option>
+            {{/each}}
+        </select>
+        
+        <label class="modal-label" for="battle-track-input">Track Battle</label>
+        <select id="battle-track-input" name="battle-track">
+            {{#each data.battles}}
+            <option value="{{this.[Battle ID]}}">Battle ID: {{this.[Battle ID]}} | {{this.[Time Stamp]}}</option>
+            {{/each}}
+        </select>
+        
+        <button type="submit">Add Player Battle</button>
+    </form>
+    <button type="button" onClick="showForm('browse')">Cancel</button>
 </div>
+
+<script src="js/add_playerBattle.js"></script>
 
 <!-- Edit Player Battle Form -->
 <div id="update" class="form-container hidden">
     <h3 class="modal">Edit Player Battle</h3>
-    <label class="modal-label">Track Player</label>
-    <select id="edit-player-track-input">
-        <option value="MasterMo">MasterMo</option>
-        <option value="Zyverous">Zyverous</option>
-        <option value="GamerDad">GamerDad</option>
-    </select>
+    <form id="edit-player-battle-form-ajax">
+        <input type="hidden" id="prev-player-id" name="prev-player-id">
+        <input type="hidden" id="prev-battle-id" name="prev-battle-id">
 
-    <label class="modal-label">Track Battle</label>
-    <input type="text" id="edit-battle-track-input" value="4">
+        <label class="modal-label" for="edit-player-track-input">Track Player</label>
+        <select id="edit-player-track-input" name="edit-player-track">
+            {{#each data.players}}
+            <option value="{{this.[Player ID]}}">{{this.Player}}</option>
+            {{/each}}
+        </select>
 
-    <button onClick="saveChanges()">Save Changes</button>
-    <button onClick="showForm('browse')">Cancel</button>
+        <label class="modal-label" for="edit-battle-track-input">Track Battle</label>
+        <select id="edit-battle-track-input" name="edit-battle-track">
+            {{#each data.battles}}
+            <option value="{{this.[Battle ID]}}">Battle ID: {{this.[Battle ID]}} | {{this.[Time Stamp]}}</option>
+            {{/each}}
+        </select>
+
+        <button type="submit">Save Changes</button>
+    </form>
+        <button type="button" onClick="showForm('browse')">Cancel</button>
 </div>
+
+<script src="js/update_playerBattle.js"></script>
 
 <!-- Delete Confirmation -->
 <div id="delete" class="form-container hidden">
     <h3 class="modal">Are you sure you want to delete this player battle?</h3>
-    <p class="modal-label">Track Player: <span id="delete-message"></span></p>
+    <p class="modal-label">Player: <span id="delete-player-id"></span></p>
+    <p class="modal-label">Battle: <span id="delete-battle-id"></span></p>
+    <button type="button" onClick="showForm('browse')">Cancel</button>
     <button id="confirm-delete-button">Delete</button>
-    <button onClick="showForm('browse')">Cancel</button>
 </div>
+<script src="js/delete_playerBattle.js"></script>
 {{/layout}}
