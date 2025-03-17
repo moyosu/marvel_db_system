@@ -1,3 +1,13 @@
+/****************************************************************
+    File Section: 2 - DML queries
+    Group: 88
+    Authors: Zyan Shull-Bain, Yongkang Mo
+    Date: 3/17/2025
+    Description:
+            This file contains the DML queries for the Marvel Database
+            System.
+****************************************************************/
+
 /*
  ***************************** Abilities queries *********************************
  */

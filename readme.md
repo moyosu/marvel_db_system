@@ -1,7 +1,7 @@
 ## Citations
 
 - **GitHub Repository: osu-cs340-ecampus, contributors: [Cortona1, currym-osu (Michael L Curry), dmgs11]** (March 2025) Node.js Starter App (v1.0) [Source code]. Available at: https://github.com/osu-cs340-ecampus/nodejs-starter-app/
-    - *Used as the foundation for our web application structure, as well as for the database connection setup and basic Express.js configuration in app.js.*
+    - *Majority of the codes are deritives of the starter app. Used as the foundation for our web application structure, as well as for the database connection setup and basic Express.js configuration in app.js.*
 - **Website: W3Schools, contributors: [W3Schools]** (March 2025) JavaScript Function Parameters [Web page]. Available at: https://www.w3schools.com/js/js_function_parameters.asp 
     - *Referenced for implementing route handler functions that process form data and query parameters throughout our routes files.*
 - **Website: W3Schools, contributors: [W3Schools]** (March 2025) JavaScript Location reload() Method [Web page]. Available at: https://www.w3schools.com/jsref/met_loc_reload.asp
