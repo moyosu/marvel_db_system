@@ -27,6 +27,11 @@ document.addEventListener("DOMContentLoaded", function () {
             cooldownValue < 0 ||
             chargesValue < 0 
         ) {
+            // Citation for the following code below:
+            // Date: 03/17/2025
+            // Adapted from: Stack Overflow
+            // Source URL: https://stackoverflow.com/questions/15072302/javascript-alert-statement-with-string-int
+            // Purpose: This was used to guide the user when they provide infromation about the ability to be added. 
             alert("Numeric fields (Ability Range, Cooldown, and Charges) cannot be less than 0.");
             return; // Stop the form submission if validation fails
         }
