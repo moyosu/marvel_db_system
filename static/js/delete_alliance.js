@@ -1,12 +1,11 @@
-function confirmDelete(alliance_id, name) {
+function confirmDelete(alliance_id, alliance_name) {
 
     // Show the modal
-    showForm('delete', alliance_id);
+    showForm('delete');
 
     // Display the alliance ID in the modal
     document.getElementById('delete-message').textContent = alliance_id;
-    document.getElementById('delete-message-name').textContent = name;
-
+    document.getElementById('delete-alliance-name').textContent = alliance_name;
     // Update the delete button to call deleteAlliance with the correct ID
     document.getElementById('confirm-delete-button').onclick = function () {
         deleteAlliance(alliance_id);
@@ -27,7 +26,6 @@ function deleteAlliance(alliance_id) {
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4) {
-            console.log("Response Status: ", xhttp.status); // Log the response status
             if (xhttp.status == 200) {  // Expecting 204 No Content
                 // Refresh the page or update the table to reflect the deletion
                 location.reload();
@@ -36,8 +34,6 @@ function deleteAlliance(alliance_id) {
             }
         }
     };
-    console.log("Sending data: ", JSON.stringify(data)); // Log the data being sent
-    console.log("Alliance ID to delete: ", alliance_id);
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
 

@@ -88,9 +88,14 @@ router.post('/add-player-character', function (req, res) {
     db.pool.query(query, function (error, results, fields) {
         // Check to see if there was an error
         if (error) {
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.status(400).json({ error: error.message });
+            if (error.code === 'ER_DUP_ENTRY') {
+                res.status(409).send("Duplicate entry"); // Send a conflict response
+                return;
+            } else {
+                console.error("Error executing query: ", error); // Log any errors
+                res.status(500).send("Error executing query"); // Send an error response
+                return;
+            }
         } else {
             // If there was no error, perform a SELECT * on PlayerCharacters     
             let query2 = `
@@ -136,8 +141,13 @@ router.put('/put-player-character-ajax', function (req, res) {
     console.log("Query: ", query);
     db.pool.query(query, function (error, rows, fields) {
         if (error) {
-            console.log(error);
-            res.status(400).json({ error: error.message });
+            if (error.code === 'ER_DUP_ENTRY') {
+                res.status(409).send("Duplicate entry"); // Send a conflict response
+                return;
+            } else {
+                res.status(500).send("Error executing query"); // Send an error response
+                return;
+            }
         }
         else {
             res.status(200).json(rows);

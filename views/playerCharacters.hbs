@@ -18,10 +18,10 @@
                 {{#each data.playerCharacters}}
                 <tr>
                     <td>
-                        <a href="#" onClick="updatePlayerCharacter('{{this.[Player ID]}}', '{{this.[Character ID]}}')">Edit</a>
+                        <a id="edit-option" href="#" onClick="updatePlayerCharacter('{{this.[Player ID]}}', '{{this.[Character ID]}}')">Edit</a>
                     </td>
                     <td>
-                        <a href="#" onclick="confirmDelete('{{this.[Player ID]}}', '{{this.[Character ID]}}', '{{this.Player}}', '{{this.Character}}')">Delete</a>
+                        <a id="delete-option" href="#" onclick="confirmDelete('{{this.[Player ID]}}', '{{this.[Character ID]}}', '{{this.Player}}', '{{this.Character}}')">Delete</a>
                     </td>
                     <td>{{this.Player}}</td>
                     <td>{{this.Character}}</td>

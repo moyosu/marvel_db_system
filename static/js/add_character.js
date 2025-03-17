@@ -60,26 +60,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Tell our AJAX request how to resolve
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
-                // Parse the response
-                let response = JSON.parse(xhttp.responseText);
-
-                // Add the new row to the table
-                // addRowToTable(response);
-
-                // Clear the input fields
-                characterNameValue = '';
-                characterRoleValue = '';
-                characterHealthValue = '';
-                characterHasSecondaryWeaponValue = '';
-                characterMoveSpeedValue = '';
-                characterCriticalMultiplierValue = '';
-                characterAmmoCapacityValue = '';
-                characterAllianceValue = '';
-                
                 // Refresh the window to reflect the new character addition
-                // location.reload(); 
-                // Hide the form
-                showForm('browse');
+                location.reload(); 
             } else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 alert("There was an error with the input.");
                 console.log("There was an error with the input.");

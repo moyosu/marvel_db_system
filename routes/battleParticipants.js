@@ -88,9 +88,15 @@ router.post('/add-battle-participant', function (req, res) {
 
     db.pool.query(query, function (error, rows, _fields) {
         if (error) {
-            console.error("Error executing query: ", error); // Log any errors
-            res.status(500).send("Error executing query"); // Send an error response
-            return;
+            if (error.code === 'ER_DUP_ENTRY') {
+                res.status(409).send("Duplicate entry"); // Send a conflict response
+                return;
+            } else {
+                console.error("Error executing query: ", error); // Log any errors
+                res.status(500).send("Error executing query"); // Send an error response
+                return;
+            }
+
         } else {
             // If there was no error, perform a SELECT * on BattleParticipants
             let query2 = `
@@ -133,9 +139,13 @@ router.put('/update-battle-participant', function (req, res) {
 
     db.pool.query(query, function (error, rows, _fields) {
         if (error) {
-            console.error("Error executing query: ", error); // Log any errors
-            res.status(500).send("Error executing query"); // Send an error response
-            return;
+            if (error.code === 'ER_DUP_ENTRY') {
+                res.status(409).send("Duplicate entry"); // Send a conflict response
+                return;
+            } else {
+                res.status(500).send("Error executing query"); // Send an error response
+                return;
+            }
         }
         else {
             res.status(200).json(rows);

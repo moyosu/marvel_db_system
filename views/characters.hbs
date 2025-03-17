@@ -1,17 +1,16 @@
 {{#> layout title="Characters Page"}}
-<div class="filter-container">
-    <label for="dropdown-filter">Filter by Role:</label>
-    <select id="dropdown-filter" onchange="filterCharacters()">
-        <option value="all">All Roles</option>
-        <option value="Vanguard">Vanguard</option>
-        <option value="Duelist">Duelist</option>
-        <option value="Strategist">Strategist</option>
-    </select>
-</div>
 
 <div id="browse">
     <h3 class="table-name">Browse Characters</h3>
-
+    <div class="filter-container">
+        <label for="dropdown-filter">Filter by Role:</label>
+        <select id="dropdown-filter" onchange="filterCharacters()">
+            <option value="all">All Roles</option>
+            <option value="Vanguard">Vanguard</option>
+            <option value="Duelist">Duelist</option>
+            <option value="Strategist">Strategist</option>
+        </select>
+    </div>
     <div class="table-container">
         <table border="1" cellpadding="5">
             <thead class="table-header">
@@ -29,11 +28,11 @@
                 {{#each data.characters}}
                 <tr>
                     <td>
-                        <a href="#"
+                        <a id="edit-option" href="#"
                             onClick="updateCharacter({{this.[Character ID]}}, '{{this.Character}}', '{{this.Role}}', '{{this.Health}}', '{{this.[Has Secondary Weapon]}}', '{{this.[Move Speed]}}', '{{this.[Critical Multiplier]}}', '{{this.[Ammo Capacity]}}', '{{this.Alliance}}')">Edit</a>
                     </td>
                     <td>
-                        <a href="#" onclick="confirmDelete({{this.[Character ID]}}, '{{this.Character}}')">Delete</a>
+                        <a id="delete-option" href="#" onclick="confirmDelete({{this.[Character ID]}}, '{{this.Character}}')">Delete</a>
                     </td>
                     <td>{{this.[Character ID]}}</td>
                     <td>{{this.Character}}</td>
@@ -57,7 +56,8 @@
     <h3 class="modal">Add a New Character</h3>
     <form id="add-character-form-ajax">
         <label class="modal-label" for="character-name-input">Character Name</label>
-        <input type="text" name="character-name" id="character-name-input" placeholder="Enter character's name" required>
+        <input type="text" name="character-name" id="character-name-input" placeholder="Enter character's name"
+            required>
 
         <label class="modal-label" for="character-role-input">Role</label>
         <select name="character-role" id="character-role-input" required>
@@ -71,7 +71,8 @@
         <input type="number" name="character-health" id="character-health-input" value="100" required>
 
         <label class="modal-label" for="character-secondary-weapon-input">Has Secondary Weapon</label>
-        <select name="character-secondary-weapon" id="character-secondary-weapon-input" onchange="updateSelectedHasSecondaryWeapon(this.selectedIndex)" required>
+        <select name="character-secondary-weapon" id="character-secondary-weapon-input"
+            onchange="updateSelectedHasSecondaryWeapon(this.selectedIndex)" required>
             <option value="1">Yes</option>
             <option value="0" selected>No</option>
         </select>
@@ -80,13 +81,15 @@
         <input type="number" name="character-move-speed" id="character-move-speed-input" value="1" required>
 
         <label class="modal-label" for="character-critical-multiplier-input">Critical Multiplier</label>
-        <input type="number" name="character-critical-multiplier" id="character-critical-multiplier-input" value="0" required>
+        <input type="number" name="character-critical-multiplier" id="character-critical-multiplier-input" value="0"
+            required>
 
         <label class="modal-label" for="character-ammo-capacity-input">Ammo Capacity</label>
         <input type="number" name="character-ammo-capacity" id="character-ammo-capacity-input" value="0">
 
         <label class="modal-label" for="character-track-alliance-input">Track Alliance</label>
-        <select name="character-track-alliance" id="character-track-alliance-input" onchange="updateSelectedAlliance(this.selectedIndex)">
+        <select name="character-track-alliance" id="character-track-alliance-input"
+            onchange="updateSelectedAlliance(this.selectedIndex)">
             {{#each data.alliances}}
             <option value="{{this.[Alliance ID]}}">{{this.Alliance}}</option>
             {{/each}}
@@ -107,7 +110,8 @@
         <input type="text" class="edit-id" id="edit-character-id-input" name="character-id" value="" readonly>
 
         <label class="modal-label" for="edit-character-name-input">Character Name</label>
-        <input type="text" id="edit-character-name-input" name="character-name" placeholder="Enter character's name" required>
+        <input type="text" id="edit-character-name-input" name="character-name" placeholder="Enter character's name"
+            required>
 
         <label class="modal-label" for="edit-character-role-input">Role</label>
         <select id="edit-character-role-input" name="character-role" required>
@@ -121,7 +125,8 @@
         <input type="number" id="edit-character-health-input" name="character-health" value="100" required>
 
         <label class="modal-label" for="edit-character-secondary-weapon-input">Has Secondary Weapon</label>
-        <select name="character-secondary-weapon" id="edit-character-secondary-weapon-input" onchange="updateSelectedHasSecondaryWeapon(this.selectedIndex)" required>
+        <select name="character-secondary-weapon" id="edit-character-secondary-weapon-input"
+            onchange="updateSelectedHasSecondaryWeapon(this.selectedIndex)" required>
             <option value="1">Yes</option>
             <option value="0">No</option>
         </select>
@@ -130,7 +135,8 @@
         <input type="number" id="edit-character-move-speed-input" name="character-move-speed" value="1" required>
 
         <label class="modal-label" for="edit-character-critical-multiplier-input">Critical Multiplier</label>
-        <input type="number" id="edit-character-critical-multiplier-input" name="character-critical-multiplier" value="0" required>
+        <input type="number" id="edit-character-critical-multiplier-input" name="character-critical-multiplier"
+            value="0" required>
 
         <label class="modal-label" for="edit-character-ammo-capacity-input">Ammo Capacity</label>
         <input type="number" id="edit-character-ammo-capacity-input" name="character-ammo-capacity" value="0">
@@ -145,7 +151,7 @@
         </select>
         <button type="submit">Save Changes</button>
     </form>
-        <button onClick="showForm('browse')">Cancel</button>
+    <button onClick="showForm('browse')">Cancel</button>
 </div>
 
 <!-- Delete Confirmation -->

@@ -1,12 +1,13 @@
-function confirmDelete(player_id, battle_id, player, battle) {
+function confirmDelete(player_id, battle_id, player, battle, timestamp) {
     document.getElementById('delete-player-id').value = player_id;
     document.getElementById('delete-battle-id').value = battle_id;
+    document.getElementById('delete-player-id').innerText = player;
+    document.getElementById('delete-battle-id').innerText = battle;
+    document.getElementById('delete-timestamp').innerText = timestamp;
     document.getElementById('confirm-delete-button').onclick = function() {
         deletePlayerBattle(player_id, battle_id);
     };
-    document.getElementById('delete-player-id').innerText = player;
-    document.getElementById('delete-battle-id').innerText = battle;
-    showForm('delete', player_id, battle_id);
+    showForm('delete');
 }
 
 function deletePlayerBattle(player_id, battle_id) {
@@ -29,11 +30,5 @@ function deletePlayerBattle(player_id, battle_id) {
             }
         }
     };
-
-    console.log("Sending data: ", data);
-    console.log("Player ID: ", player_id);
-    console.log("Battle ID: ", battle_id);
     xhttp.send(JSON.stringify(data));
-
-    showForm('browse');
 }

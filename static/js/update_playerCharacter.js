@@ -2,7 +2,7 @@ function updatePlayerCharacter(player, character) {
     // Get the form fields we need to update
     let inputPlayer = document.getElementById('edit-player-track-input');
     let inputCharacter = document.getElementById('edit-character-track-input');
-    
+
     // Store the previous values in hidden fields
     document.getElementById('prev-player-id').value = player;
     document.getElementById('prev-character-id').value = character;
@@ -44,16 +44,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Tell our AJAX request how to resolve
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                // Parse the response
-                let response = JSON.parse(xhttp.responseText);
+            if (xhttp.readyState == 4) {
+                if (xhttp.status == 200) {
+                    // refresh the page
+                    location.reload();
+                } else if (xhttp.status == 409) {
+                    alert('Duplicate entry');
+                    document.getElementById('edit-player-track-input').value = prevPlayerValue;
+                    document.getElementById('edit-character-track-input').value = prevCharacterValue;
+                }
+                else {
+                    console.error('Error updating player character: ', xhttp.responseText);
+                    alert('There was an error updating the player character.');
 
-                // refresh the page
-                location.reload();
-                showForm('browse');
-            }
+                }
+            };
         };
-
         // Send the request
         xhttp.send(JSON.stringify(data));
     });

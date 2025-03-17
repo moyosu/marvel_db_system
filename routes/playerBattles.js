@@ -103,8 +103,14 @@ router.post('/add-player-battle', function (req, res) {
             `;
             db.pool.query(query2, function (error, rows, fields) {
                 if (error) {
-                    console.log(error);
-                    res.status(400).json({ error: error.message });
+                    if (error.code === 'ER_DUP_ENTRY') {
+                        res.status(409).send("Duplicate entry"); // Send a conflict response
+                        return;
+                    } else {
+                        console.error("Error executing query: ", error); // Log any errors
+                        res.status(500).send("Error executing query"); // Send an error response
+                        return;
+                    }
                 } else {
                     res.status(200).json(rows);
                 }
@@ -138,8 +144,14 @@ router.put('/put-player-battle-ajax', function (req, res, next) {
 
     db.pool.query(queryPlayerBattle, [player_id, battle_id, prev_player_id, prev_battle_id], function (error, rows, fields) {
         if (error) {
-            console.log(error);
-            res.status(400).json({ error: error.message });
+            if (error.code === 'ER_DUP_ENTRY') {
+                res.status(409).send("Duplicate entry"); // Send a conflict response
+                return;
+            }
+            else {
+                res.status(500).send("Error executing query"); // Send an error response
+                return;
+            }
         } else {
             res.status(200).json(rows);
         }

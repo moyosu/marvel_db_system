@@ -1,16 +1,15 @@
 {{#> layout title="Battles Page"}}
-<div class="filter-container">
-    <label for="dropdown-filter">Filter by Win:</label>
-    <select id="dropdown-filter" onchange="filterCharacters()">
-        <option value="all">All Battles</option>
-        <option value="true">Win</option>
-        <option value="false">Loss</option>
-    </select>
-</div>
 
 <div id="browse">
     <h3 class="table-name">Browse Battles</h3>
-
+    <div class="filter-container">
+        <label for="dropdown-filter">Filter by Win:</label>
+        <select id="dropdown-filter" onchange="filterCharacters()">
+            <option value="all">All Battles</option>
+            <option value="true">Win</option>
+            <option value="false">Loss</option>
+        </select>
+    </div>
     <div class="table-container">
         <table border="1" cellpadding="5">
             <thead class="table-header">
@@ -29,9 +28,11 @@
                 {{#each data}}
                 <tr>
                     <td>
-                        <a href="#" onClick="updateBattle('{{this.[Battle ID]}}', '{{this.[Time Stamp]}}', '{{this.Victory}}', '{{this.Kills}}', '{{this.Deaths}}', '{{this.Assists}}', '{{this.[Damage Dealt]}}', '{{this.[Damage Blocked]}}', '{{this.Healing}}', '{{this.Accuracy}}')">Edit</a>                    </td>
+                        <a id="edit-option" href="#"
+                            onClick="updateBattle('{{this.[Battle ID]}}', '{{this.[Time Stamp]}}', '{{this.Victory}}', '{{this.Kills}}', '{{this.Deaths}}', '{{this.Assists}}', '{{this.[Damage Dealt]}}', '{{this.[Damage Blocked]}}', '{{this.Healing}}', '{{this.Accuracy}}')">Edit</a>
+                    </td>
                     <td>
-                        <a href="#" onClick="confirmDelete({{this.[Battle ID]}}, '{{this.[Time Stamp]}}')">Delete</a>
+                        <a id="delete-option" href="#" onClick="confirmDelete('{{this.[Battle ID]}}', '{{this.[Time Stamp]}}')">Delete</a>
                     </td>
                     <td>{{this.[Battle ID]}}</td>
                     <td>{{this.[Time Stamp]}}</td>
@@ -138,7 +139,7 @@
 <div id="delete" class="form-container hidden">
     <h3 class="modal">Are you sure you want to delete this battle?</h3>
     <p class="modal-label">Battle ID: <span id="delete-message"></span></p>
-    <p class="modal-label">Battle Time: <span id="delete-message-time"></span></p>
+    <p class="modal-label">Time Stamp: <span id="delete-time-stamp"></span></p>
     <button id="confirm-delete-button">Delete</button>
     <button type="button" onClick="showForm('browse')">Cancel</button>
 </div>

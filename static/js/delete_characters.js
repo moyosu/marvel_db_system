@@ -26,7 +26,6 @@ function deleteCharacter(character_id) {
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4) {
-            console.log("Response Status: ", xhttp.status); // Log the response status
             if (xhttp.status == 204) {  // Expecting 204 No Content
                 // Refresh the page or update the table to reflect the deletion
                 location.reload();
@@ -35,9 +34,5 @@ function deleteCharacter(character_id) {
             }
         }
     };
-    console.log("Sending data: ", data); // Log the data we are sending
-    console.log("Character ID: ", character_id); // Log the character ID
     xhttp.send(JSON.stringify(data)); // Send the data
-    
-    showForm('browse');
 }

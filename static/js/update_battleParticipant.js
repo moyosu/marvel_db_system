@@ -44,13 +44,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Tell our AJAX request how to resolve
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                // Parse the response
-                let response = JSON.parse(xhttp.responseText);
+            if (xhttp.readyState == 4) {
+                if (xhttp.status == 200) {
+                    // refresh the page
+                    location.reload();
+                } else if (xhttp.status == 409) {
+                    alert('Duplicate entry');
+                    document.getElementById('edit-battle-track-input').value = document.getElementById('edit-battle-track-input').options[0].value;
+                    document.getElementById('edit-character-track-input').value = document.getElementById('edit-character-track-input').options[0].value;
+                }
+                else {
+                    console.error('Error updating battle participant: ', xhttp.responseText);
+                    alert('There was an error updating the battle participant.');
+                }
 
-                // refresh the page
-                location.reload();
-                showForm('browse');
             }
         };
         // Send the request

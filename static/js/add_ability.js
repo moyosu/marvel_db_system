@@ -49,21 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Tell our AJAX request how to resolve
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
-                // Parse the response
-                let response = JSON.parse(xhttp.responseText);
-
-                // Clear the input fields
-                abilityNameInput.value = '';
-                specialEffectInput.value = '';
-                abilityRangeInput.value = '';
-                cooldownInput.value = '';
-                chargesInput.value = '';
-
                 // Reload the page or update data dynamically
                 location.reload();
-
-                // hide the form
-                showForm('browse');
             } else if (xhttp.readyState == 4 && xhttp.status != 200) {
                 console.log("There was an error with the input.")
             }

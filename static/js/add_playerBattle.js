@@ -27,20 +27,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Tell our AJAX request how to resolve
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                // Parse the response
-                let response = JSON.parse(xhttp.responseText);
-
-                // Clear the input fields
-                inputPlayer.value = '';
-                inputBattle.value = '';
-
-                // refresh the page
-                location.reload();
-                showForm('browse');
+            if (xhttp.readyState == 4) {
+                if (xhttp.status == 200) {
+                    // refresh the page
+                    location.reload();
+                } else if (xhttp.status == 409) {
+                    alert('Duplicate entry');
+                    document.getElementById('player-track-input').value = document.getElementById('player-track-input').options[0].value;
+                    document.getElementById('battle-track-input').value = document.getElementById('battle-track-input').options[0].value;
+                } else {
+                    console.error('Error adding player battle: ', xhttp.responseText);
+                    alert('There was an error adding the player battle.');
+                }
             }
         };
-
         // Send the request
         xhttp.send(JSON.stringify(data));
     });

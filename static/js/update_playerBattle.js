@@ -2,7 +2,7 @@ function updatePlayerBattle(player, battle) {
     // Get the form fields we need to update
     let inputPlayer = document.getElementById('edit-player-track-input');
     let inputBattle = document.getElementById('edit-battle-track-input');
-    
+
     // Store the previous values in hidden fields
     document.getElementById('prev-player-id').value = player;
     document.getElementById('prev-battle-id').value = battle;
@@ -44,16 +44,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Tell our AJAX request how to resolve
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                // Parse the response
-                let response = JSON.parse(xhttp.responseText);
-
-                // Refresh the page
-                location.reload();
-                showForm('browse');
-            }
+            if (xhttp.readyState == 4) {
+                if (xhttp.status == 200) {
+                    // Refresh the page
+                    location.reload();
+                } else if (xhttp.status == 409) {
+                    alert('Duplicate entry');
+                    document.getElementById('edit-player-track-input').value = prevPlayerValue;
+                    document.getElementById('edit-battle-track-input').value = prevBattleValue;
+                } else {
+                    console.error('Error updating player battle: ', xhttp.responseText);
+                    alert('There was an error updating the player battle.');
+                }
+            };
         };
-
         // Send the request
         xhttp.send(JSON.stringify(data));
     });

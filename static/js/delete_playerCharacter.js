@@ -6,7 +6,7 @@ function confirmDelete(player_id, character_id, player, character) {
     };
     document.getElementById('delete-player-id').innerText = player;
     document.getElementById('delete-character-id').innerText = character;
-    showForm('delete', player_id, character_id);
+    showForm('delete');
 }
 
 function deletePlayerCharacter(player_id, character_id) {
@@ -21,7 +21,6 @@ function deletePlayerCharacter(player_id, character_id) {
 
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4) {
-            console.log("Response Status: ", xhttp.status);
             if (xhttp.status == 204) {
                 location.reload();
             } else {
@@ -31,6 +30,4 @@ function deletePlayerCharacter(player_id, character_id) {
     };
 
     xhttp.send(JSON.stringify(data));
-
-    showForm('browse');
 }
