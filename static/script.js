@@ -1,3 +1,8 @@
+// script.js - Functions for the filters on various pages
+
+/**
+ * The functionality in this file is completely our own work.
+ */
 
 /**
  * Shows the selected form and hides the others.
