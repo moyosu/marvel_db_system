@@ -1,3 +1,13 @@
+
+/**
+ * Shows the selected form and hides the others.
+ * 
+ * @param {string} formType - The form to display (e.g., "browse", "insert", "update", "delete").
+ * @param {string|null} id - Optional ID parameter for the form.
+ * @param {string|null} name - Optional name parameter for the form.
+ * 
+ * After choosing to follow the starter app layout, we stoped passing the id and name
+ */
 window.showForm = function (formType, id = null, name = null) {
     const forms = ["browse", "insert", "update", "delete"];
     
@@ -18,6 +28,10 @@ window.showForm = function (formType, id = null, name = null) {
     }
 }
 
+/**
+ * Filters players based on the selected rank from the dropdown.
+ * Displays only rows where the rank matches the selected rank.
+ */
 function filterPlayers() {
     const selectedRank = document.getElementById("dropdown-filter").value;
     const table = document.querySelector(".table-container table");
@@ -37,6 +51,10 @@ function filterPlayers() {
     }
 }
 
+/**
+ * Filters characters based on the selected role from the dropdown.
+ * Displays only rows where the role matches the selected role.
+ */
 function filterCharacters() {
     const selectedRole = document.getElementById("dropdown-filter").value; // Corrected variable name
     const table = document.querySelector(".table-container table"); // Added dot to select by class
@@ -56,6 +74,10 @@ function filterCharacters() {
     }
 }
 
+/**
+ * Filters battles based on the selected role from the dropdown.
+ * Displays only rows where the role matches the selected role.
+ */
 function filterBattles() {
     const selectedRole = document.getElementById("dropdown-filter").value; // Corrected variable name
     const table = document.querySelector(".table-container table"); // Added dot to select by class
@@ -75,6 +97,10 @@ function filterBattles() {
     }
 }
 
+/**
+ * Filters the table based on a search query entered by the user.
+ * Displays only rows where the text in the track_player column matches the search query.
+ */
 function filterTable() {
     let input = document.getElementById("searchInput").value.toLowerCase().trim(); // Ensure consistent input
     let table = document.getElementById("IT-table");
@@ -92,6 +118,10 @@ function filterTable() {
     }
 }
 
+/**
+ * Filters abilities based on the selected character from the dropdown.
+ * Displays only rows where the character matches the selected character.
+ */
 function filterAbilities() {
     let selectedCharacter = document.getElementById("dropdown-filter").value.toLowerCase();
     let rows = document.querySelectorAll("#browse tbody tr");
