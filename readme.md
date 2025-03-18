@@ -8,6 +8,7 @@
     - *Referenced for implementing page refresh functionality after successful AJAX operations, as seen in our create, update and delete JavaScript functions.*
 - **Website: Handlebars.js, contributors: [Handlebars.js]** (March 2025) Handlebars.js Data Variables [Web page]. Available at: https://handlebarsjs.com/api-reference/data-variables.html#index 
     - *Used for implementing dynamic data rendering in our view templates, particularly for displaying database query results in tables.*
+- *The overall structure and implementation of handlebars with the exception of the dynamic data rendering was done entirely on our own.
 - **Website: GeeksforGeeks, contributors: [GeeksforGeeks]** (March 2025) Express.js express.Router Function [Web page]. Available at: https://www.geeksforgeeks.org/express-js-express-router-function/ 
     - *Referenced for implementing modular routing structure in our application, as seen in the routes directory organization.*
 - *Figured out the duplicate intersection table entries entirely on our own by examining the error logs. First by checking for errors in error logs due to duplicate entry and send a specific status code to the HTTP response.*
