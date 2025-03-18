@@ -15,4 +15,6 @@
 - *Update form fields pre-populate associated values are entirely our own work, exception where citations are present inline with the codes.*
 - **Website: Stack Overflow, contributors: [Stack Overflow]** (March 2025)
 Javascript Alert Statements with input values [Web page]. Available at: https://stackoverflow.com/questions/15072302/javascript-alert-statement-with-string-int
-    - *Referenced for implementing the alert system when a user inputs an invalid response into one of the input fields for the add and update modals for numeric values.
+    - *Referenced for implementing the alert system when a user inputs an invalid response into one of the input fields for the add and update modals for numeric values.*
+- **IMAGE: ChatGPT Generated, contributors; [ChatGPT]** (Feb. 2025)
+    - *The image provied on our webpages was an AI generated image created by ChatGPT when asking for a superhero logo with an M on it. We were the ones who asked for its creation and it was not taken from an already created image on the internet.*
